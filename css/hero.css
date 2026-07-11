@@ -21,7 +21,7 @@
 
 /* was 1.15fr .85fr — evened up so the portrait column carries more weight */
 .hero-inner{
-  position:relative; z-index:2; padding:var(--s-10) 0 var(--s-8);
+  position:relative; z-index:2; padding:var(--s-3) 0 var(--s-6);
   display:grid; grid-template-columns:1fr 1fr; gap:var(--s-8); align-items:center;
 }
 @media (max-width:900px){ .hero-inner{ grid-template-columns:1fr; gap:var(--s-6); } }
