@@ -1,0 +1,49 @@
+/* =====================================================================
+   PROJECT STATUS
+   'Currently building' card and the roadmap checklist.
+===================================================================== */
+
+/* =====================================================================
+   CURRENTLY BUILDING
+===================================================================== */
+.building-card{
+  border:1px solid var(--line-strong); border-radius:8px; background:var(--panel);
+  padding:var(--s-6); max-width:640px;
+}
+.building-title{ font-family:var(--f-display); font-weight:800; font-size:clamp(20px,2.8vw,26px); letter-spacing:-.4px; margin-bottom:var(--s-4); }
+.building-checklist{ display:flex; flex-direction:column; gap:12px; margin-bottom:var(--s-5); }
+.building-checklist li{
+  display:flex; align-items:flex-start; gap:12px; font-size:14.5px; color:var(--ink-dim); line-height:1.6;
+}
+.building-checklist li::before{
+  content:"○"; color:var(--ink-faint); flex:none; font-size:13px; line-height:1.6;
+}
+.building-checklist li.done{ color:var(--ink); }
+.building-checklist li.done::before{ content:"✓"; color:var(--accent); }
+.building-eta{ display:flex; align-items:center; gap:10px; border-top:1px solid var(--line); padding-top:var(--s-4); }
+.building-eta .lbl{ font-family:var(--f-mono); font-size:10.5px; color:var(--ink-faint); letter-spacing:.8px; text-transform:uppercase; }
+.building-eta .val{ font-family:var(--f-mono); font-size:13px; color:var(--accent); }
+
+/* =====================================================================
+   ROADMAP
+===================================================================== */
+.roadmap-list{ display:flex; flex-direction:column; border-top:1px solid var(--line); max-width:700px; }
+.roadmap-list li{
+  display:flex; align-items:center; gap:16px; padding:15px 0; border-bottom:1px solid var(--line);
+}
+.roadmap-mark{ font-family:var(--f-mono); font-size:15px; color:var(--ink-faint); flex:none; width:20px; text-align:center; }
+.roadmap-list li.done .roadmap-mark{ color:var(--accent); }
+.roadmap-list li.active .roadmap-mark{ color:var(--accent); animation:roadmappulse 1.6s ease-in-out infinite; }
+@keyframes roadmappulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+.roadmap-label{
+  flex:1; font-family:var(--f-display); font-weight:700; font-size:16.5px; letter-spacing:-.2px; color:var(--ink-dim);
+}
+.roadmap-list li.done .roadmap-label{ color:var(--ink-faint); text-decoration:line-through; text-decoration-color:var(--line-strong); }
+.roadmap-list li.active .roadmap-label{ color:var(--ink); }
+.roadmap-status{
+  font-family:var(--f-mono); font-size:10.5px; letter-spacing:.6px; text-transform:uppercase; color:var(--ink-faint);
+  border:1px solid var(--line-strong); border-radius:4px; padding:4px 9px; flex:none;
+}
+.roadmap-list li.done .roadmap-status{ color:var(--accent); border-color:var(--accent-line); }
+.roadmap-list li.active .roadmap-status{ color:var(--accent); border-color:var(--accent-line); background:var(--accent-dim); }
+

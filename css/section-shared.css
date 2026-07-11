@@ -1,0 +1,43 @@
+/* =====================================================================
+   SECTION SHARED + STATEMENT
+   Layout rules shared by every content section (headings, eyebrows,
+   spacing) plus the one-off manifesto/statement block.
+===================================================================== */
+
+/* =====================================================================
+   SECTION SHARED
+===================================================================== */
+section{ padding:var(--s-16) 0; position:relative; }
+@media (max-width:640px){ section{ padding:var(--s-8) 0; } }
+
+.section-label{
+  font-family:var(--f-mono); font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:var(--s-3);
+}
+.section-label::before{ content:""; width:16px; height:1px; background:var(--accent); }
+
+.section-heading{
+  font-family:var(--f-display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(32px,5.4vw,64px); letter-spacing:-1.5px; line-height:1.02; color:var(--ink);
+}
+.section-heading .dim{ color:var(--ink-faint); }
+.section-intro{ font-size:16px; color:var(--ink-dim); max-width:620px; line-height:1.75; margin-top:var(--s-3); }
+.section-head{ margin-bottom:var(--s-8); }
+
+.vert-word{
+  letter-spacing:16px; font-family:var(--f-mono); font-size:13px; color:var(--ink-faint);
+  text-transform:uppercase; text-align:center; margin:0 auto var(--s-4);
+}
+
+/* =====================================================================
+   STATEMENT (manifesto)
+===================================================================== */
+.statement-inner{ max-width:920px; }
+.statement-heading{
+  font-family:var(--f-display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(30px,5.4vw,58px); line-height:1.06; letter-spacing:-1.5px; margin-bottom:var(--s-5);
+}
+.statement-heading .dim{ color:var(--ink-faint); }
+.statement-body{ font-size:17px; color:var(--ink-dim); line-height:1.85; max-width:660px; }
+.statement-body strong{ color:var(--ink); font-weight:600; }
+

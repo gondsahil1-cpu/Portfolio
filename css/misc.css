@@ -1,0 +1,58 @@
+/* =====================================================================
+   MISC — GitHub stats, resume links, footer, skip link, section
+   dividers, and the base (non-glass) lightbox structure.
+===================================================================== */
+
+/* =====================================================================
+   GITHUB STATS
+===================================================================== */
+.github-grid{ display:flex; flex-wrap:wrap; gap:var(--s-4); }
+.github-card{ border:1px solid var(--line); border-radius:8px; max-width:420px; width:100%; }
+
+/* =====================================================================
+   RESUME
+===================================================================== */
+.resume-links{ display:flex; flex-wrap:wrap; gap:var(--s-3); margin-bottom:var(--s-6); }
+.resume-link{
+  display:flex; align-items:center; gap:10px; font-family:var(--f-mono); font-size:13px; color:var(--ink-dim);
+  text-decoration:none; border:1px solid var(--line-strong); border-radius:5px; padding:10px 16px;
+  transition:border-color .2s ease, color .2s ease;
+}
+.resume-link span{ color:var(--accent); }
+.resume-link:hover{ border-color:var(--accent-line); color:var(--ink); }
+
+/* =====================================================================
+   FOOTER
+===================================================================== */
+footer{ border-top:1px solid var(--line); padding:var(--s-4) 0; }
+.footer-inner{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:var(--s-2); }
+.footer-copy{ font-family:var(--f-mono); font-size:12px; color:var(--ink-faint); }
+.footer-social{ display:flex; gap:var(--s-3); }
+.footer-social a{ font-family:var(--f-mono); font-size:12.5px; color:var(--ink-dim); text-decoration:none; }
+.footer-social a:hover{ color:var(--accent); }
+
+/* skip link */
+.skip-link{
+  position:absolute; left:-999px; top:0; background:var(--accent); color:var(--accent-ink);
+  padding:10px 16px; z-index:3000; font-family:var(--f-mono); font-size:13px; border-radius:0 0 6px 0;
+}
+.skip-link:focus{ left:0; }
+
+/* trace divider */
+.trace-divider{ display:flex; align-items:center; gap:var(--s-2); color:var(--ink-faint); margin-bottom:var(--s-8); }
+.trace-divider .via{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none; box-shadow:0 0 0 3px var(--accent-dim); }
+.trace-divider .line-el{ flex:1; height:1px; background:var(--line); }
+
+/* lightbox */
+.lightbox{
+  position:fixed; inset:0; z-index:2000; background:rgba(9,9,8,0.94);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;
+}
+.lightbox.open{ opacity:1; visibility:visible; }
+.lightbox-close{
+  position:absolute; top:24px; right:24px; background:none; border:1px solid var(--line-strong);
+  color:var(--ink); width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:16px;
+}
+.lightbox-close:hover{ border-color:var(--accent); color:var(--accent); }
+

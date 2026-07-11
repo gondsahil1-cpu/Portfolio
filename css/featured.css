@@ -1,0 +1,44 @@
+/* =====================================================================
+   MARQUEE + FEATURED PROJECT TEASER
+   The scrolling text marquee band and the single large 'featured
+   project' card shown just below the hero.
+===================================================================== */
+
+/* =====================================================================
+   MARQUEE
+===================================================================== */
+/* =====================================================================
+   FEATURED PROJECT TEASER
+===================================================================== */
+.featured-teaser{ padding:var(--s-8) 0; }
+.featured-card{
+  display:grid; grid-template-columns:.85fr 1.15fr; align-items:stretch;
+  border:1px solid var(--line-strong); border-radius:10px; overflow:hidden; background:var(--panel);
+}
+@media (max-width:800px){ .featured-card{ grid-template-columns:1fr; } }
+.featured-visual{
+  background:var(--accent-dim); display:flex; align-items:center; justify-content:center;
+  min-height:200px; border-right:1px solid var(--line);
+}
+@media (max-width:800px){ .featured-visual{ border-right:none; border-bottom:1px solid var(--line); min-height:160px; } }
+.featured-visual svg{ width:96px; height:96px; stroke:var(--accent); fill:none; stroke-width:1.4; }
+.featured-body{ padding:var(--s-6); }
+.featured-title{
+  font-family:var(--f-display); font-weight:900; text-transform:uppercase;
+  font-size:clamp(24px,3.6vw,38px); letter-spacing:-.8px; line-height:1.05; margin-bottom:var(--s-3);
+}
+.featured-desc{ color:var(--ink-dim); font-size:15px; line-height:1.75; max-width:520px; margin-bottom:var(--s-4); }
+
+.marquee{
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  overflow:hidden; padding:var(--s-3) 0; background:var(--panel);
+}
+.marquee-track{ display:flex; width:max-content; animation:marquee 26s linear infinite; }
+.marquee-track span{
+  font-family:var(--f-display); font-weight:800; text-transform:uppercase;
+  font-size:clamp(20px,3vw,32px); letter-spacing:-.5px; color:var(--ink-faint);
+  padding:0 var(--s-4); white-space:nowrap; display:flex; align-items:center; gap:var(--s-4);
+}
+.marquee-track span em{ font-style:normal; color:var(--accent); }
+@keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
