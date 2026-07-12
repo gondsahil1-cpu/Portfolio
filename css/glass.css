@@ -180,32 +180,68 @@ body{
 .btn-primary:active, .btn-outline:active, .nav-cta:active, .resume-link:active{ transform:scale(.97); }
 .btn-primary, .btn-outline, .nav-cta, .resume-link{ border-radius:var(--lg-r-pill) !important; }
 
-/* ============================ NAVIGATION — the one always-visible glass surface ============================ */
-.navbar{ position:relative; isolation:isolate; }
+/* ============================ NAVIGATION — the one always-visible glass surface ============================
+   Floating capsule now, not a full-width bar: border wraps all four
+   sides and the corner radius is pill-shaped. A dedicated "compact"
+   variant (toggled by JS on scroll-down, see index.html) turns up the
+   blur/saturation and tightens the surface, mimicking the Dynamic
+   Island's "shrink while busy" read. Hover breathes the capsule
+   outward by ~2–3% so it feels alive, same physics language as the
+   buttons below. */
+.navbar{ isolation:isolate; will-change:transform; }
 .navbar::before{
-  content:""; position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0;
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0; border-radius:inherit;
   background:radial-gradient(360px 200px at var(--lg-mx,50%) var(--lg-my,0%), rgba(255,255,255,.14), transparent 65%);
   transition:opacity .5s cubic-bezier(.22,1,.36,1);
 }
 .navbar:hover::before{ opacity:1; }
 .navbar > *{ position:relative; z-index:2; }
 .navbar{
-  background:linear-gradient(180deg, rgba(20,19,17,.6), rgba(12,11,10,.46)) !important;
-  -webkit-backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
-  backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
-  border-bottom:1px solid rgba(255,255,255,.14) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 16px 40px -24px rgba(0,0,0,.6);
+  background:linear-gradient(180deg, rgba(22,21,19,.58), rgba(12,11,10,.42)) !important;
+  -webkit-backdrop-filter:blur(18px) saturate(var(--lg-sat)) !important;
+  backdrop-filter:blur(18px) saturate(var(--lg-sat)) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  border-radius:999px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.08), inset 0 -1px 0 rgba(0,0,0,.2),
+    0 16px 40px -20px rgba(0,0,0,.6), 0 2px 10px -4px rgba(0,0,0,.4);
+  transition:
+    background .45s cubic-bezier(.16,1,.3,1),
+    border-color .4s ease,
+    box-shadow .45s cubic-bezier(.16,1,.3,1),
+    -webkit-backdrop-filter .45s ease,
+    backdrop-filter .45s ease;
+}
+/* Dynamic-Island "busy" state: denser glass, tighter shadow, no scale
+   change here (the height/padding shrink is handled in navigation.css) */
+.navbar.nav-compact{
+  background:linear-gradient(180deg, rgba(16,15,14,.72), rgba(9,9,8,.6)) !important;
+  -webkit-backdrop-filter:blur(26px) saturate(180%) !important;
+  backdrop-filter:blur(26px) saturate(180%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.25),
+    0 10px 26px -14px rgba(0,0,0,.65);
+}
+/* hover: capsule breathes outward slightly and the glass brightens —
+   scoped to fine pointers so touch taps don't get stuck "hovered" */
+@media (hover:hover) and (pointer:fine){
+  .navbar:hover{
+    --nav-scale:1.025;
+    border-color:rgba(255,255,255,.24) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.2),
+      0 20px 48px -18px rgba(0,0,0,.65), 0 4px 14px -4px rgba(0,0,0,.45);
+  }
 }
 /* the SVG-distortion refraction filter is deliberately NOT applied here — it's
    reserved for the five major panels above; the nav is fixed and repaints on
    every scroll frame, so it gets the cheaper plain blur only. */
 
 /* nav-links pill sits on top of the already-blurred navbar — a second nested
-   blur there would compound cost for no visible gain, so it's tint + border only. */
+   blur there would compound cost for no visible gain, so it's tint + border only.
+   Individual link pills (hover/active fill) are styled in navigation.css. */
 .nav-links{
-  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
-  border-radius:var(--lg-r-pill); padding:8px 18px;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.2);
+  background:transparent; border:none; padding:0; box-shadow:none;
 }
 
 /* mobile full-screen menu and the lightbox are only ever painted while open,

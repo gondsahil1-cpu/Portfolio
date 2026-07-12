@@ -1,75 +1,267 @@
 /* =====================================================================
    NAVIGATION
-   Fixed top navbar, desktop nav links, mobile menu toggle + full-screen
-   overlay. Glass styling for .navbar/.nav-links/.menu-overlay lives in
-   glass.css, not here — this file is layout/structure only.
-===================================================================== */
+   Floating "dynamic island" style capsule navbar: fixed, centered,
+   width fits its content, shrinks/blurs on scroll-down and expands
+   back on scroll-up. Glass material (background/blur/border/shadow)
+   for .navbar/.nav-links/.menu-overlay lives in glass.css — this file
+   is shape, layout and micro-interaction only.
+
+   States driven from index.html's inline script:
+     .nav-loaded   -> added one frame after paint, plays the entrance
+     .nav-compact  -> added while the user is scrolling down past the
+                      top of the page, removed near top or on scroll-up
+========================================================================= */
 
 /* =====================================================================
-   NAV
+   NAV SHELL — floating, centered, fits content
 ===================================================================== */
 .navbar{
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  border-bottom:1px solid var(--line);
-  background:rgba(9,9,8,0.72); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-}
-.nav-inner{
-  max-width:var(--page-max); margin:0 auto; padding:0 var(--s-5);
-  height:72px; display:flex; align-items:center; justify-content:space-between;
-}
-@media (max-width:640px){ .nav-inner{ padding:0 var(--s-3); height:64px; } }
+  position:fixed;
+  top:18px; left:50%;
+  z-index:1000;
+  width:max-content;
+  max-width:90vw;
+  border-radius:999px;
+  opacity:0;
 
-.logo{ display:flex; align-items:center; gap:10px; text-decoration:none; }
-.logo-mark{
-  width:30px; height:30px; border:1px solid var(--line-strong); border-radius:4px;
-  display:flex; align-items:center; justify-content:center; background:var(--panel);
+  /* translate keeps the capsule horizontally centered at all times;
+     --nav-y and --nav-scale are the only things any other rule
+     (entrance, hover, glass.css) should ever touch — never redeclare
+     `transform` elsewhere, or it silently cancels the centering. */
+  --nav-y:-14px;
+  --nav-scale:1;
+  transform:translate(-50%, var(--nav-y)) scale(var(--nav-scale));
+
+  /* entrance: fade + slide down, spring-ish ease */
+  transition:
+    opacity .8s cubic-bezier(.16,1,.3,1),
+    transform .45s cubic-bezier(.16,1,.3,1),
+    top .4s cubic-bezier(.16,1,.3,1),
+    box-shadow .4s ease;
 }
+.navbar.nav-loaded{
+  opacity:1;
+  --nav-y:0;
+}
+/* dynamic-island shrink: nudge upward + let glass.css's compact rule
+   handle the padding/blur/opacity delta */
+.navbar.nav-loaded.nav-compact{
+  top:8px;
+}
+
+.nav-inner{
+  margin:0; padding:0 8px 0 20px;
+  height:64px;
+  display:flex; align-items:center; justify-content:space-between; gap:var(--s-4);
+  transition:height .4s cubic-bezier(.16,1,.3,1), padding .4s cubic-bezier(.16,1,.3,1), gap .4s ease;
+}
+.navbar.nav-compact .nav-inner{
+  height:52px;
+  padding:0 6px 0 18px;
+  gap:var(--s-3);
+}
+@media (max-width:640px){
+  .nav-inner{ padding:0 6px 0 16px; height:58px; }
+  .navbar.nav-compact .nav-inner{ height:50px; padding:0 5px 0 14px; }
+}
+
+/* =====================================================================
+   LOGO — subtle scale, glow and a hint of rotation on hover
+===================================================================== */
+.logo{ display:flex; align-items:center; gap:10px; }
+
+/* logo-mark-btn is the real interactive element now — a plain button
+   reset wrapped around the visual .logo-mark box, so it can double as
+   the capsule's expand/collapse control without hijacking the #home
+   link (that lives on .logo-text-link instead). */
+.logo-mark-btn{
+  background:none; border:none; padding:0; margin:0; display:flex; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.logo-mark{
+  width:30px; height:30px; border:1px solid var(--line-strong); border-radius:9px;
+  display:flex; align-items:center; justify-content:center; background:var(--panel);
+  overflow:hidden; position:relative;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .5s cubic-bezier(.34,1.56,.64,1), border-color .4s ease, width .4s cubic-bezier(.16,1,.3,1), height .4s cubic-bezier(.16,1,.3,1);
+}
+.navbar.nav-compact .logo-mark{ width:27px; height:27px; }
 .logo-mark svg{ width:15px; height:15px; }
-.logo-text{ font-family:var(--f-mono); font-size:13.5px; letter-spacing:.4px; font-weight:600; }
+/* the photo handed off from the loader — starts invisible so the
+   flying clone reads as the thing "arriving"; faded in once it lands */
+.logo-mark img{
+  width:100%; height:100%; object-fit:cover; border-radius:inherit; display:block;
+  opacity:0; transition:opacity .35s ease;
+}
+.logo-mark.logo-arrived img{ opacity:1; }
+
+.logo-text-link{ text-decoration:none; display:flex; align-items:center; }
+.logo-text{ font-family:var(--f-mono); font-size:13.5px; letter-spacing:.4px; font-weight:600; transition:font-size .4s ease; }
 .logo-text span{ color:var(--accent); }
 
-.nav-right{ display:flex; align-items:center; gap:var(--s-4); }
-.nav-links{ display:flex; align-items:center; gap:var(--s-4); }
-.nav-links a{
-  font-family:var(--f-mono); font-size:12.5px; letter-spacing:.5px; text-transform:uppercase;
-  text-decoration:none; color:var(--ink-dim); position:relative; padding:4px 0; display:inline-block;
-  transition:color .2s ease, transform .3s cubic-bezier(.16,1,.3,1); transform-origin:center left;
+.logo-mark-btn:hover .logo-mark{
+  transform:scale(1.08) rotate(-2deg);
+  border-color:var(--accent-line);
+  box-shadow:0 0 0 1px var(--accent-line), 0 0 18px -2px rgba(232,163,61,.55);
 }
-.nav-links a::after{
-  content:""; position:absolute; left:0; right:0; bottom:-3px; height:1px; background:var(--accent);
-  transform:scaleX(0); transform-origin:left; transition:transform .3s cubic-bezier(.16,1,.3,1);
-}
-.nav-links a:hover{ color:var(--ink); transform:scale(1.08); }
-.nav-links a.active{ color:var(--ink); }
-.nav-links a:hover::after, .nav-links a.active::after{ transform:scaleX(1); }
+.logo-mark-btn:active .logo-mark{ transform:scale(.96) rotate(0deg); }
 
-.menu-toggle{
-  display:flex; align-items:center; gap:9px; background:none; border:none; cursor:pointer;
-  font-family:var(--f-mono); font-size:12px; letter-spacing:1.4px; text-transform:uppercase; color:var(--ink);
-  padding:6px 2px;
+/* =====================================================================
+   FLYING PHOTO — a fixed-position clone JS animates from the loader's
+   position to .logo-mark's position (see index.html finishLoading()).
+   Pure top/left/width/height transition (a manual FLIP), so it works
+   whether the navbar has settled at its final spot or not.
+===================================================================== */
+.logo-flight{
+  position:fixed; z-index:10001; overflow:hidden; border-radius:8px; pointer-events:none;
+  transition:top .8s cubic-bezier(.16,1,.3,1), left .8s cubic-bezier(.16,1,.3,1),
+             width .8s cubic-bezier(.16,1,.3,1), height .8s cubic-bezier(.16,1,.3,1),
+             border-radius .8s cubic-bezier(.16,1,.3,1);
 }
+.logo-flight img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+/* =====================================================================
+   NAV LINKS — each its own glass pill
+===================================================================== */
+/* =====================================================================
+   NAV COLLAPSIBLE — everything except the logo (links, CTA, mobile
+   toggle). Toggled by .navbar.nav-collapsed, set from JS: once on load
+   (so the capsule starts as a small pill while the photo flies in),
+   and afterwards by clicking .logo-mark-btn. max-width + opacity gives
+   the Dynamic-Island "grow open" read without animating layout width
+   directly (the navbar itself is width:max-content and just follows).
+===================================================================== */
+.nav-collapsible{
+  display:flex; align-items:center; overflow:hidden;
+  max-width:640px; opacity:1; margin-left:var(--s-4);
+  transition:max-width .6s cubic-bezier(.16,1,.3,1), opacity .4s ease .1s, margin-left .6s cubic-bezier(.16,1,.3,1);
+}
+.navbar.nav-collapsed .nav-collapsible{
+  max-width:0; opacity:0; margin-left:0; pointer-events:none;
+  transition:max-width .5s cubic-bezier(.16,1,.3,1), opacity .25s ease, margin-left .5s cubic-bezier(.16,1,.3,1);
+}
+/* the capsule always stays open on mobile/touch widths — nav-links are
+   already hidden there and .menu-toggle (the real mobile menu entry
+   point) lives inside .nav-collapsible, so it must stay reachable */
+@media (max-width:900px){
+  .navbar.nav-collapsed .nav-collapsible{ max-width:640px; opacity:1; margin-left:var(--s-3); pointer-events:auto; }
+}
+
+.nav-right{ display:flex; align-items:center; gap:var(--s-3); }
+.nav-links{ display:flex; align-items:center; gap:2px; }
+
+.nav-links a{
+  font-family:var(--f-mono); font-size:12px; letter-spacing:.4px; text-transform:uppercase;
+  text-decoration:none; color:var(--ink-dim);
+  display:inline-flex; align-items:center;
+  padding:9px 16px; border-radius:999px;
+  background:transparent; border:1px solid transparent;
+  transform:translateY(0) scale(1);
+  transition:
+    color .3s ease,
+    background .35s cubic-bezier(.16,1,.3,1),
+    border-color .35s ease,
+    transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+/* underline animation removed on purpose — replaced by pill fill */
+.nav-links a::after{ content:none; }
+
+.nav-links a:hover{
+  color:var(--ink);
+  background:rgba(255,255,255,.07);
+  transform:translateY(-2px) scale(1.04);
+}
+.nav-links a:active{ transform:translateY(0) scale(.98); }
+
+.nav-links a.active{
+  color:var(--accent-ink);
+  background:var(--accent);
+  border-color:var(--accent);
+}
+.nav-links a.active:hover{ transform:translateY(-2px) scale(1.03); background:var(--accent); }
+
+/* =====================================================================
+   NAV CTA — the one filled/accent pill in the capsule, meant to read
+   as the floating navbar's centerpiece. Reuses .btn-primary's glass
+   tint from glass.css; this just tunes size/glow for the nav context.
+===================================================================== */
+.nav-cta.btn-primary{
+  padding:9px 18px; font-size:12.5px;
+  box-shadow:
+    0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.22),
+    0 0 0 1px rgba(232,163,61,.15), 0 0 22px -6px rgba(232,163,61,.55);
+  transition:padding .4s cubic-bezier(.16,1,.3,1), font-size .4s ease, transform .3s ease, box-shadow .3s ease, opacity .3s ease;
+}
+.nav-cta.btn-primary:hover{
+  box-shadow:
+    0 14px 30px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.36),
+    0 0 0 1px rgba(232,163,61,.25), 0 0 30px -4px rgba(232,163,61,.7);
+}
+.navbar.nav-compact .nav-cta.btn-primary{ padding:7px 15px; font-size:11.5px; }
+@media (max-width:560px){ .nav-cta{ display:none; } }
+
+/* =====================================================================
+   MOBILE TOGGLE — its own rounded glass capsule
+===================================================================== */
+.menu-toggle{
+  display:flex; align-items:center; gap:9px;
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+  border-radius:999px; cursor:pointer;
+  font-family:var(--f-mono); font-size:11.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--ink);
+  padding:9px 16px 9px 14px;
+  transition:background .3s ease, border-color .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.menu-toggle:hover{ background:rgba(255,255,255,.09); border-color:rgba(255,255,255,.2); }
+.menu-toggle:active{ transform:scale(.96); }
 @media (min-width:901px){ .menu-toggle{ display:none; } }
 .menu-toggle .bars{ display:flex; flex-direction:column; gap:4px; }
-.menu-toggle .bars span{ width:18px; height:1.5px; background:var(--ink); display:block; transition:transform .3s ease, opacity .3s ease; }
+.menu-toggle .bars span{ width:16px; height:1.5px; background:var(--ink); display:block; transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .3s ease; }
 .menu-toggle.open .bars span:nth-child(1){ transform:translateY(5.5px) rotate(45deg); }
 .menu-toggle.open .bars span:nth-child(2){ opacity:0; }
 .menu-toggle.open .bars span:nth-child(3){ transform:translateY(-5.5px) rotate(-45deg); }
 @media (max-width:900px){ .nav-links{ display:none; } }
 
+/* =====================================================================
+   MOBILE FULL-SCREEN MENU — soft blur-in, staggered link entrance
+===================================================================== */
 .menu-overlay{
   position:fixed; inset:0; z-index:999; background:var(--bg);
   display:flex; flex-direction:column; justify-content:center; padding:0 var(--s-5);
-  opacity:0; visibility:hidden; transform:translateY(-8px);
-  transition:opacity .4s ease, visibility .4s ease, transform .4s ease;
+  opacity:0; visibility:hidden;
+  transition:opacity .5s cubic-bezier(.16,1,.3,1), visibility .5s cubic-bezier(.16,1,.3,1);
 }
-.menu-overlay.open{ opacity:1; visibility:visible; transform:translateY(0); }
+.menu-overlay.open{ opacity:1; visibility:visible; }
 @media (min-width:901px){ .menu-overlay{ display:none; } }
+
 .menu-overlay a{
   font-family:var(--f-display); font-weight:900; font-size:clamp(34px,11vw,58px);
   text-decoration:none; color:var(--ink); display:block; padding:8px 0;
   border-bottom:1px solid var(--line);
+  opacity:0; transform:translateY(28px);
+  transition:opacity .5s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
 }
-.menu-overlay a span{ color:var(--accent); font-family:var(--f-mono); font-size:14px; margin-right:14px; }
-.menu-overlay-foot{ display:flex; gap:var(--s-4); margin-top:var(--s-6); }
-.menu-overlay-foot a{ font-family:var(--f-mono); font-size:13px; color:var(--ink-dim); border:none; padding:0; }
+/* staggered reveal — each link a little later than the last; the
+   close animation reuses the same transition so it reverses smoothly */
+.menu-overlay.open a{ opacity:1; transform:translateY(0); }
+.menu-overlay a:nth-child(1){ transition-delay:.06s; }
+.menu-overlay a:nth-child(2){ transition-delay:.11s; }
+.menu-overlay a:nth-child(3){ transition-delay:.16s; }
+.menu-overlay a:nth-child(4){ transition-delay:.21s; }
+.menu-overlay a:nth-child(5){ transition-delay:.26s; }
+.menu-overlay:not(.open) a{ transition-delay:0s; }
 
+.menu-overlay a span{ color:var(--accent); font-family:var(--f-mono); font-size:14px; margin-right:14px; }
+.menu-overlay-foot{
+  display:flex; gap:var(--s-4); margin-top:var(--s-6);
+  opacity:0; transform:translateY(20px);
+  transition:opacity .5s cubic-bezier(.16,1,.3,1) .32s, transform .55s cubic-bezier(.16,1,.3,1) .32s;
+}
+.menu-overlay.open .menu-overlay-foot{ opacity:1; transform:translateY(0); }
+.menu-overlay-foot a{ font-family:var(--f-mono); font-size:13px; color:var(--ink-dim); border:none; padding:0; opacity:1; transform:none; transition:color .2s ease; }
+.menu-overlay-foot a:hover{ color:var(--accent); }
+
+@media (prefers-reduced-motion:reduce){
+  .navbar, .nav-inner, .logo-mark, .nav-links a, .menu-toggle, .menu-toggle .bars span,
+  .menu-overlay, .menu-overlay a, .menu-overlay-foot{
+    transition-duration:.001ms !important;
+  }
+}

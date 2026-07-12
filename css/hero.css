@@ -6,8 +6,13 @@
 ===================================================================== */
 .hero{
   position:relative; min-height:100vh; display:flex; align-items:center;
-  padding-top:56px; overflow:hidden;
+  /* was 56px, tuned for the old flush full-width 72px navbar. The
+     navbar is now a floating capsule sitting at top:18px with its own
+     ~64px height + shadow, so the hero needs more top clearance to
+     keep the eyebrow line from sitting under it. */
+  padding-top:128px; overflow:hidden;
 }
+@media (max-width:640px){ .hero{ padding-top:104px; } }
 .hero-glow{
   position:absolute; inset:0; pointer-events:none; z-index:1;
   background:radial-gradient(560px circle at var(--gx,50%) var(--gy,32%), rgba(232,163,61,0.16), rgba(232,163,61,0.05) 42%, transparent 68%);

@@ -1,0 +1,65 @@
+/* =====================================================================
+   TEXT REEL — section title "combination lock" character animation
+   Loaded after section-shared.css (heading typography lives there).
+   Applied only to elements JS marks with .reel-host (see index.html);
+   headings are otherwise untouched — same font, size, weight, color.
+
+   Each character becomes a small overflow:hidden window (.reel-char)
+   over a vertical stack of random letters (.reel-track) ending on the
+   real character. The stack is nudged into place with a spring-ish
+   ease and a brief overshoot, with a tiny motion-blur while it spins.
+   Every character gets its own randomized duration/delay (set inline
+   via custom properties by JS) so the reel never looks mechanical.
+===================================================================== */
+
+.reel-host{ }
+
+.reel-word{
+  display:inline-block;
+  white-space:nowrap;
+}
+
+.reel-char{
+  display:inline-block;
+  overflow:hidden;
+  height:1em;
+  line-height:1;
+  vertical-align:baseline;
+  position:relative;
+}
+.reel-char .reel-track{
+  display:flex;
+  flex-direction:column;
+  transform:translateY(0);
+  animation-name:reel-spin;
+  animation-duration:var(--dur, .8s);
+  animation-delay:var(--delay, 0s);
+  animation-timing-function:cubic-bezier(.16,1,.3,1);
+  animation-fill-mode:both;
+  animation-play-state:paused;
+  will-change:transform, filter;
+}
+.reel-char .reel-track span{
+  display:block;
+  height:1em;
+  line-height:1;
+  text-align:center;
+}
+
+/* runs once the host has scrolled into view */
+.reel-run .reel-track{ animation-play-state:running; }
+
+.reel-space{ display:inline-block; }
+
+@keyframes reel-spin{
+  0%   { transform:translateY(0); filter:blur(0); }
+  8%   { filter:blur(3px); }
+  70%  { filter:blur(1.5px); }
+  90%  { transform:translateY(calc(-1 * var(--offset))); filter:blur(.4px); }
+  96%  { transform:translateY(calc(-1 * var(--offset) - .12em)); }
+  100% { transform:translateY(calc(-1 * var(--offset))); filter:blur(0); }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .reel-char .reel-track{ animation:none !important; transform:translateY(calc(-1 * var(--offset))) !important; }
+}

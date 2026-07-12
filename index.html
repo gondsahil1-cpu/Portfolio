@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/hero.css" />
 <link rel="stylesheet" href="css/featured.css" />
 <link rel="stylesheet" href="css/section-shared.css" />
+<link rel="stylesheet" href="css/text-reel.css" />
 <link rel="stylesheet" href="css/works.css" />
 <link rel="stylesheet" href="css/education.css" />
 <link rel="stylesheet" href="css/studio.css" />
@@ -33,10 +34,11 @@
 
 <div class="loader" id="loader">
   <div class="loader-inner">
-    <div class="loader-mark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>
+    <div class="loader-mark" id="loaderMark">
+      <img src="images/LOGO.jpg" alt="" id="loaderPic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <svg class="loader-mark-fallback" viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.6" style="display:none;"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>
     </div>
-    <div class="loader-label">Booting system</div>
+    <div class="loader-label">Sahil</div>
     <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
     <div class="loader-pct" id="loaderPct">00%</div>
   </div>
@@ -66,24 +68,33 @@
 ========================================================= -->
 <nav class="navbar">
   <div class="nav-inner">
-    <a href="#home" class="logo">
-      <span class="logo-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.6"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>
-      </span>
-      <span class="logo-text">SAHIL<span>.GOND</span></span>
-    </a>
-    <div class="nav-right">
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#works">Works</a></li>
-        <li><a href="#studio">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <a href="#contact" class="nav-cta btn-outline" style="padding:9px 18px; font-size:12.5px;">Start a build ↗</a>
-      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="menuOverlay">
-        <span id="menuLabel">Menu</span>
-        <span class="bars"><span></span><span></span><span></span></span>
+    <div class="logo">
+      <!-- the photo/microchip mark is now a real button: it toggles the
+           capsule open/closed. #home lives on the text next to it instead. -->
+      <button type="button" class="logo-mark-btn" id="logoMarkBtn" aria-expanded="false" aria-controls="navCollapsible" aria-label="Expand navigation">
+        <span class="logo-mark" id="logoMark">
+          <img src="images/LOGO.jpg" alt="Sahil Gond" id="navLogoImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <svg class="logo-mark-fallback" viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.6" style="display:none;"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>
+        </span>
       </button>
+      <a href="#home" class="logo-text-link">
+        <span class="logo-text">SAHIL<span>_GOND</span></span>
+      </a>
+    </div>
+    <div class="nav-collapsible" id="navCollapsible">
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#works">Works</a></li>
+          <li><a href="#studio">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta btn-primary">Start a build ↗</a>
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="menuOverlay">
+          <span id="menuLabel">Menu</span>
+          <span class="bars"><span></span><span></span><span></span></span>
+        </button>
+      </div>
     </div>
   </div>
 </nav>
@@ -823,6 +834,7 @@
     function finishLoading(){
       loader.classList.add('hide');
       document.body.classList.remove('is-loading');
+      flyLoaderPicToNav();
       setTimeout(() => {
         document.querySelectorAll('.hero-copy .reveal').forEach(el => el.classList.add('visible'));
         const portrait = document.getElementById('heroPortrait');
@@ -831,6 +843,135 @@
         if (title) title.classList.add('split-ready');
       }, 250);
     }
+
+    // =========================
+    // LOADER PHOTO -> NAVBAR MARK
+    // Clones the loading-screen photo, flies it (via a plain top/left/
+    // width/height transition — a manual FLIP) from its position in the
+    // loader to the navbar's logo mark, then hands off to the "dynamic
+    // island" expand by removing .nav-collapsed. If the photo never
+    // loaded, or motion is reduced, skip straight to the expand.
+    // =========================
+    function flyLoaderPicToNav(){
+      const navbar = document.querySelector('.navbar');
+      const navMark = document.getElementById('logoMark');
+      const navImg = document.getElementById('navLogoImg');
+      const toggleBtn = document.getElementById('logoMarkBtn');
+      if (!navbar || !navMark || !navImg) return;
+
+      function expandNav(){
+        requestAnimationFrame(() => {
+          navbar.classList.remove('nav-collapsed');
+          if (toggleBtn) {
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            toggleBtn.setAttribute('aria-label', 'Collapse navigation');
+          }
+        });
+      }
+
+      const loaderPic = document.getElementById('loaderPic');
+      const loaderOk = loaderPic && loaderPic.style.display !== 'none' && loaderPic.complete && loaderPic.naturalWidth > 0;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!loaderOk || reduceMotion) {
+        navMark.classList.add('logo-arrived');
+        expandNav();
+        return;
+      }
+
+      const startRect = loaderPic.getBoundingClientRect();
+
+      // wait a frame so the navbar (already fading in behind the loader)
+      // has a settled position to read as the flight's landing spot
+      requestAnimationFrame(() => {
+        const endRect = navMark.getBoundingClientRect();
+
+        const clone = document.createElement('div');
+        clone.className = 'logo-flight';
+        clone.style.top = startRect.top + 'px';
+        clone.style.left = startRect.left + 'px';
+        clone.style.width = startRect.width + 'px';
+        clone.style.height = startRect.height + 'px';
+        clone.style.borderRadius = '8px';
+        const img = document.createElement('img');
+        img.src = loaderPic.src;
+        clone.appendChild(img);
+        document.body.appendChild(clone);
+
+        requestAnimationFrame(() => {
+          clone.style.top = endRect.top + 'px';
+          clone.style.left = endRect.left + 'px';
+          clone.style.width = endRect.width + 'px';
+          clone.style.height = endRect.height + 'px';
+          clone.style.borderRadius = '9px';
+        });
+
+        let done = false;
+        function finish(){
+          if (done) return;
+          done = true;
+          clone.remove();
+          navImg.style.opacity = '1';
+          navMark.classList.add('logo-arrived');
+          expandNav();
+        }
+        clone.addEventListener('transitionend', finish);
+        setTimeout(finish, 950); // safety net if transitionend never fires
+      });
+    }
+  })();
+
+  // =========================
+  // NAVBAR — floating capsule: entrance + scroll-direction "Dynamic
+  // Island" behaviour (shrinks going down, expands back going up).
+  // Uses direction, not just a scroll-position threshold, and only
+  // reads scrollY inside rAF to stay off the main-thread hot path.
+  // =========================
+  (function(){
+    const nav = document.querySelector('.navbar');
+    if (!nav) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Starts as a compact pill (logo mark only) — the loading-screen
+    // script hands its photo off here, then expands the capsule open.
+    nav.classList.add('nav-collapsed');
+    requestAnimationFrame(() => nav.classList.add('nav-loaded'));
+
+    // Position-based, not direction-based: once you've scrolled past
+    // the threshold the capsule stays shrunk/up for the rest of the
+    // page, however far down you go — it only relaxes back to full
+    // size when you're back near the very top. (Direction-based
+    // toggling used to flicker under momentum/trackpad scroll, where
+    // scrollY jitters by a few px even while moving "down".)
+    let ticking = false;
+    const THRESHOLD = 24;
+    function apply(){
+      const y = window.scrollY;
+      nav.classList.toggle('nav-compact', y > THRESHOLD);
+      ticking = false;
+    }
+    if (!reduceMotion) {
+      window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(apply); ticking = true; }
+      }, { passive:true });
+    }
+  })();
+
+  // =========================
+  // LOGO MARK — manual expand/collapse toggle for the navbar capsule.
+  // Desktop only: on mobile the capsule always stays open since
+  // .menu-toggle (the mobile menu entry point) lives inside it.
+  // =========================
+  (function(){
+    const navbar = document.querySelector('.navbar');
+    const btn = document.getElementById('logoMarkBtn');
+    if (!navbar || !btn) return;
+    btn.addEventListener('click', () => {
+      if (window.innerWidth <= 900) return;
+      const collapsed = navbar.classList.toggle('nav-collapsed');
+      btn.setAttribute('aria-expanded', String(!collapsed));
+      btn.setAttribute('aria-label', collapsed ? 'Expand navigation' : 'Collapse navigation');
+    });
   })();
 
   // =========================
@@ -985,6 +1126,154 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, { threshold:0.12 });
     els.forEach(el => io.observe(el));
+  })();
+
+  // =========================
+  // TEXT REEL — section titles animate in like a combination-lock:
+  // each character spins through a short run of random letters before
+  // settling on the real one. Runs once per heading, only once it has
+  // scrolled into view, and is skipped entirely for reduced motion.
+  // =========================
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const hosts = document.querySelectorAll('.section-heading, .contact-heading, .statement-heading, .featured-title');
+    if (!hosts.length) return;
+
+    // Measures the rendered width of a single character in a given
+    // element's actual font/weight/size + letter-spacing, using a shared
+    // offscreen canvas. Each character cell gets locked to this width.
+    // Without it, .reel-char (inline-block) auto-sizes to the WIDEST
+    // glyph among the 5-8 random "spin" letters + the real final letter
+    // stacked inside it — so a slot that happens to roll a wide letter
+    // like W/M/0 but settles on a narrow one like i/l/. keeps that wide
+    // box forever, leaving a stray gap around the settled character.
+    // That's what was reading as random extra space between words.
+    const measureCanvas = document.createElement('canvas');
+    const measureCtx = measureCanvas.getContext('2d');
+    function charWidth(ch, font, letterSpacing){
+      measureCtx.font = font;
+      return measureCtx.measureText(ch).width + letterSpacing;
+    }
+    // These heading classes are all styled with text-transform:uppercase,
+    // but the source text in the HTML is normal mixed case. The canvas
+    // measurement above has no idea about that CSS rule, so without this
+    // it measures e.g. lowercase "i" (narrow) while the browser actually
+    // paints "I" (wider) in that same cell — the box ends up too small
+    // for the real glyph, which is what was clipping/overlapping letters.
+    function visualChar(ch, textTransform){
+      if (textTransform === 'uppercase') return ch.toUpperCase();
+      if (textTransform === 'lowercase') return ch.toLowerCase();
+      return ch;
+    }
+
+    function buildChar(ch, index, font, letterSpacing, textTransform){
+      if (/\s/.test(ch)) {
+        const s = document.createElement('span');
+        s.className = 'reel-space';
+        s.textContent = '\u00A0';
+        return s;
+      }
+      const steps = 5 + Math.floor(Math.random() * 4); // 5–8 letters spin past before landing
+      const wrap = document.createElement('span');
+      wrap.className = 'reel-char';
+      const track = document.createElement('span');
+      track.className = 'reel-track';
+      for (let i = 0; i < steps; i++) {
+        const o = document.createElement('span');
+        o.textContent = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+        track.appendChild(o);
+      }
+      const final = document.createElement('span');
+      final.textContent = ch;
+      track.appendChild(final);
+      wrap.appendChild(track);
+
+      // lock the cell's width to the FINAL character only, as actually
+      // painted (post text-transform), so mid-spin letters (which may be
+      // wider) clip/center instead of permanently stretching the box
+      wrap.style.width = (Math.ceil(charWidth(visualChar(ch, textTransform), font, letterSpacing)) + 1) + 'px';
+
+      // each character gets its own duration + delay so the reel
+      // never reads as one mechanical, uniform sweep
+      const dur = (0.55 + Math.random() * 0.5).toFixed(2);
+      const delay = (index * 0.026 + Math.random() * 0.06).toFixed(2);
+      wrap.style.setProperty('--offset', steps + 'em');
+      track.style.setProperty('--dur', dur + 's');
+      track.style.setProperty('--delay', delay + 's');
+      return wrap;
+    }
+
+    function reelify(el){
+      const cs = getComputedStyle(el);
+      const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const letterSpacing = parseFloat(cs.letterSpacing) || 0;
+      const textTransform = cs.textTransform;
+      const textNodes = [];
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      let n;
+      while ((n = walker.nextNode())) textNodes.push(n);
+      let i = 0;
+      textNodes.forEach(node => {
+        const frag = document.createDocumentFragment();
+        // Each reel-char/reel-space is its own inline-block, and adjacent
+        // inline-blocks are independently breakable by default — the browser
+        // has no idea a run of them forms "one word", so it was free to wrap
+        // the line between any two characters, including mid-word. Splitting
+        // on whitespace and wrapping each word's characters in one atomic
+        // .reel-word container (nowrap, shrink-to-fit) restores normal
+        // word-wrapping: breaks can only happen at the actual spaces.
+        const parts = node.textContent.split(/(\s+)/);
+        parts.forEach(part => {
+          if (part === '') return;
+          if (/^\s+$/.test(part)) {
+            part.split('').forEach(ch => frag.appendChild(buildChar(ch, i++, font, letterSpacing, textTransform)));
+          } else {
+            const wordWrap = document.createElement('span');
+            wordWrap.className = 'reel-word';
+            part.split('').forEach(ch => wordWrap.appendChild(buildChar(ch, i++, font, letterSpacing, textTransform)));
+            frag.appendChild(wordWrap);
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+
+    // Google Fonts loads with display=swap, so at the moment this script
+    // runs, Archivo/Space Grotesk may still be a system-font fallback.
+    // Measuring character widths against that fallback, then having the
+    // real webfont swap in moments later, is what made letters clip and
+    // overlap each other — the fixed-width cell no longer matched the
+    // glyph once the actual font arrived. document.fonts.ready resolves
+    // once all requested webfonts have actually loaded and applied, so
+    // measurement happens against the real rendered font.
+    // (document.fonts.ready resolves immediately in browsers without the
+    // Font Loading API, so this degrades safely.)
+    const start = () => {
+      hosts.forEach(el => {
+        const label = el.textContent.trim();
+        if (!label) return;
+        el.setAttribute('aria-label', label);   // keeps the real words for screen readers
+        el.classList.add('reel-host');
+        reelify(el);
+      });
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reel-run'); // fires the CSS animation once
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold:0.4 });
+      hosts.forEach(el => io.observe(el));
+    };
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(start);
+    } else {
+      start();
+    }
   })();
 
   // =========================
