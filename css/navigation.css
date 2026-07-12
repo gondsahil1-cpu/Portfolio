@@ -143,8 +143,8 @@
    already hidden there and .menu-toggle (the real mobile menu entry
    point) lives inside .nav-collapsible, so it must stay reachable */
 @media (max-width:900px){
-  .nav-collapsible{ max-width:60px; margin-left:var(--s-2); }
-  .navbar.nav-collapsed .nav-collapsible{ max-width:60px; opacity:1; margin-left:var(--s-2); pointer-events:auto; }
+  .nav-collapsible{ max-width:160px; margin-left:var(--s-2); }
+  .navbar.nav-collapsed .nav-collapsible{ max-width:160px; opacity:1; margin-left:var(--s-2); pointer-events:auto; }
 }
 
 .nav-right{ display:flex; align-items:center; gap:var(--s-3); }
