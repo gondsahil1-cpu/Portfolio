@@ -12,7 +12,7 @@
      keep the eyebrow line from sitting under it. */
   padding-top:128px; overflow:hidden;
 }
-@media (max-width:640px){ .hero{ padding-top:104px; min-height:auto; padding-bottom:var(--s-8); } }
+@media (max-width:900px){ .hero{ padding-top:104px; min-height:auto; padding-bottom:var(--s-8); } }
 .hero-glow{
   position:absolute; inset:0; pointer-events:none; z-index:1;
   background:radial-gradient(560px circle at var(--gx,50%) var(--gy,32%), rgba(232,163,61,0.16), rgba(232,163,61,0.05) 42%, transparent 68%);
