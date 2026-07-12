@@ -143,7 +143,8 @@
    already hidden there and .menu-toggle (the real mobile menu entry
    point) lives inside .nav-collapsible, so it must stay reachable */
 @media (max-width:900px){
-  .navbar.nav-collapsed .nav-collapsible{ max-width:640px; opacity:1; margin-left:var(--s-3); pointer-events:auto; }
+  .nav-collapsible{ max-width:60px; margin-left:var(--s-2); }
+  .navbar.nav-collapsed .nav-collapsible{ max-width:60px; opacity:1; margin-left:var(--s-2); pointer-events:auto; }
 }
 
 .nav-right{ display:flex; align-items:center; gap:var(--s-3); }
@@ -197,7 +198,10 @@
     0 0 0 1px rgba(232,163,61,.25), 0 0 30px -4px rgba(232,163,61,.7);
 }
 .navbar.nav-compact .nav-cta.btn-primary{ padding:7px 15px; font-size:11.5px; }
-@media (max-width:560px){ .nav-cta{ display:none; } }
+/* hidden at the same breakpoint the hamburger takes over — the mobile
+   menu already surfaces Contact, so keeping the full-size CTA here
+   just crowds the capsule against the toggle button */
+@media (max-width:900px){ .nav-cta{ display:none; } }
 
 /* =====================================================================
    MOBILE TOGGLE — its own rounded glass capsule
