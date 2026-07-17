@@ -26,6 +26,11 @@
   line-height:1;
   vertical-align:baseline;
   position:relative;
+  /* each character animates independently of its siblings and the
+     rest of the page — contain scopes layout/paint/style work to this
+     box so the browser doesn't re-evaluate ancestors on every one of
+     the (potentially dozens of) simultaneous per-character reflows */
+  contain:layout paint style;
 }
 .reel-char .reel-track{
   display:flex;
