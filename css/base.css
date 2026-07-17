@@ -46,19 +46,26 @@ body.is-loading{ overflow:hidden; height:100vh; }
    LOADING SCENE
 ===================================================================== */
 .loader{
-  position:fixed; inset:0; z-index:10000; background:var(--bg);
+  /* transparent on purpose — the frame-sequence canvas (frame-bg.css,
+     z-index:0) and its dark readability scrim (z-index:1) sit directly
+     underneath at z-index 10000's base layer and are meant to show
+     through here during the reverse-scrub intro. If no frames exist
+     yet, frame-bg.css's canvas falls back to plain --bg, so this still
+     looks identical to a solid loader with nothing else changed. */
+  position:fixed; inset:0; z-index:10000; background:transparent;
   display:flex; align-items:center; justify-content:center;
   transition:opacity .6s ease, visibility .6s ease;
+  overflow:hidden;
 }
 .loader.hide{ opacity:0; visibility:hidden; pointer-events:none; }
-.loader-inner{ display:flex; flex-direction:column; align-items:center; gap:var(--s-3); width:220px; }
+.loader-inner{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:var(--s-3); width:220px; }
 .loader-mark{
-  width:44px; height:44px; border:1px solid var(--line-strong); border-radius:8px;
+  width:60px; height:60px; border:1px solid var(--line-strong); border-radius:9px;
   display:flex; align-items:center; justify-content:center; background:var(--panel);
   animation:loaderpulse 1.4s ease-in-out infinite;
   overflow:hidden; position:relative;
 }
-.loader-mark svg{ width:22px; height:22px; }
+.loader-mark svg{ width:28px; height:28px; }
 .loader-mark img{ width:100%; height:100%; object-fit:cover; border-radius:inherit; display:block; }
 @keyframes loaderpulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.1); } }
 .loader-label{ font-family:var(--f-mono); font-size:11px; letter-spacing:2.5px; color:var(--ink-dim); text-transform:uppercase; }
