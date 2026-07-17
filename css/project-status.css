@@ -29,8 +29,10 @@
 ===================================================================== */
 .roadmap-list{ display:flex; flex-direction:column; border-top:1px solid var(--line); max-width:700px; }
 .roadmap-list li{
-  display:flex; align-items:center; gap:16px; padding:15px 0; border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:16px; padding:15px var(--s-2); border-bottom:1px solid var(--line);
+  transition:background .3s ease, padding-left .25s ease;
 }
+.roadmap-list li:hover{ background:rgba(255,255,255,.025); padding-left:var(--s-3); }
 .roadmap-mark{ font-family:var(--f-mono); font-size:15px; color:var(--ink-faint); flex:none; width:20px; text-align:center; }
 .roadmap-list li.done .roadmap-mark{ color:var(--accent); }
 .roadmap-list li.active .roadmap-mark{ color:var(--accent); animation:roadmappulse 1.6s ease-in-out infinite; }
@@ -42,7 +44,7 @@
 .roadmap-list li.active .roadmap-label{ color:var(--ink); }
 .roadmap-status{
   font-family:var(--f-mono); font-size:10.5px; letter-spacing:.6px; text-transform:uppercase; color:var(--ink-faint);
-  border:1px solid var(--line-strong); border-radius:4px; padding:4px 9px; flex:none;
+  border:1px solid var(--line-strong); border-radius:7px; padding:4px 9px; flex:none; background:var(--panel);
 }
 .roadmap-list li.done .roadmap-status{ color:var(--accent); border-color:var(--accent-line); }
 .roadmap-list li.active .roadmap-status{ color:var(--accent); border-color:var(--accent-line); background:var(--accent-dim); }

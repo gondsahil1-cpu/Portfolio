@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sahil Gond — Electrical Engineer</title>
+<meta name="description" content="Sahil Gond. Electrical engineering student building embedded systems, robotics and automation. Not a demo — a system." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800;900&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/base.css?v=2" />
+<link rel="stylesheet" href="css/navigation.css?v=2" />
+<link rel="stylesheet" href="css/hero.css?v=2" />
+<link rel="stylesheet" href="css/featured.css?v=2" />
+<link rel="stylesheet" href="css/section-shared.css?v=2" />
+<link rel="stylesheet" href="css/text-reel.css?v=2" />
+<link rel="stylesheet" href="css/works.css?v=2" />
+<link rel="stylesheet" href="css/education.css?v=2" />
+<link rel="stylesheet" href="css/studio.css?v=2" />
+<link rel="stylesheet" href="css/toolkit.css?v=2" />
+<link rel="stylesheet" href="css/contact.css?v=2" />
+<link rel="stylesheet" href="css/project-status.css?v=2" />
+<link rel="stylesheet" href="css/misc.css?v=2" />
+<link rel="stylesheet" href="css/frame-bg.css?v=1" />
+<!-- glass.css loaded last on purpose: it overrides the base component
+     styles above (with !important) for the handful of elements that
+     still get real glass treatment. See its header comment for scope. -->
+<link rel="stylesheet" href="css/glass.css?v=2" />
+</head>
+<body class="is-loading">
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-mark" id="loaderMark">
+      <img src="images/LOGO.jpg" alt="" id="loaderPic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <svg class="loader-mark-fallback" viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.6" style="display:none;"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>
+    </div>
+    <div class="loader-label">Sahil</div>
+    <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
+    <div class="loader-pct" id="loaderPct">00%</div>
+  </div>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="lg-distortion" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.009 0.012" numOctaves="2" seed="7" result="lg-noise"></feTurbulence>
+      <feGaussianBlur in="lg-noise" stdDeviation="2.4" result="lg-noise-soft"></feGaussianBlur>
+      <feDisplacementMap in="SourceGraphic" in2="lg-noise-soft" scale="16" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+  </defs>
+</svg>
+<canvas id="frameBgCanvas" class="frame-bg-canvas" aria-hidden="true"></canvas>
+<div class="frame-bg-scrim" aria-hidden="true"></div>
+<div class="lg-grain" aria-hidden="true"></div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- =========================================================
+  NAVBAR
+========================================================= -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo">
+      <!-- the photo/microchip mark is now a real button: it toggles the
+           capsule open/closed. #home lives on the text next to it instead. -->
+      <button type="button" class="logo-mark-btn" id="logoMarkBtn" aria-expanded="false" aria-controls="navCollapsible" aria-label="Expand navigation">
+        <span class="logo-mark" id="logoMark">
+          <img src="images/LOGO.jpg" alt="Sahil Gond" id="navLogoImg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <svg class="logo-mark-fallback" viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="1.6" style="display:none;"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg>
+        </span>
+      </button>
+      <a href="#home" class="logo-text-link">
+        <span class="logo-text">SAHIL<span>_GOND</span></span>
+      </a>
+    </div>
+    <div class="nav-collapsible" id="navCollapsible">
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#works">Works</a></li>
+          <li><a href="#studio">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta btn-primary">Start a build ↗</a>
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="menuOverlay">
+          <span id="menuLabel">Menu</span>
+          <span class="bars"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="menu-overlay" id="menuOverlay">
+  <a href="#experience"><span>01</span>Experience</a>
+  <a href="#works"><span>02</span>Works</a>
+  <a href="#studio"><span>03</span>About</a>
+  <a href="#roadmap"><span>04</span>Roadmap</a>
+  <a href="#contact"><span>05</span>Contact</a>
+  <div class="menu-overlay-foot">
+    <a href="https://github.com/sahilgond" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://linkedin.com/in/sahilgond" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:sahil.gond@email.com">Email</a>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- =========================================================
+  HERO
+========================================================= -->
+<section id="home" class="hero">
+  <div class="hero-glow" id="heroGlow"></div>
+  <div class="hero-vignette"></div>
+
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-eyebrow reveal">Electrical Engineering · Embedded Systems</div>
+        <h1 class="hero-title" id="heroTitle">SAHIL GOND</h1>
+        <p class="hero-claim reveal reveal-d1">Electrical Engineer.<br><span class="dim">Building embedded systems, robotics &amp; intelligent hardware.</span></p>
+        <p class="hero-tagline reveal reveal-d2">Not a demo — a system.</p>
+        <p class="hero-sub reveal reveal-d2">I design and build embedded systems, robotics, and automation — combining electronics, firmware, and iteration until it survives outside the breadboard.</p>
+        <div class="hero-ctas reveal reveal-d3">
+          <a href="#works" class="btn-primary">View the work ↓</a>
+          <a href="https://github.com/sahilgond" target="_blank" rel="noopener" class="btn-outline">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55v-2.15c-3.2.7-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.42.36.78 1.08.78 2.17v3.22c0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+      <!-- EDIT PORTRAIT: replace src below with your own headshot. Recommended 900x1200 (3:4 portrait). -->
+      <div class="hero-portrait" id="heroPortrait">
+        <div class="hero-portrait-frame" style="background:none !important; background-color:transparent !important; border:none !important; box-shadow:none !important; backdrop-filter:none !important;">
+          <img src="images/pfp.png" alt="Portrait of Sahil Gond" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="hero-portrait-fallback">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+            <span>Add your photo at assets/images/sahil-gond.png</span>
+          </div>
+          <span class="hero-portrait-tag">Sahil Gond</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scope">
+    <svg viewBox="0 0 1200 86" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 43 H70 L90 6 L110 78 L130 43 H190 L210 18 L230 66 L250 43 H320 L340 12 L360 74 L380 43 H450 L470 24 L490 60 L510 43 H580 L600 4 L620 80 L640 43 H710 L730 20 L750 68 L770 43 H840 L860 10 L880 76 L900 43 H970 L990 28 L1010 56 L1030 43 H1100 L1120 8 L1140 78 L1160 43 H1200"/>
+    </svg>
+  </div>
+  <div class="hero-scroll-cue"><span class="stem"></span>SCROLL</div>
+</section>
+
+<!-- =========================================================
+  FEATURED PROJECT TEASER
+========================================================= -->
+<section id="featured" class="featured-teaser">
+  <div class="container">
+    <div class="featured-card reveal">
+      <div class="featured-visual">
+        <svg viewBox="0 0 64 64"><rect x="14" y="20" width="36" height="24" rx="4"/><circle cx="12" cy="32" r="6"/><circle cx="52" cy="32" r="6"/><path d="M22 20V14M42 20V14M20 14h6M40 14h6"/><path d="M28 30h8"/></svg>
+      </div>
+      <div class="featured-body">
+        <div class="section-label" style="margin-bottom:14px;">Flagship Project</div>
+        <h2 class="featured-title">Autonomous Maze Solving Robot</h2>
+        <p class="featured-desc">A differential-drive robot that reads three ultrasonic sensors and makes real-time turn decisions to solve a maze — no remote, no map, no external control.</p>
+        <div class="chip-row" style="margin-bottom:var(--s-4);">
+          <span class="chip">ESP32</span>
+          <span class="chip">3x Ultrasonic Sensors</span>
+          <span class="chip">Autonomous Navigation</span>
+        </div>
+        <a href="#works" class="btn-primary" id="featuredCta">View Case Study ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+  STATEMENT
+========================================================= -->
+<section id="statement">
+  <div class="container statement-inner">
+    <div class="trace-divider reveal"><span class="via"></span><span class="line-el"></span></div>
+    <h2 class="statement-heading reveal">Most projects work in the video.<br><span class="dim">I want mine to work in your hand.</span></h2>
+    <p class="statement-body reveal reveal-d1">In a world of tutorial clones, the rare thing is a circuit that survives being unplugged, moved, and switched back on. <strong>Sensors drift, power sags, and code that ran once has to run every time.</strong> Most of the real engineering happens after the demo works — in the part where it has to keep working.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+  EXPERIENCE
+  EDIT ME: replace the bracketed placeholders below with your
+  real internship / job details. Duplicate the <article> block
+  for additional roles.
+========================================================= -->
+<section id="experience">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Experience</div>
+      <h2 class="section-heading">Time on the job, <span class="dim">not just the bench.</span></h2>
+      <p class="section-intro">Where I've applied this outside my own projects.</p>
+    </div>
+
+    <div class="works-list reveal">
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="exp-panel-1">
+          <div class="work-row-left">
+            <span class="work-index">01</span>
+            <div class="work-titles">
+              <div class="work-title">[Your Job Title]</div>
+              <div class="work-tagline">[Company Name] · [Start Month Year] – [End Month Year]</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">[Internship / Full-time]</span>
+            <span class="work-explore">Explore<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="exp-panel-1">
+          <div class="work-panel-inner">
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.75; margin-bottom:var(--s-5); max-width:760px;">[One or two sentences summarizing what you worked on and the impact — e.g. "Worked on embedded firmware for a sensor monitoring product, from prototype to bench testing."]</p>
+
+            <div class="work-cols">
+              <div class="work-block">
+                <div class="work-block-title">Responsibilities</div>
+                <ul>
+                  <li>[Responsibility one]</li>
+                  <li>[Responsibility two]</li>
+                  <li>[Responsibility three]</li>
+                </ul>
+              </div>
+              <div class="work-block">
+                <div class="work-block-title">Skills Used</div>
+                <div class="chip-row"><span class="chip">[Skill]</span><span class="chip">[Skill]</span><span class="chip">[Skill]</span></div>
+              </div>
+            </div>
+
+            <div class="work-block" style="margin-bottom:var(--s-5);">
+              <div class="work-block-title">Tools</div>
+              <div class="chip-row"><span class="chip">[Tool]</span><span class="chip">[Tool]</span><span class="chip">[Tool]</span></div>
+            </div>
+
+            <div class="work-block-title" style="margin-bottom:var(--s-2);">Photos — add real photos to assets/images/experience/</div>
+            <div class="gallery-grid">
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: workplace">
+                <img src="assets/images/experience/workplace.jpg" alt="Workplace" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 4"/></svg><span>Workplace</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: on the job">
+                <img src="assets/images/experience/on-the-job.jpg" alt="On the job" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 15l5-5 4 4 5-6 4 4"/></svg><span>On the job</span></div>
+              </div>
+            </div>
+
+            <div class="notes-block">
+              <p><strong>Certificate:</strong> [Link to or note about a completion certificate, if you have one]</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <p class="form-note reveal" style="margin-top:var(--s-4);">No experience listed yet? Delete this section, or replace it with a project-based internship, a lab role, or coursework with real deliverables.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+  EDUCATION
+  EDIT ME: replace the bracketed placeholders with your real
+  institute, degree, dates, and CGPA.
+========================================================= -->
+<section id="education">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Education</div>
+      <h2 class="section-heading">Where the fundamentals <span class="dim">came from.</span></h2>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+      <div>
+        <div class="edu-degree">Diploma in Electrical Engineering</div>
+        <div class="edu-school">Government Polytechnic Daman · Daman, Dadra and Nagar Haveli and Daman and Diu</div>
+      </div>
+      <div class="edu-stats">
+        <div class="edu-stat"><div class="num">07/2026</div><div class="lbl">Graduation</div></div>
+        <div class="edu-stat"><div class="num">8.05</div><div class="lbl">CGPA</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+  WORKS
+========================================================= -->
+<section id="works">
+  <div class="container">
+    <div class="vert-word reveal"> WORKS</div>
+    <div class="section-head reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
+      <h2 class="section-heading">Anyone can wire a breadboard.<br><span class="dim">Shipping is the hard part.</span></h2>
+      <p class="section-intro" style="margin-left:auto; margin-right:auto;">Two builds, documented the way I'd hand them to another engineer: the problem, the solution, the hardware, and what I'd change next time.</p>
+    </div>
+
+    <div class="works-list reveal">
+      <!-- ---------- WORK 1 ---------- -->
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="work-panel-1">
+          <div class="work-row-left">
+            <span class="work-index">01</span>
+            <div class="work-titles">
+              <div class="work-title">RFID Attendance System</div>
+              <div class="work-tagline">Tap once. Trust the log.</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">RFID · ESP32 · LCD/OLED · Logging</span>
+            <span class="work-explore">Explore<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="work-panel-1">
+          <div class="work-panel-inner">
+            <div class="work-visual pcb-panel">
+              <svg viewBox="0 0 64 64"><rect x="8" y="14" width="48" height="30" rx="3"/><path d="M8 22h48"/><circle cx="18" cy="30" r="4"/><rect x="30" y="26" width="18" height="9" rx="1"/><path d="M14 50h36M20 50v4M44 50v4"/></svg>
+              <div class="work-visual-caption">Photo placeholder — swap for hardware photography of the finished reader + enclosure</div>
+            </div>
+            <div class="metric-strip">
+              <div class="metric"><div class="num">RC522</div><div class="lbl">Reader Module</div></div>
+              <div class="metric"><div class="num">1-Tap</div><div class="lbl">Attendance Flow</div></div>
+              <div class="metric"><div class="num">Real-Time</div><div class="lbl">Logging</div></div>
+            </div>
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.75; margin-bottom:var(--s-5); max-width:760px;">A tap-to-log attendance terminal built around RFID authentication, with a live status display and dependable logging — designed to replace manual sign-in sheets in a classroom or lab setting.</p>
+
+            <div class="work-cols">
+              <div class="work-block">
+                <div class="work-block-title">Problem Statement</div>
+                <p>Manual attendance sheets are slow, easy to falsify, and generate no usable data. A classroom needs a fast, tamper-resistant way to log who is present, with immediate feedback so a mis-scan is caught on the spot.</p>
+              </div>
+              <div class="work-block">
+                <div class="work-block-title">Engineering Solution</div>
+                <p>An RFID reader authenticates each tag against a known ID list on the microcontroller. A valid scan is timestamped and logged, then confirmed instantly on an LCD/OLED display — invalid or duplicate scans are flagged the same way.</p>
+              </div>
+            </div>
+
+            <div class="work-block" style="margin-bottom:var(--s-5);">
+              <div class="work-block-title">Key Features</div>
+              <ul>
+                <li>RFID tag authentication against a stored ID list</li>
+                <li>Real-time attendance logging with timestamps</li>
+                <li>On-device LCD/OLED status feedback for every scan</li>
+                <li>ESP32 (or Arduino) implementation, low part count</li>
+                <li>Deliberately simple, reliable UX — one tap, one result</li>
+              </ul>
+            </div>
+
+            <div class="hw-sw-grid">
+              <div>
+                <div class="work-block-title">Hardware Used</div>
+                <div class="chip-row"><span class="chip">ESP32</span><span class="chip">RFID-RC522 reader</span><span class="chip">RFID tags</span><span class="chip">16x2 LCD / SSD1306 OLED</span><span class="chip">Breadboard + jumper wiring</span></div>
+              </div>
+              <div>
+                <div class="work-block-title">Software Used</div>
+                <div class="chip-row"><span class="chip">Arduino IDE</span><span class="chip">Embedded C</span><span class="chip">MFRC522 library</span><span class="chip">Git</span></div>
+              </div>
+            </div>
+
+            <div class="work-block-title" style="margin-bottom:var(--s-2);">Image Gallery — add real photos to assets/images/rfid/</div>
+            <div class="gallery-grid">
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: breadboard prototype">
+                <img src="assets/images/rfid/Breadboard.png" alt="RFID breadboard prototype" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="9" width="18" height="6" rx="1"/><path d="M6 9V6M10 9V5M14 9V6M18 9V6"/></svg><span>Breadboard prototype</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: wiring close-up">
+                <img src="assets/images/rfid/wiring.jpg" alt="RFID reader wiring close-up" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Wiring close-up</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: finished enclosure">
+                <img src="assets/images/rfid/enclosure.jpg" alt="RFID finished enclosure" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/></svg><span>Finished enclosure</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: live scan test">
+                <img src="assets/images/rfid/scan-test.jpeg" alt="RFID live scan test" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span>Live scan test</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: display output">
+                <img src="assets/images/rfid/display.png" alt="RFID display output" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="6" width="18" height="12" rx="1"/><path d="M7 10h10M7 13h6"/></svg><span>Display output</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open demo video or GIF">
+                <img src="assets/images/rfid/demo.gif" alt="RFID demo video or GIF" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M8 6l10 6-10 6z"/></svg><span>Demo video / GIF</span></div>
+              </div>
+            </div>
+
+            <div class="notes-block">
+              <p><strong>Challenges encountered:</strong> Early reads were inconsistent when a tag was scanned at an angle, which meant tightening the accepted read window and adding a short debounce so a single tap couldn't register as two entries.</p>
+              <p><strong>Lessons learned:</strong> A reliable one-tap experience matters more than adding features — most of the effort went into making failure cases (bad scan, duplicate scan) obvious rather than silent.</p>
+            </div>
+
+            <div class="work-actions">
+              <a href="https://github.com/sahilgond/rfid-attendance-system" target="_blank" rel="noopener" class="btn-outline">View Repository ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- WORK 2 (FLAGSHIP) ---------- -->
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="work-panel-2">
+          <div class="work-row-left">
+            <span class="work-index">02</span>
+            <div class="work-titles">
+              <span class="work-badge">Flagship Build</span>
+              <div class="work-title">Autonomous Maze Solving Robot</div>
+              <div class="work-tagline">No remote. No map. No excuses.</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">ESP32 · Autonomous Nav · Ultrasonic</span>
+            <span class="work-explore">Explore<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="work-panel-2">
+          <div class="work-panel-inner">
+            <div class="work-visual pcb-panel">
+              <svg viewBox="0 0 64 64"><rect x="14" y="20" width="36" height="24" rx="4"/><circle cx="12" cy="32" r="6"/><circle cx="52" cy="32" r="6"/><path d="M22 20V14M42 20V14M20 14h6M40 14h6"/><path d="M28 30h8"/></svg>
+              <div class="work-visual-caption">Photo placeholder — swap for hardware photography of the finished chassis and wiring</div>
+            </div>
+            <div class="metric-strip">
+              <div class="metric"><div class="num">3</div><div class="lbl">Ultrasonic Sensors</div></div>
+              <div class="metric"><div class="num">0</div><div class="lbl">Remote Inputs</div></div>
+              <div class="metric"><div class="num">ESP32</div><div class="lbl">Onboard Compute</div></div>
+            </div>
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.75; margin-bottom:var(--s-5); max-width:760px;">A differential-drive robot that navigates and solves a maze on its own — reading three ultrasonic sensors, making a turn decision in real time, and avoiding obstacles without any remote input.</p>
+
+            <div class="work-cols">
+              <div class="work-block">
+                <div class="work-block-title">Problem Statement</div>
+                <p>A robot navigating an unknown maze has to make correct turn decisions in real time, with no map and no external control — a wrong call compounds into a wall collision within a few centimeters.</p>
+              </div>
+              <div class="work-block">
+                <div class="work-block-title">Engineering Solution</div>
+                <p>Three ultrasonic sensors (front, left, right) feed distance readings into a decision routine on the ESP32, which prioritizes open paths and falls back to a reverse-and-retry when boxed in. Two independently driven wheels give tight, low-radius turns.</p>
+              </div>
+            </div>
+
+            <div class="work-block" style="margin-bottom:var(--s-5);">
+              <div class="work-block-title">Key Features</div>
+              <ul>
+                <li>Fully autonomous navigation — no remote control required</li>
+                <li>Three-point ultrasonic obstacle detection (front / left / right)</li>
+                <li>Differential drive for tight, low-radius turning</li>
+                <li>Real-time decision-making algorithm for turn selection</li>
+                <li>Clean wiring loom and deliberate hardware layout</li>
+              </ul>
+            </div>
+
+            <div class="hw-sw-grid">
+              <div>
+                <div class="work-block-title">Hardware Used</div>
+                <div class="chip-row"><span class="chip">ESP32</span><span class="chip">3x HC-SR04 ultrasonic sensors</span><span class="chip">DC gear motors</span><span class="chip">Motor driver (H-bridge)</span><span class="chip">Chassis + battery pack</span></div>
+              </div>
+              <div>
+                <div class="work-block-title">Software Used</div>
+                <div class="chip-row"><span class="chip">Arduino IDE</span><span class="chip">Embedded C / C++</span><span class="chip">Git</span></div>
+              </div>
+            </div>
+
+            <div class="work-block-title" style="margin-bottom:var(--s-2);">Image Gallery — add real photos to assets/images/maze-robot/</div>
+            <div class="gallery-grid">
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: chassis build">
+                <img src="assets/images/maze-robot/chassis.jpg" alt="Maze robot chassis build" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="4" y="8" width="16" height="9" rx="2"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/></svg><span>Chassis build</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: sensor wiring">
+                <img src="assets/images/maze-robot/wiring.jpg" alt="Maze robot sensor wiring" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 3v4M5 8l3 2M19 8l-3 2M12 21v-4M5 16l3-2M19 16l-3-2"/><circle cx="12" cy="12" r="3"/></svg><span>Sensor wiring</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: CAD render">
+                <img src="assets/images/maze-robot/cad-render.jpg" alt="Maze robot CAD render" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 3h18v18H3z"/><path d="M3 3l18 18M21 3L3 21"/></svg><span>CAD render</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: testing run">
+                <img src="assets/images/maze-robot/testing.jpg" alt="Maze robot testing run" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 3h18v18H3z"/><path d="M3 9h6V3M15 21v-6h6M9 15H3M21 9h-6V3"/></svg><span>Testing run</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open image: finished robot">
+                <img src="assets/images/maze-robot/finished.jpg" alt="Finished maze robot" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/></svg><span>Finished robot</span></div>
+              </div>
+              <div class="gallery-item" tabindex="0" role="button" aria-label="Open demo video or GIF">
+                <img src="assets/images/maze-robot/demo.gif" alt="Maze robot demo video or GIF" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="gallery-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M8 6l10 6-10 6z"/></svg><span>Demo video / GIF</span></div>
+              </div>
+            </div>
+
+            <div class="notes-block">
+              <p><strong>Challenges encountered:</strong> Ultrasonic readings became unreliable at sharp corridor angles due to sound reflecting away from the sensor. A short median filter and a minimum-confidence threshold before committing to a turn resolved most false positives.</p>
+              <p><strong>Lessons learned:</strong> Mechanical tolerance matters as much as code — a slightly uneven chassis introduced drift over long runs, so tuning was as much about squaring the wheelbase as it was about the decision logic.</p>
+            </div>
+
+            <div class="work-actions">
+              <a href="https://github.com/sahilgond/maze-solving-robot" target="_blank" rel="noopener" class="btn-outline">View Repository ↗</a>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+  STUDIO (about + timeline)
+========================================================= -->
+<!-- =========================================================
+  TOOLKIT (skills) — moved ahead of About per resume-reading order
+========================================================= -->
+<section id="toolkit">
+  <div class="container">
+    <div class="trace-divider reveal"><span class="via"></span><span class="line-el"></span></div>
+    <div class="section-head reveal">
+      <div class="section-label">The Toolkit</div>
+      <h2 class="section-heading">What I build <span class="dim">with.</span></h2>
+    </div>
+
+    <div class="toolkit-list reveal">
+      <div class="toolkit-row">
+        <button class="toolkit-row-head" aria-expanded="false" aria-controls="tk-1">
+          <span class="toolkit-title"><span class="ti"><svg viewBox="0 0 24 24"><path d="M8 4L4 12l4 8M16 4l4 8-4 8"/></svg></span>Programming</span>
+          <span class="plus">+</span>
+        </button>
+        <div class="toolkit-panel" id="tk-1"><div class="toolkit-tags"><span class="toolkit-tag">C</span><span class="toolkit-tag">C++</span><span class="toolkit-tag">Python</span></div></div>
+      </div>
+      <div class="toolkit-row">
+        <button class="toolkit-row-head" aria-expanded="false" aria-controls="tk-2">
+          <span class="toolkit-title"><span class="ti"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span>Embedded Systems</span>
+          <span class="plus">+</span>
+        </button>
+        <div class="toolkit-panel" id="tk-2"><div class="toolkit-tags"><span class="toolkit-tag">ESP32</span><span class="toolkit-tag">Arduino</span><span class="toolkit-tag">Embedded C</span></div></div>
+      </div>
+      <div class="toolkit-row">
+        <button class="toolkit-row-head" aria-expanded="false" aria-controls="tk-3">
+          <span class="toolkit-title"><span class="ti"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></span>Electronics</span>
+          <span class="plus">+</span>
+        </button>
+        <div class="toolkit-panel" id="tk-3"><div class="toolkit-tags"><span class="toolkit-tag">Circuit Design</span><span class="toolkit-tag">Sensors</span><span class="toolkit-tag">Motor Drivers</span><span class="toolkit-tag">RFID</span><span class="toolkit-tag">Power Electronics</span></div></div>
+      </div>
+      <div class="toolkit-row">
+        <button class="toolkit-row-head" aria-expanded="false" aria-controls="tk-4">
+          <span class="toolkit-title"><span class="ti"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.1-3.1a4 4 0 0 1-5 5L6.4 20.6a2 2 0 0 1-2.8-2.8L12 9.4a4 4 0 0 1 5-5l-3 3Z"/></svg></span>Tools</span>
+          <span class="plus">+</span>
+        </button>
+        <div class="toolkit-panel" id="tk-4"><div class="toolkit-tags"><span class="toolkit-tag">Arduino IDE</span><span class="toolkit-tag">VS Code</span><span class="toolkit-tag">Git</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+  STUDIO (about)
+========================================================= -->
+<section id="studio">
+  <div class="container">
+    <div class="trace-divider reveal"><span class="via"></span><span class="line-el"></span></div>
+    <div class="section-label reveal">( The Engineer )</div>
+    <h2 class="studio-lead reveal">I got into embedded systems because software felt incomplete — <span class="dim">a program that never touches a wire, a motor, or a sensor is still just a program.</span></h2>
+
+    <div class="studio-grid">
+      <div class="studio-body reveal">
+        <p>I'm an <strong>Electrical Engineering student</strong> with a focus on embedded systems, robotics, and automation. I'm drawn to problems that live at the boundary of hardware and software — where a sensor reading has to become a decision, and a decision has to become motion.</p>
+        <p>My process starts with a real constraint: a wiring limitation, a power budget, a timing requirement. From there I prototype in circuit, iterate in code, and rebuild until the system behaves predictably under real conditions — not just on a breadboard in ideal light.</p>
+        <p>I care about <strong>reliability and clarity</strong> as much as functionality: clean wiring, documented pinouts, and code a future engineer — often future me — can actually read.</p>
+
+        <ul class="build-list">
+          <li>Embedded firmware for ESP32 / Arduino <em>01</em></li>
+          <li>Sensor integration &amp; real-time logic <em>02</em></li>
+          <li>Motor control &amp; autonomous navigation <em>03</em></li>
+          <li>Circuit design &amp; power delivery <em>04</em></li>
+        </ul>
+      </div>
+
+      <div class="reveal reveal-d1">
+        <div class="stat-grid">
+          <div class="stat"><div class="num" data-count="2" data-suffix="+">0</div><div class="lbl">Hardware Builds</div></div>
+          <div class="stat"><div class="num" data-count="3">0</div><div class="lbl">Comms Protocols Used</div></div>
+          <div class="stat"><div class="num" data-count="7">0</div><div class="lbl">Projects On The Roadmap</div></div>
+          <div class="stat"><div class="num" data-static="ESP32">ESP32</div><div class="lbl">Primary MCU</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+  CAREER TIMELINE
+========================================================= -->
+<section id="career-timeline">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">The Journey</div>
+      <h2 class="section-heading">How I got <span class="dim">here.</span></h2>
+    </div>
+
+    <div class="timeline reveal" id="timeline" style="max-width:640px;">
+      <div class="timeline-track"></div>
+      <div class="timeline-fill" id="timelineFill"></div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Milestone 01</div>
+        <div class="timeline-title">Started learning electronics</div>
+        <div class="timeline-desc">First breadboard circuits — resistors, LEDs, and understanding current and voltage hands-on.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Milestone 02</div>
+        <div class="timeline-title">First Arduino projects</div>
+        <div class="timeline-desc">Moved from static circuits to programmable ones — sensors, actuators, first real debugging.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Milestone 03</div>
+        <div class="timeline-title">RFID Attendance System</div>
+        <div class="timeline-desc">First complete end-to-end build: authentication hardware, logging logic, and a user-facing display.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Milestone 04</div>
+        <div class="timeline-title">Maze Solving Robot</div>
+        <div class="timeline-desc">First fully autonomous system — multi-sensor input, real-time decisions, motor control together.</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Milestone 05</div>
+        <div class="timeline-title">What's next</div>
+        <div class="timeline-desc">Expanding into PCB design, IoT monitoring, and more advanced robotics — see the roadmap below.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+  CURRENTLY BUILDING
+  EDIT ME: swap in whichever roadmap item you're actively
+  working on, and mark real progress on the checklist.
+========================================================= -->
+<section id="building">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Currently Building</div>
+      <h2 class="section-heading">What's on the bench <span class="dim">right now.</span></h2>
+    </div>
+    <div class="building-card reveal">
+      <div class="building-title">Smart Home Automation System</div>
+      <ul class="building-checklist">
+        <li class="done">[Step already completed — e.g. sensor selection &amp; wiring]</li>
+        <li class="done">[Step already completed — e.g. base firmware flashed]</li>
+        <li>[Step in progress]</li>
+        <li>[Step not yet started]</li>
+      </ul>
+      <div class="building-eta"><span class="lbl">Expected Completion</span><span class="val">[Month Year]</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+  ROADMAP
+========================================================= -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Roadmap</div>
+      <h2 class="section-heading">The build order.</h2>
+      <p class="section-intro">Shipped, in progress, and next up — in the order I'm tackling them.</p>
+    </div>
+    <ul class="roadmap-list reveal">
+      <li class="done"><span class="roadmap-mark">✓</span><span class="roadmap-label">RFID Attendance System</span><span class="roadmap-status">Shipped</span></li>
+      <li class="done"><span class="roadmap-mark">✓</span><span class="roadmap-label">Autonomous Maze Solving Robot</span><span class="roadmap-status">Shipped</span></li>
+      <li class="active"><span class="roadmap-mark">●</span><span class="roadmap-label">Smart Home Automation System</span><span class="roadmap-status">In progress</span></li>
+      <li><span class="roadmap-mark">○</span><span class="roadmap-label">Line Following Robot</span><span class="roadmap-status">Up next</span></li>
+      <li><span class="roadmap-mark">○</span><span class="roadmap-label">PCB Design Projects</span><span class="roadmap-status">Planned</span></li>
+      <li><span class="roadmap-mark">○</span><span class="roadmap-label">IoT Monitoring System</span><span class="roadmap-status">Planned</span></li>
+      <li><span class="roadmap-mark">○</span><span class="roadmap-label">Robotic Arm</span><span class="roadmap-status">Planned</span></li>
+      <li><span class="roadmap-mark">○</span><span class="roadmap-label">Solar Energy Monitoring</span><span class="roadmap-status">Planned</span></li>
+      <li><span class="roadmap-mark">○</span><span class="roadmap-label">Custom Embedded Dev Board</span><span class="roadmap-status">Planned</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- =========================================================
+  GITHUB STATS
+  These badges pull LIVE data from GitHub — update the
+  "sahilgond" username below to yours to reflect real numbers.
+========================================================= -->
+<section id="github-stats">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">GitHub</div>
+      <h2 class="section-heading">The commit history.</h2>
+      <p class="section-intro">Live, not curated — pulled straight from GitHub.</p>
+    </div>
+    <div class="github-grid reveal">
+      <img class="github-card" loading="lazy" src="https://github-readme-stats.vercel.app/api?username=sahilgond&show_icons=true&hide_border=true&bg_color=00000000&title_color=e8a33d&text_color=f3f1ea&icon_color=e8a33d" alt="GitHub stats for sahilgond" />
+      <img class="github-card" loading="lazy" src="https://github-readme-stats.vercel.app/api/top-langs/?username=sahilgond&layout=compact&hide_border=true&bg_color=00000000&title_color=e8a33d&text_color=f3f1ea" alt="Top languages for sahilgond" />
+    </div>
+    <a href="https://github.com/sahilgond" target="_blank" rel="noopener" class="btn-outline" style="margin-top:var(--s-5);">View GitHub Profile ↗</a>
+  </div>
+</section>
+
+<!-- =========================================================
+  RESUME
+========================================================= -->
+<section id="resume">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Resume</div>
+      <h2 class="section-heading">Everything, <span class="dim">on one page.</span></h2>
+    </div>
+    <div class="resume-links reveal">
+      <a href="#experience" class="resume-link"><span>01</span>Experience</a>
+      <a href="#education" class="resume-link"><span>02</span>Education</a>
+      <a href="#toolkit" class="resume-link"><span>03</span>Skills</a>
+      <a href="#experience" class="resume-link"><span>04</span>Internships</a>
+    </div>
+    <!-- EDIT RESUME LINK: place resume PDF at assets/resume-sahil-gond.pdf -->
+    <a href="assets/resume-sahil-gond.pdf" class="btn-primary reveal" download>Download Résumé ↓</a>
+  </div>
+</section>
+
+<!-- =========================================================
+  CONTACT
+========================================================= -->
+<section id="contact">
+  <div class="container">
+    <div class="trace-divider reveal"><span class="via"></span><span class="line-el"></span></div>
+    <div class="reveal">
+      <div class="section-label">Let's talk</div>
+      <h2 class="contact-heading">Let's start from<br>a blank<span class="dim"> breadboard.</span></h2>
+      <p class="contact-intro">Open to internships, collaborations, and conversations about embedded systems and robotics.</p>
+      <div class="contact-ctas">
+        <a href="mailto:sahil.gond@email.com" class="btn-primary">Send an email ↗</a>
+        <a href="assets/resume-sahil-gond.pdf" class="btn-outline" download>Download résumé ↓</a>
+      </div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-list">
+          <a href="mailto:sahil.gond@email.com" class="contact-row">
+            <span class="contact-row-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+            <span class="contact-row-text"><span class="contact-row-label">Email</span><span class="contact-row-value">sahil.gond@email.com</span></span>
+          </a>
+          <a href="https://github.com/sahilgond" target="_blank" rel="noopener" class="contact-row">
+            <span class="contact-row-icon"><svg viewBox="0 0 24 24"><path d="M8 4L4 12l4 8M16 4l4 8-4 8"/></svg></span>
+            <span class="contact-row-text"><span class="contact-row-label">GitHub</span><span class="contact-row-value">github.com/sahilgond</span></span>
+          </a>
+          <a href="https://linkedin.com/in/sahilgond" target="_blank" rel="noopener" class="contact-row">
+            <span class="contact-row-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 11v5M8 8v.01M12 16v-3a2 2 0 0 1 4 0v3M12 13v3"/></svg></span>
+            <span class="contact-row-text"><span class="contact-row-label">LinkedIn</span><span class="contact-row-value">linkedin.com/in/sahilgond</span></span>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form reveal reveal-d1" id="contactForm">
+        <div class="form-row"><label for="cf-name">Name</label><input type="text" id="cf-name" name="name" required /></div>
+        <div class="form-row"><label for="cf-email">Email</label><input type="email" id="cf-email" name="email" required /></div>
+        <div class="form-row"><label for="cf-message">Message</label><textarea id="cf-message" name="message" required></textarea></div>
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">Send Message</button>
+        <p class="form-note">This opens your email client with the message pre-filled. Connect to a form backend (e.g. Formspree) to send directly.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-copy">© 2026 Sahil Gond. Built with intent.</div>
+    <div class="footer-social">
+      <a href="https://github.com/sahilgond" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/sahilgond" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:sahil.gond@email.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <div class="lightbox-content" id="lightboxContent"></div>
+</div>
+
+<script>
+  // =========================
+  // LOADING SCENE
+  // =========================
+  (function(){
+    const loader = document.getElementById('loader');
+    const fill = document.getElementById('loaderFill');
+    const pct = document.getElementById('loaderPct');
+    let progress = 0;
+    const minDuration = 1500; // ms, floor so the scene always reads intentionally
+    const start = performance.now();
+
+    function tick(){
+      const elapsed = performance.now() - start;
+      const target = Math.min(100, Math.round((elapsed / minDuration) * 100));
+      progress = Math.min(100, Math.max(progress, target));
+      fill.style.width = progress + '%';
+      pct.textContent = String(progress).padStart(2, '0') + '%';
+      if (progress < 100 || elapsed < minDuration) {
+        requestAnimationFrame(tick);
+      } else {
+        finishLoading();
+      }
+    }
+    requestAnimationFrame(tick);
+
+    function finishLoading(){
+      loader.classList.add('hide');
+      document.body.classList.remove('is-loading');
+      flyLoaderPicToNav();
+      setTimeout(() => {
+        document.querySelectorAll('.hero-copy .reveal').forEach(el => el.classList.add('visible'));
+        const portrait = document.getElementById('heroPortrait');
+        if (portrait) portrait.classList.add('visible');
+        const title = document.getElementById('heroTitle');
+        if (title) title.classList.add('split-ready');
+      }, 250);
+    }
+
+    // =========================
+    // LOADER PHOTO -> NAVBAR MARK
+    // Clones the loading-screen photo, flies it (via a plain top/left/
+    // width/height transition — a manual FLIP) from its position in the
+    // loader to the navbar's logo mark, then hands off to the "dynamic
+    // island" expand by removing .nav-collapsed. If the photo never
+    // loaded, or motion is reduced, skip straight to the expand.
+    // =========================
+    function flyLoaderPicToNav(){
+      const navbar = document.querySelector('.navbar');
+      const navMark = document.getElementById('logoMark');
+      const navImg = document.getElementById('navLogoImg');
+      const toggleBtn = document.getElementById('logoMarkBtn');
+      if (!navbar || !navMark || !navImg) return;
+
+      function expandNav(){
+        requestAnimationFrame(() => {
+          navbar.classList.remove('nav-collapsed');
+          if (toggleBtn) {
+            toggleBtn.setAttribute('aria-expanded', 'true');
+            toggleBtn.setAttribute('aria-label', 'Collapse navigation');
+          }
+        });
+      }
+
+      const loaderPic = document.getElementById('loaderPic');
+      const loaderOk = loaderPic && loaderPic.style.display !== 'none' && loaderPic.complete && loaderPic.naturalWidth > 0;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!loaderOk || reduceMotion) {
+        navMark.classList.add('logo-arrived');
+        expandNav();
+        return;
+      }
+
+      const startRect = loaderPic.getBoundingClientRect();
+
+      // wait a frame so the navbar (already fading in behind the loader)
+      // has a settled position to read as the flight's landing spot
+      requestAnimationFrame(() => {
+        const endRect = navMark.getBoundingClientRect();
+
+        const clone = document.createElement('div');
+        clone.className = 'logo-flight';
+        clone.style.top = startRect.top + 'px';
+        clone.style.left = startRect.left + 'px';
+        clone.style.width = startRect.width + 'px';
+        clone.style.height = startRect.height + 'px';
+        clone.style.borderRadius = '8px';
+        const img = document.createElement('img');
+        img.src = loaderPic.src;
+        clone.appendChild(img);
+        document.body.appendChild(clone);
+
+        requestAnimationFrame(() => {
+          clone.style.top = endRect.top + 'px';
+          clone.style.left = endRect.left + 'px';
+          clone.style.width = endRect.width + 'px';
+          clone.style.height = endRect.height + 'px';
+          clone.style.borderRadius = '9px';
+        });
+
+        let done = false;
+        function finish(){
+          if (done) return;
+          done = true;
+          clone.remove();
+          navImg.style.opacity = '1';
+          navMark.classList.add('logo-arrived');
+          expandNav();
+        }
+        clone.addEventListener('transitionend', finish);
+        setTimeout(finish, 950); // safety net if transitionend never fires
+      });
+    }
+  })();
+
+  // =========================
+  // NAVBAR — floating capsule: entrance + scroll-direction "Dynamic
+  // Island" behaviour (shrinks going down, expands back going up).
+  // Uses direction, not just a scroll-position threshold, and only
+  // reads scrollY inside rAF to stay off the main-thread hot path.
+  // =========================
+  (function(){
+    const nav = document.querySelector('.navbar');
+    if (!nav) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Starts as a compact pill (logo mark only) — the loading-screen
+    // script hands its photo off here, then expands the capsule open.
+    nav.classList.add('nav-collapsed');
+    requestAnimationFrame(() => nav.classList.add('nav-loaded'));
+
+    // Position-based, not direction-based: once you've scrolled past
+    // the threshold the capsule stays shrunk/up for the rest of the
+    // page, however far down you go — it only relaxes back to full
+    // size when you're back near the very top. (Direction-based
+    // toggling used to flicker under momentum/trackpad scroll, where
+    // scrollY jitters by a few px even while moving "down".)
+    let ticking = false;
+    const THRESHOLD = 24;
+    function apply(){
+      const y = window.scrollY;
+      nav.classList.toggle('nav-compact', y > THRESHOLD);
+      ticking = false;
+    }
+    if (!reduceMotion) {
+      window.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(apply); ticking = true; }
+      }, { passive:true });
+    }
+  })();
+
+  // =========================
+  // LOGO MARK — manual expand/collapse toggle for the navbar capsule.
+  // Desktop only: on mobile the capsule always stays open since
+  // .menu-toggle (the mobile menu entry point) lives inside it.
+  // =========================
+  (function(){
+    const navbar = document.querySelector('.navbar');
+    const btn = document.getElementById('logoMarkBtn');
+    if (!navbar || !btn) return;
+    btn.addEventListener('click', () => {
+      if (window.innerWidth <= 900) return;
+      const collapsed = navbar.classList.toggle('nav-collapsed');
+      btn.setAttribute('aria-expanded', String(!collapsed));
+      btn.setAttribute('aria-label', collapsed ? 'Expand navigation' : 'Collapse navigation');
+    });
+  })();
+
+  // =========================
+  // CUSTOM CURSOR
+  // =========================
+  (function(){
+    if (window.matchMedia('(hover:none)').matches || window.innerWidth < 901) return;
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0, rx=0, ry=0;
+    window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; dot.style.left=mx+'px'; dot.style.top=my+'px'; });
+    function loop(){ rx += (mx-rx)*0.18; ry += (my-ry)*0.18; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(loop); }
+    loop();
+    document.querySelectorAll('a, button, .gallery-item, .work-row-head, .toolkit-row-head').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    });
+  })();
+
+  // =========================
+  // LIQUID GLASS — pointer-tracked specular glint
+  // The glint radial gradient already exists in CSS (var(--lg-mx/--lg-my));
+  // this is what actually drives it to the cursor instead of sitting at
+  // a fixed 50%/50%. (3D tilt-on-hover has been removed — panels no
+  // longer rotate with the pointer, only the glint follows it.)
+  // =========================
+  (function(){
+    if (window.matchMedia('(hover:none)').matches) return;
+    const glintSel = '.featured-card, .edu-card, .building-card, .contact-form, .github-card, .btn-primary, .btn-outline, .nav-cta, .resume-link, .navbar, .menu-overlay';
+    let current = null;
+    document.addEventListener('pointermove', e => {
+      const el = e.target.closest(glintSel);
+      if (el !== current) current = el;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      el.style.setProperty('--lg-mx', (px * 100) + '%');
+      el.style.setProperty('--lg-my', (py * 100) + '%');
+    }, { passive:true });
+  })();
+
+  // =========================
+  // HERO SPLIT TITLE
+  // (markup is built immediately; the 'split-ready' class that
+  // actually animates it in is added by the loading scene above)
+  // =========================
+  (function(){
+    const el = document.getElementById('heroTitle');
+    const text = el.textContent;
+    el.innerHTML = '';
+    text.split(' ').forEach((word, wi) => {
+      const wrap = document.createElement('span');
+      wrap.className = 'split-word';
+      wrap.style.marginRight = '0.32em';
+      const inner = document.createElement('span');
+      inner.textContent = word;
+      inner.style.transitionDelay = (wi * 0.12) + 's';
+      wrap.appendChild(inner);
+      el.appendChild(wrap);
+    });
+  })();
+
+  // =========================
+  // HERO CURSOR GLOW
+  // =========================
+  (function(){
+    const hero = document.getElementById('home');
+    const glow = document.getElementById('heroGlow');
+    if (!hero || !glow) return;
+    let raf = null, gx = 50, gy = 32, tx = 50, ty = 32;
+    let lastClientX = null, lastClientY = null, isOver = false;
+    function setActive(on){ glow.classList.toggle('active', on); }
+    function updateTarget(clientX, clientY){
+      const rect = hero.getBoundingClientRect();
+      tx = ((clientX - rect.left) / rect.width) * 100;
+      ty = ((clientY - rect.top) / rect.height) * 100;
+    }
+    function loop(){
+      gx += (tx - gx) * 0.12;
+      gy += (ty - gy) * 0.12;
+      glow.style.setProperty('--gx', gx + '%');
+      glow.style.setProperty('--gy', gy + '%');
+      raf = requestAnimationFrame(loop);
+    }
+    hero.addEventListener('mousemove', e => {
+      lastClientX = e.clientX; lastClientY = e.clientY; isOver = true;
+      updateTarget(e.clientX, e.clientY);
+      if (!raf) loop();
+      setActive(true);
+    });
+    hero.addEventListener('mouseleave', () => { isOver = false; setActive(false); });
+    // Keep glow aligned with cursor when the page scrolls under a stationary mouse
+    window.addEventListener('scroll', () => {
+      if (isOver && lastClientX !== null) {
+        updateTarget(lastClientX, lastClientY);
+        if (!raf) loop();
+      }
+    }, { passive: true });
+  })();
+
+
+  // =========================
+  // MOBILE / FULLSCREEN MENU
+  // =========================
+  (function(){
+    const btn = document.getElementById('menuToggle');
+    const overlay = document.getElementById('menuOverlay');
+    const label = document.getElementById('menuLabel');
+    function close(){ overlay.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); label.textContent='Menu'; }
+    function open(){ overlay.classList.add('open'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); label.textContent='Close'; }
+    btn.addEventListener('click', () => overlay.classList.contains('open') ? close() : open());
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  })();
+
+  // =========================
+  // ACTIVE NAV ON SCROLL
+  // =========================
+  (function(){
+    const sections = ['home','experience','works','toolkit','studio','contact'].map(id => document.getElementById(id)).filter(Boolean);
+    const links = document.querySelectorAll('.nav-links a');
+    function update(){
+      let current = sections[0];
+      const y = window.scrollY + 140;
+      sections.forEach(s => { if (s.offsetTop <= y) current = s; });
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+    }
+    window.addEventListener('scroll', update, { passive:true });
+    update();
+  })();
+
+  // =========================
+  // SCROLL REVEAL
+  // (hero-copy elements are intentionally excluded — the loading
+  // scene above controls when those animate in)
+  // =========================
+  (function(){
+    const els = Array.from(document.querySelectorAll('.reveal:not(.visible)'))
+      .filter(el => !el.closest('.hero-copy'));
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold:0.12 });
+    els.forEach(el => io.observe(el));
+  })();
+
+  // =========================
+  // TEXT REEL — section titles animate in like a combination-lock:
+  // each character spins through a short run of random letters before
+  // settling on the real one. Runs once per heading, only once it has
+  // scrolled into view, and is skipped entirely for reduced motion.
+  // =========================
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const hosts = document.querySelectorAll('.section-heading, .contact-heading, .statement-heading, .featured-title');
+    if (!hosts.length) return;
+
+    // Measures the rendered width of a single character in a given
+    // element's actual font/weight/size + letter-spacing, using a shared
+    // offscreen canvas. Each character cell gets locked to this width.
+    // Without it, .reel-char (inline-block) auto-sizes to the WIDEST
+    // glyph among the 5-8 random "spin" letters + the real final letter
+    // stacked inside it — so a slot that happens to roll a wide letter
+    // like W/M/0 but settles on a narrow one like i/l/. keeps that wide
+    // box forever, leaving a stray gap around the settled character.
+    // That's what was reading as random extra space between words.
+    const measureCanvas = document.createElement('canvas');
+    const measureCtx = measureCanvas.getContext('2d');
+    function charWidth(ch, font, letterSpacing){
+      measureCtx.font = font;
+      return measureCtx.measureText(ch).width + letterSpacing;
+    }
+    // These heading classes are all styled with text-transform:uppercase,
+    // but the source text in the HTML is normal mixed case. The canvas
+    // measurement above has no idea about that CSS rule, so without this
+    // it measures e.g. lowercase "i" (narrow) while the browser actually
+    // paints "I" (wider) in that same cell — the box ends up too small
+    // for the real glyph, which is what was clipping/overlapping letters.
+    function visualChar(ch, textTransform){
+      if (textTransform === 'uppercase') return ch.toUpperCase();
+      if (textTransform === 'lowercase') return ch.toLowerCase();
+      return ch;
+    }
+
+    function buildChar(ch, index, font, letterSpacing, textTransform){
+      if (/\s/.test(ch)) {
+        const s = document.createElement('span');
+        s.className = 'reel-space';
+        s.textContent = '\u00A0';
+        return s;
+      }
+      const steps = 5 + Math.floor(Math.random() * 4); // 5–8 letters spin past before landing
+      const wrap = document.createElement('span');
+      wrap.className = 'reel-char';
+      const track = document.createElement('span');
+      track.className = 'reel-track';
+      for (let i = 0; i < steps; i++) {
+        const o = document.createElement('span');
+        o.textContent = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+        track.appendChild(o);
+      }
+      const final = document.createElement('span');
+      final.textContent = ch;
+      track.appendChild(final);
+      wrap.appendChild(track);
+
+      // lock the cell's width to the FINAL character only, as actually
+      // painted (post text-transform), so mid-spin letters (which may be
+      // wider) clip/center instead of permanently stretching the box
+      wrap.style.width = (Math.ceil(charWidth(visualChar(ch, textTransform), font, letterSpacing)) + 1) + 'px';
+
+      // each character gets its own duration + delay so the reel
+      // never reads as one mechanical, uniform sweep
+      const dur = (0.55 + Math.random() * 0.5).toFixed(2);
+      const delay = (index * 0.026 + Math.random() * 0.06).toFixed(2);
+      wrap.style.setProperty('--offset', steps + 'em');
+      track.style.setProperty('--dur', dur + 's');
+      track.style.setProperty('--delay', delay + 's');
+      return wrap;
+    }
+
+    function reelify(el){
+      const cs = getComputedStyle(el);
+      const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      const letterSpacing = parseFloat(cs.letterSpacing) || 0;
+      const textTransform = cs.textTransform;
+      const textNodes = [];
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      let n;
+      while ((n = walker.nextNode())) textNodes.push(n);
+      let i = 0;
+      textNodes.forEach(node => {
+        const frag = document.createDocumentFragment();
+        // Each reel-char/reel-space is its own inline-block, and adjacent
+        // inline-blocks are independently breakable by default — the browser
+        // has no idea a run of them forms "one word", so it was free to wrap
+        // the line between any two characters, including mid-word. Splitting
+        // on whitespace and wrapping each word's characters in one atomic
+        // .reel-word container (nowrap, shrink-to-fit) restores normal
+        // word-wrapping: breaks can only happen at the actual spaces.
+        const parts = node.textContent.split(/(\s+)/);
+        parts.forEach(part => {
+          if (part === '') return;
+          if (/^\s+$/.test(part)) {
+            part.split('').forEach(ch => frag.appendChild(buildChar(ch, i++, font, letterSpacing, textTransform)));
+          } else {
+            const wordWrap = document.createElement('span');
+            wordWrap.className = 'reel-word';
+            part.split('').forEach(ch => wordWrap.appendChild(buildChar(ch, i++, font, letterSpacing, textTransform)));
+            frag.appendChild(wordWrap);
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      });
+    }
+
+    // Google Fonts loads with display=swap, so at the moment this script
+    // runs, Archivo/Space Grotesk may still be a system-font fallback.
+    // Measuring character widths against that fallback, then having the
+    // real webfont swap in moments later, is what made letters clip and
+    // overlap each other — the fixed-width cell no longer matched the
+    // glyph once the actual font arrived. document.fonts.ready resolves
+    // once all requested webfonts have actually loaded and applied, so
+    // measurement happens against the real rendered font.
+    // (document.fonts.ready resolves immediately in browsers without the
+    // Font Loading API, so this degrades safely.)
+    const start = () => {
+      hosts.forEach(el => {
+        const label = el.textContent.trim();
+        if (!label) return;
+        el.setAttribute('aria-label', label);   // keeps the real words for screen readers
+        el.classList.add('reel-host');
+        reelify(el);
+      });
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reel-run'); // fires the CSS animation once
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold:0.4 });
+      hosts.forEach(el => io.observe(el));
+    };
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(start);
+    } else {
+      start();
+    }
+  })();
+
+  // =========================
+  // COUNT-UP STATS
+  // =========================
+  (function(){
+    const nums = document.querySelectorAll('.stat .num[data-count]');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseInt(el.dataset.count, 10);
+        const suffix = el.dataset.suffix || '';
+        let cur = 0;
+        const step = Math.max(1, Math.round(target / 24));
+        const t = setInterval(() => {
+          cur += step;
+          if (cur >= target){ cur = target; clearInterval(t); }
+          el.textContent = cur + suffix;
+        }, 40);
+        io.unobserve(el);
+      });
+    }, { threshold:0.5 });
+    nums.forEach(n => io.observe(n));
+  })();
+
+  // =========================
+  // WORK ROWS — EXPANDABLE
+  // =========================
+  (function(){
+    function expandRow(btn){
+      const panel = document.getElementById(btn.getAttribute('aria-controls'));
+      btn.setAttribute('aria-expanded', 'true');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+    document.querySelectorAll('.work-row-head').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.style.maxHeight = expanded ? '0px' : panel.scrollHeight + 'px';
+      });
+    });
+
+    // Featured project teaser CTA — jump to Works and open the Maze Robot case study
+    const featuredCta = document.getElementById('featuredCta');
+    if (featuredCta) {
+      featuredCta.addEventListener('click', e => {
+        e.preventDefault();
+        const targetBtn = document.querySelector('[aria-controls="work-panel-2"]');
+        if (targetBtn) {
+          expandRow(targetBtn);
+          setTimeout(() => { targetBtn.scrollIntoView({ behavior:'smooth', block:'start' }); }, 60);
+        } else {
+          document.getElementById('works').scrollIntoView({ behavior:'smooth' });
+        }
+      });
+    }
+  })();
+
+  // =========================
+  // TOOLKIT ROWS — EXPANDABLE
+  // =========================
+  (function(){
+    document.querySelectorAll('.toolkit-row-head').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.toolkit-row-head[aria-expanded="true"]').forEach(other => {
+          if (other !== btn) {
+            other.setAttribute('aria-expanded','false');
+            document.getElementById(other.getAttribute('aria-controls')).style.maxHeight = '0px';
+          }
+        });
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.style.maxHeight = expanded ? '0px' : panel.scrollHeight + 'px';
+      });
+    });
+  })();
+
+  // =========================
+  // GALLERY LIGHTBOX
+  // =========================
+  (function(){
+    const lightbox = document.getElementById('lightbox');
+    const content = document.getElementById('lightboxContent');
+    const closeBtn = document.getElementById('lightboxClose');
+    document.querySelectorAll('.gallery-item').forEach(item => {
+      function openItem(){
+        const img = item.querySelector('img');
+        const fallback = item.querySelector('.gallery-fallback');
+        content.innerHTML = '';
+        const imgLoaded = img && img.style.display !== 'none' && img.complete && img.naturalWidth > 0;
+        if (imgLoaded) {
+          const big = document.createElement('img');
+          big.src = img.src;
+          big.alt = img.alt;
+          big.style.cssText = 'max-width:min(80vw,700px); max-height:80vh; border-radius:6px; filter:grayscale(35%) contrast(1.05);';
+          content.appendChild(big);
+        } else {
+          const svg = fallback.querySelector('svg');
+          const label = fallback.querySelector('span').textContent;
+          const wrap = document.createElement('div');
+          wrap.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:16px;';
+          const clone = svg.cloneNode(true);
+          clone.style.cssText = 'width:140px;height:140px;stroke:#e8a33d;';
+          const cap = document.createElement('div');
+          cap.textContent = label + ' — replace with real project photography';
+          cap.style.cssText = 'font-family:"IBM Plex Mono",monospace;font-size:13px;color:#8f8c84;';
+          wrap.appendChild(clone); wrap.appendChild(cap);
+          content.appendChild(wrap);
+        }
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      item.addEventListener('click', openItem);
+      item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openItem(); } });
+    });
+    function closeLB(){ lightbox.classList.remove('open'); document.body.style.overflow=''; content.innerHTML=''; }
+    closeBtn.addEventListener('click', closeLB);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLB(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+  })();
+
+  // =========================
+  // TIMELINE SCROLL FILL
+  // =========================
+  (function(){
+    const fill = document.getElementById('timelineFill');
+    const tl = document.getElementById('timeline');
+    const steps = document.querySelectorAll('.timeline-step');
+    if (!fill || !tl) return;
+    function update(){
+      const rect = tl.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      const progress = Math.min(Math.max((viewH - rect.top) / rect.height, 0), 1);
+      fill.style.height = (progress * 100) + '%';
+      steps.forEach((s, i) => s.classList.toggle('active', progress > i / steps.length));
+    }
+    window.addEventListener('scroll', update, { passive:true });
+    update();
+  })();
+
+  // =========================
+  // SCROLL-SCRUBBED FRAME SEQUENCE (background)
+  //
+  // Draws one still frame at a time onto a full-viewport canvas as the
+  // page scrolls — the "product page scroll video" effect, without an
+  // actual <video> (video elements can't be scrubbed frame-accurately
+  // and reliably across browsers on scroll; a preloaded image sequence
+  // can).
+  //
+  // TO ADD YOUR OWN FOOTAGE:
+  //   1. Export the video as a numbered JPG sequence, e.g. with ffmpeg:
+  //        ffmpeg -i input.mp4 -vf "fps=6,scale=1600:-1" images/frames/frame_%04d.jpg
+  //      6fps over a ~15-20s clip gives ~90-120 frames, which is plenty
+  //      for a smooth scrub without loading hundreds of images.
+  //   2. Put the numbered files in images/frames/ alongside this file.
+  //   3. Set FRAME_COUNT below to however many frames you exported.
+  // Until then, this script finds nothing at that path and the canvas
+  // just shows the plain --bg colour — nothing else on the site changes.
+  // =========================
+  (function(){
+    const FRAME_COUNT = 300;                      // <- set to your exported frame count
+    const FRAME_PATH  = i => `images/frames/frame_${String(i).padStart(3,'0')}.jpg`;
+    const FRAME_SCOPE = 'page';                   // 'page' = scrub across the whole document; 'hero' = only while the hero section scrolls by
+
+    const canvas = document.getElementById('frameBgCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const frames = [];
+    let ready = false;
+
+    function progress(){
+      if (FRAME_SCOPE === 'hero') {
+        const hero = document.getElementById('home');
+        if (!hero) return 0;
+        const rect = hero.getBoundingClientRect();
+        const span = Math.max(1, rect.height - window.innerHeight);
+        return Math.min(1, Math.max(0, -rect.top / span));
+      }
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    }
+
+    function draw(){
+      if (!ready || !frames.length) return;
+      const idx = Math.min(frames.length - 1, Math.max(0, Math.round(progress() * (frames.length - 1))));
+      const img = frames[idx];
+      if (!img || !img.complete || !img.naturalWidth) return;
+      const cw = canvas.width, ch = canvas.height;
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      const scale = Math.max(cw / iw, ch / ih);
+      const w = iw * scale, h = ih * scale;
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+    }
+
+    function resize(){
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      draw();
+    }
+
+    let ticking = false;
+    function onScroll(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { draw(); ticking = false; });
+    }
+
+    for (let i = 1; i <= FRAME_COUNT; i++) {
+      const img = new Image();
+      img.onload = () => { if (!ready) { ready = true; resize(); } else { draw(); } };
+      img.onerror = () => {}; // missing frames are silently skipped — canvas just stays --bg
+      img.src = FRAME_PATH(i);
+      frames.push(img);
+    }
+
+    window.addEventListener('resize', resize, { passive:true });
+    window.addEventListener('scroll', onScroll, { passive:true });
+    resize();
+  })();
+
+  // =========================
+  // CONTACT FORM — mailto
+  // =========================
+  (function(){
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = form.name.value, email = form.email.value, message = form.message.value;
+      const subject = encodeURIComponent('Portfolio contact from ' + name);
+      const body = encodeURIComponent(message + '\n\n— ' + name + ' (' + email + ')');
+      window.location.href = `mailto:sahil.gond@email.com?subject=${subject}&body=${body}`;
+    });
+  })();
+</script>
+</body>
+</html>

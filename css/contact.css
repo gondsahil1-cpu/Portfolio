@@ -19,11 +19,13 @@
 
 .contact-list{ display:flex; flex-direction:column; gap:0; border-top:1px solid var(--line); }
 .contact-row{
-  display:flex; align-items:center; gap:14px; padding:16px 0;
-  border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink); transition:padding-left .25s ease, color .25s ease;
+  display:flex; align-items:center; gap:14px; padding:16px var(--s-2);
+  border-bottom:1px solid var(--line); text-decoration:none; color:var(--ink);
+  transition:padding-left .25s ease, color .25s ease, background .3s ease;
 }
-.contact-row:hover{ padding-left:8px; color:var(--accent); }
-.contact-row-icon{ width:34px; height:34px; border-radius:6px; background:var(--panel); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; flex:none; }
+.contact-row:hover{ padding-left:calc(var(--s-2) + 8px); color:var(--accent); background:rgba(255,255,255,.025); }
+.contact-row-icon{ width:34px; height:34px; border-radius:8px; background:var(--panel); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; flex:none; transition:border-color .25s ease; }
+.contact-row:hover .contact-row-icon{ border-color:var(--accent-line); }
 .contact-row-icon svg{ width:15px; height:15px; stroke:var(--accent); fill:none; stroke-width:1.6; }
 .contact-row-text{ display:flex; flex-direction:column; gap:1px; }
 .contact-row-label{ font-family:var(--f-mono); font-size:10.5px; color:var(--ink-faint); letter-spacing:.8px; text-transform:uppercase; }

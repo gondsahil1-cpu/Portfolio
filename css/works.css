@@ -6,13 +6,19 @@
 
 /* =====================================================================
    WORKS
+   Each .work-row is a self-contained card (glass treatment lives in
+   glass.css) — real padding on the head + panel keeps text clear of
+   the rounded corners instead of sitting flush against them, and a
+   flex `gap` replaces the old flush border-bottom list rhythm so each
+   card reads as its own object, not a continuous list.
 ===================================================================== */
-.works-list{ border-top:1px solid var(--line); }
-.work-row{ border-bottom:1px solid var(--line); }
+.works-list{ display:flex; flex-direction:column; gap:var(--s-3); }
+.work-row{ overflow:hidden; }
 .work-row-head{
   display:flex; align-items:center; justify-content:space-between; gap:var(--s-4);
-  padding:var(--s-5) 0; cursor:pointer; background:none; border:none; width:100%; text-align:left; color:inherit;
+  padding:var(--s-5) var(--s-5); cursor:pointer; background:none; border:none; width:100%; text-align:left; color:inherit;
 }
+@media (max-width:640px){ .work-row-head{ padding:var(--s-4) var(--s-3); } }
 .work-row-left{ display:flex; align-items:baseline; gap:var(--s-4); flex:1; min-width:0; }
 .work-index{ font-family:var(--f-mono); font-size:13px; color:var(--ink-faint); flex:none; width:34px; }
 .work-titles{ min-width:0; }
@@ -39,7 +45,11 @@
 .work-row-head[aria-expanded="true"] .work-explore .plus{ transform:rotate(45deg); border-color:var(--accent); color:var(--accent); }
 
 .work-panel{ max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.16,1,.3,1); }
-.work-panel-inner{ padding:0 0 var(--s-6); }
+.work-panel-inner{
+  padding:var(--s-4) var(--s-5) var(--s-6);
+  border-top:1px solid rgba(255, 255, 255, 0.558);
+}
+@media (max-width:640px){ .work-panel-inner{ padding:var(--s-3) var(--s-3) var(--s-5); } }
 
 .work-visual{
   border:1px solid var(--line); border-radius:6px; background:var(--panel);
@@ -65,7 +75,7 @@
 .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
 .chip{
   font-family:var(--f-mono); font-size:12px; color:var(--ink-dim); border:1px solid var(--line-strong);
-  border-radius:4px; padding:6px 10px; background:var(--bg);
+  border-radius:7px; padding:6px 10px; background:var(--bg);
 }
 
 .gallery-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--s-2); margin-bottom:var(--s-5); }
@@ -85,11 +95,10 @@
 
 /* metrics strip — used on project + about cards */
 .metric-strip{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:1px;
-  background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:var(--s-2);
   margin-bottom:var(--s-5);
 }
-.metric{ background:var(--panel); padding:var(--s-3); text-align:center; }
+.metric{ background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:var(--s-3); text-align:center; }
 .metric .num{ font-family:var(--f-display); font-weight:900; font-size:22px; color:var(--accent); }
 .metric .lbl{ font-family:var(--f-mono); font-size:10px; color:var(--ink-faint); letter-spacing:.6px; text-transform:uppercase; margin-top:4px; }
 
@@ -101,8 +110,8 @@
 .work-actions{ margin-top:var(--s-4); }
 
 /* pipeline (roadmap) */
-.pipeline-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:var(--s-6); }
+.pipeline-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s-3); margin-top:var(--s-6); }
 @media (max-width:860px){ .pipeline-list{ grid-template-columns:1fr 1fr; } }
 @media (max-width:560px){ .pipeline-list{ grid-template-columns:1fr; } }
-.pipeline-item{ background:var(--panel); padding:var(--s-4); }
+.pipeline-item{ background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:var(--s-4); }
 

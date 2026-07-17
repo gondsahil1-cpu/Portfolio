@@ -7,7 +7,7 @@
 /* =====================================================================
    SECTION SHARED
 ===================================================================== */
-section{ padding:var(--s-16) 0; position:relative; }
+section{ padding:var(--s-16) 0; position:relative; z-index:2; }
 @media (max-width:640px){ section{ padding:var(--s-8) 0; } }
 
 .section-label{

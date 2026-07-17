@@ -1,106 +1,92 @@
 /* =====================================================================
-   LIQUID GLASS SYSTEM (reduced)
-   Loaded last so it wins the cascade at equal specificity, same as
-   before. Layout, spacing, typography, section order and animations
-   elsewhere are untouched — this file only touches material/surface.
+   LIQUID GLASS SYSTEM
+   Loaded last so it wins the cascade at equal specificity. Layout,
+   spacing, typography, section order and animations elsewhere are
+   untouched — this file only touches material/surface.
 
-   SCOPE, ON PURPOSE: real backdrop-filter blur is expensive to paint —
-   every blurred element forces the browser to re-sample everything
-   behind it, every frame it (or anything behind it) changes. The
-   previous version put it on ~25 different component types, several
-   repeated a dozen+ times (chips, tags, list rows, gallery tiles),
-   which is a lot of simultaneous blur surfaces on one page.
+   SCOPE (trimmed): glass is now reserved for surfaces that genuinely
+   read as "floating" over the frame background — a handful of large
+   panels, the work cards, gallery tiles, and site chrome. Rows that
+   are really just a list of text (Toolkit, Roadmap, contact links,
+   the "currently building" bullet list) were flattened back to plain
+   underlined rows — see each section's own CSS file for their (now
+   glass-free) hover treatment.
 
-   This version restricts true backdrop-filter to two tiers only:
-     1) five "major panels" — the large, singular content cards
-        (featured project, education, currently-building, contact
-        form, github stats) — where glass reads as a deliberate,
-        premium surface rather than wallpaper.
-     2) site chrome that is either a single fixed element (navbar) or
-        only ever rendered on demand (mobile menu, lightbox).
+     1) MAJOR PANELS — five large, singular content cards (featured
+        project, education, currently-building, contact form, github
+        stats): full blur + optical refraction + a cursor-tracked
+        specular glint (desktop only).
+     2) SITE CHROME — navbar (always on screen), mobile menu + lightbox
+        (only ever painted on demand): full/medium blur.
+     3) WORK CARDS + TILES — work rows (Experience/Works), gallery
+        tiles, stat/metric/pipeline cells, icon tiles: medium blur —
+        there are only ever a handful expanded/visible at once.
+     4) CHIPS & TAGS — small, frequently-repeated pills (.chip,
+        .work-badge): light blur, tuned down specifically because
+        these can repeat a dozen+ times on one screen.
 
-   Everything that used to be glass — chips, tags, badges, list rows,
-   gallery tiles, small icon circles, form fields — now falls back to
-   the plain dark-panel styling already defined in its own section
-   file (works.css, toolkit.css, etc.). Nothing needed to be invented:
-   removing the override here is enough. Buttons keep a light
-   translucent tint for continuity with the major panels, but no blur.
+   Every element below keeps its original layout, spacing and colour
+   tokens from its own section file (works.css, etc.) — this file only
+   ever touches background/border/shadow/backdrop-filter.
 ===================================================================== */
 :root{
-  --lg-blur:20px;
-  --lg-sat:160%;
+  /* tier 1 — major panels */
+  --lg-blur:24px;
+  --lg-sat:172%;
+  /* tier 3 — rows & tiles */
+  --lg-blur-md:13px;
+  --lg-sat-md:152%;
+  /* tier 4 — chips & tags */
+  --lg-blur-sm:8px;
+  --lg-sat-sm:138%;
+
   --lg-r-lg:32px;
   --lg-r-md:26px;
   --lg-r-sm:18px;
+  --lg-r-xs:10px;
   --lg-r-pill:999px;
+
+  /* base tint carries a whisper of the accent so the glass reads as
+     *this site's* material rather than a generic frosted white pane */
   --lg-tint:255,255,255;
-  --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.11), rgba(var(--lg-tint),.02) 45%, rgba(var(--lg-tint),.05));
-  --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.16), rgba(var(--lg-tint),.04) 45%, rgba(var(--lg-tint),.07));
+  --lg-tint-warm:238,221,190;
+  --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.12), rgba(var(--lg-tint-warm),.025) 45%, rgba(var(--lg-tint),.05));
+  --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.17), rgba(var(--lg-tint-warm),.04) 45%, rgba(var(--lg-tint),.07));
+
+  /* layered shadow: a close/dark contact shadow + a soft/far ambient
+     shadow + a bright top inset and a much fainter second inset an
+     inch lower, which is what reads as "light passing through a few
+     millimetres of material" rather than a single flat sheen */
   --lg-shadow:
-    0 20px 46px -22px rgba(0,0,0,.6), 0 4px 14px -6px rgba(0,0,0,.45),
-    inset 0 1px 0 rgba(255,255,255,.3), inset 0 -1px 0 rgba(0,0,0,.28);
+    0 24px 54px -24px rgba(0,0,0,.62), 0 6px 16px -8px rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.3),
+    inset 0 12px 24px -20px rgba(255,255,255,.18);
   --lg-shadow-hover:
-    0 28px 62px -22px rgba(0,0,0,.68), 0 6px 18px -6px rgba(0,0,0,.5),
-    inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.3);
+    0 30px 68px -24px rgba(0,0,0,.7), 0 8px 20px -8px rgba(0,0,0,.46),
+    inset 0 1px 0 rgba(255,255,255,.44), inset 0 -1px 0 rgba(0,0,0,.32),
+    inset 0 14px 26px -20px rgba(255,255,255,.22);
+
+  /* lighter-weight shadow used by tiles so small surfaces don't get
+     the same heavy drop-shadow as a full card */
+  --lg-bg-sm:linear-gradient(168deg, rgba(var(--lg-tint),.095), rgba(var(--lg-tint-warm),.02) 50%, rgba(var(--lg-tint),.04));
+  --lg-bg-sm-hover:linear-gradient(168deg, rgba(var(--lg-tint),.15), rgba(var(--lg-tint-warm),.03) 50%, rgba(var(--lg-tint),.06));
+  --lg-shadow-sm:
+    0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.24), inset 0 -1px 0 rgba(0,0,0,.22);
+  --lg-shadow-sm-hover:
+    0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.24);
 }
 
-/* ---- ambient dark backdrop (plain gradients, no filter cost) ---- */
-body{
-  background:
-    radial-gradient(820px 560px at 10% -6%, rgba(232,163,61,.06), transparent 62%),
-    radial-gradient(680px 480px at 94% 16%, rgba(255,255,255,.03), transparent 58%),
-    radial-gradient(960px 680px at 46% 108%, rgba(232,163,61,.045), transparent 62%),
-    var(--bg);
-  background-attachment:fixed;
-}
+/* ---- backdrop colour now lives on the frame canvas itself (see
+   frame-bg.css); body no longer paints its own background so the
+   canvas underneath is never covered ---- */
+body{ background:transparent; }
 
-/* =====================================================================
-   AMBIENT COLOR FIELD — the "stuff" the glass refracts, kept behind
-   the (now far fewer) glass panels. Trimmed from three blobs to two
-   and a smaller blur radius — less for the compositor to redraw on
-   every animation tick.
-===================================================================== */
-.lg-blobs{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.lg-blob{
-  position:absolute; border-radius:50%; filter:blur(56px); will-change:transform;
-  mix-blend-mode:screen; opacity:.55;
-}
-.lg-blob-a{
-  width:52vw; height:52vw; left:-14vw; top:-18vw;
-  background:radial-gradient(circle at 35% 35%, rgba(232,163,61,.5), rgba(232,163,61,0) 70%);
-  animation:lgblobA 34s ease-in-out infinite;
-}
-.lg-blob-b{
-  width:44vw; height:44vw; right:-12vw; top:6vw;
-  background:radial-gradient(circle at 60% 40%, rgba(120,190,255,.32), rgba(120,190,255,0) 72%);
-  animation:lgblobB 40s ease-in-out infinite;
-}
-@keyframes lgblobA{
-  0%,100%{ transform:translate(0,0) scale(1); }
-  50%{ transform:translate(8vw,10vw) scale(1.12); }
-}
-@keyframes lgblobB{
-  0%,100%{ transform:translate(0,0) scale(1); }
-  50%{ transform:translate(-10vw,8vw) scale(.92); }
-}
-@media (max-width:900px){ .lg-blob{ filter:blur(40px); opacity:.45; } }
-
-/* fine film-grain over everything so the kept glass reads as a physical surface */
+/* fine film-grain over everything so the kept glass — and the video
+   frames behind it — read as a physical surface rather than flat footage */
 .lg-grain{
   position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   background-size:140px 140px;
-}
-
-.lg-ambient{
-  position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.5; mix-blend-mode:screen;
-  background:radial-gradient(360px 300px at var(--lx,18%) var(--ly,26%), rgba(255,255,255,.045), transparent 70%);
-  animation:lgdrift 26s ease-in-out infinite;
-}
-@keyframes lgdrift{
-  0%,100%{ --lx:14%; --ly:18%; }
-  33%{ --lx:74%; --ly:10%; }
-  66%{ --lx:52%; --ly:78%; }
 }
 
 /* ============================ MAJOR PANELS — the only cards with real backdrop-filter ============================ */
@@ -115,9 +101,21 @@ body{
   transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .5s cubic-bezier(.22,1,.36,1), background .5s cubic-bezier(.22,1,.36,1), border-color .5s cubic-bezier(.22,1,.36,1);
   will-change:transform;
 }
+/* cursor-tracked specular glint — a soft hotspot that follows the
+   pointer (--lg-mx/--lg-my are set by index.html's pointermove
+   handler), the single biggest thing that makes a flat blur read as
+   an actual curved, reflective surface instead of frosted paint */
+.featured-card::after, .edu-card::after, .building-card::after, .contact-form::after, .github-card::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
+  background:radial-gradient(240px 200px at var(--lg-mx,30%) var(--lg-my,0%), rgba(226, 7, 7, 0.102), transparent 65%);
+  opacity:0; transition:opacity .4s cubic-bezier(.22,1,.36,1);
+}
+.featured-card:hover::after, .edu-card:hover::after, .building-card:hover::after, .contact-form:hover::after, .github-card:hover::after{ opacity:1; }
+/* border catches light from one direction (conic sweep) rather than a
+   flat top-to-bottom fade — reads much closer to a real bevelled edge */
 .featured-card::before, .edu-card::before, .building-card::before, .contact-form::before, .github-card::before{
   content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; z-index:2; pointer-events:none;
-  background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.06) 40%, rgba(0,0,0,.3));
+  background:conic-gradient(from 218deg at 50% 50%, rgba(255,255,255,.7), rgba(255,255,255,.04) 30%, rgba(255,255,255,.02) 55%, rgba(255,255,255,.3) 82%, rgba(255,255,255,.7));
   -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor; mask-composite:exclude;
 }
@@ -141,9 +139,62 @@ body{
 .featured-card{ border-radius:var(--lg-r-lg) !important; }
 .edu-card, .building-card, .contact-form, .github-card{ border-radius:var(--lg-r-lg) !important; }
 
-/* Everything that used to be listed here — .work-row, .toolkit-row, .gallery-item,
-   .stat-grid, .metric-strip — is intentionally absent. They fall back to their
-   plain bordered-panel styling in works.css / studio.css, no blur, no override. */
+/* ============================ WORK CARDS + TILES (medium blur) ============================
+   Work rows (Experience/Works) are full self-padded cards now (see
+   works.css); gallery tiles and the small stat/metric/pipeline/icon
+   cells get the same medium-blur treatment since only a handful are
+   ever on screen at once. */
+.work-row, .gallery-item, .stat, .metric, .pipeline-item, .edu-icon, .work-visual{
+  position:relative; isolation:isolate;
+  background:var(--lg-bg-sm) !important;
+  border-color:rgba(255,255,255,.12) !important;
+  box-shadow:var(--lg-shadow-sm) !important;
+  -webkit-backdrop-filter:blur(var(--lg-blur-md)) saturate(var(--lg-sat-md)) !important;
+  backdrop-filter:blur(var(--lg-blur-md)) saturate(var(--lg-sat-md)) !important;
+  transition:background .35s ease, border-color .3s ease, box-shadow .35s ease, transform .3s ease;
+}
+.work-row:hover, .gallery-item:hover, .stat:hover, .metric:hover, .pipeline-item:hover{
+  background:var(--lg-bg-sm-hover) !important;
+  border-color:rgba(255,255,255,.2) !important;
+  box-shadow:var(--lg-shadow-sm-hover) !important;
+}
+.work-row{ border-radius:var(--lg-r-md) !important; }
+.gallery-item{ border-radius:var(--lg-r-xs) !important; }
+.stat, .metric, .pipeline-item{ border-radius:var(--lg-r-xs) !important; }
+.edu-icon{ border-radius:8px !important; }
+.work-visual{ border-radius:var(--lg-r-sm) !important; }
+
+/* the work row header acts as the site's expand/collapse "tab"; give
+   it the same corner radius as its parent so the glass seam is continuous */
+.work-row-head{ border-radius:inherit; }
+
+/* ============================ CHIPS & TAGS (light blur) ============================
+   Small, frequently-repeated pills: the "Flagship Build" work badge
+   and the generic tech-stack chip. Kept to the lightest blur tier
+   since these can repeat a dozen+ times on one screen at once. */
+.chip, .work-badge{
+  position:relative; isolation:isolate;
+  background:var(--lg-bg-sm) !important;
+  border-color:rgba(255,255,255,.14) !important;
+  box-shadow:0 4px 10px -6px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2) !important;
+  -webkit-backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
+  backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
+  transition:background .3s ease, border-color .25s ease, transform .25s ease;
+}
+.chip:hover{
+  background:var(--lg-bg-sm-hover) !important;
+  border-color:rgba(255,255,255,.24) !important;
+  transform:translateY(-1px);
+}
+/* accent-tinted badge keeps its amber cast — glass adds the frost, not a colour change */
+.work-badge{ background:linear-gradient(168deg, rgba(232,163,61,.24), rgba(232,163,61,.08)) !important; border-color:rgba(232,163,61,.4) !important; }
+
+/* nav-links pills (see NAVIGATION below) double as the top-level "tabs" —
+   give the active/hover pill state the same light glass tier */
+.nav-links a:hover, .nav-links a.active{
+  -webkit-backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm));
+  backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm));
+}
 
 /* ============================ BUTTONS — translucent tint, no blur ============================ */
 .btn-primary, .btn-outline, .nav-cta, .resume-link{
@@ -200,7 +251,7 @@ body{
   background:linear-gradient(180deg, rgba(22,21,19,.58), rgba(12,11,10,.42)) !important;
   -webkit-backdrop-filter:blur(18px) saturate(var(--lg-sat)) !important;
   backdrop-filter:blur(18px) saturate(var(--lg-sat)) !important;
-  border:1px solid rgba(255,255,255,.14) !important;
+  border:1px solid rgba(255, 255, 255, 0.066) !important;
   border-radius:999px !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08), inset 0 -1px 0 rgba(0,0,0,.2),
@@ -215,12 +266,12 @@ body{
 /* Dynamic-Island "busy" state: denser glass, tighter shadow, no scale
    change here (the height/padding shrink is handled in navigation.css) */
 .navbar.nav-compact{
-  background:linear-gradient(180deg, rgba(16,15,14,.72), rgba(9,9,8,.6)) !important;
+  background:linear-gradient(180deg, rgba(16, 15, 14, 0.205), rgba(9, 9, 8, 0.218)) !important;
   -webkit-backdrop-filter:blur(26px) saturate(180%) !important;
   backdrop-filter:blur(26px) saturate(180%) !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.25),
-    0 10px 26px -14px rgba(0,0,0,.65);
+    0 10px 26px -14px rgba(0, 0, 0, 0.198);
 }
 /* hover: capsule breathes outward slightly and the glass brightens —
    scoped to fine pointers so touch taps don't get stuck "hovered" */
@@ -260,12 +311,20 @@ body{
   backdrop-filter:blur(24px) saturate(var(--lg-sat));
 }
 .lightbox{ -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); }
+.lightbox-close, .menu-toggle{
+  background:var(--lg-bg-sm) !important;
+  border-color:rgba(255,255,255,.16) !important;
+  box-shadow:var(--lg-shadow-sm) !important;
+  -webkit-backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
+  backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
+  transition:background .3s ease, border-color .25s ease, transform .3s ease, box-shadow .3s ease;
+}
+.lightbox-close:hover, .menu-toggle:hover{
+  background:var(--lg-bg-sm-hover) !important;
+  border-color:rgba(255,255,255,.26) !important;
+}
 
 /* ============================ TIMELINE — soft glow connectors (box-shadow only, no filter) ============================ */
 .timeline-track{ background:rgba(255,255,255,.08); }
 .timeline-fill{ box-shadow:0 0 14px 2px rgba(232,163,61,.55); }
 .timeline-step.active .timeline-dot{ box-shadow:0 0 0 5px rgba(232,163,61,.16), 0 0 14px 2px rgba(232,163,61,.55); }
-
-@media (prefers-reduced-motion:reduce){
-  .lg-ambient{ animation:none; }
-}

@@ -5,9 +5,6 @@
 ===================================================================== */
 
 /* =====================================================================
-   MARQUEE
-===================================================================== */
-/* =====================================================================
    FEATURED PROJECT TEASER
 ===================================================================== */
 .featured-teaser{ padding:var(--s-8) 0; }
@@ -28,17 +25,4 @@
   font-size:clamp(24px,3.6vw,38px); letter-spacing:-.8px; line-height:1.05; margin-bottom:var(--s-3);
 }
 .featured-desc{ color:var(--ink-dim); font-size:15px; line-height:1.75; max-width:520px; margin-bottom:var(--s-4); }
-
-.marquee{
-  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-  overflow:hidden; padding:var(--s-3) 0; background:var(--panel);
-}
-.marquee-track{ display:flex; width:max-content; animation:marquee 26s linear infinite; }
-.marquee-track span{
-  font-family:var(--f-display); font-weight:800; text-transform:uppercase;
-  font-size:clamp(20px,3vw,32px); letter-spacing:-.5px; color:var(--ink-faint);
-  padding:0 var(--s-4); white-space:nowrap; display:flex; align-items:center; gap:var(--s-4);
-}
-.marquee-track span em{ font-style:normal; color:var(--accent); }
-@keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 

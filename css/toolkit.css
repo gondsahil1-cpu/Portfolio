@@ -7,11 +7,14 @@
    TOOLKIT (skills)
 ===================================================================== */
 .toolkit-list{ border-top:1px solid var(--line); }
-.toolkit-row{ border-bottom:1px solid var(--line); }
+.toolkit-row{ border-bottom:1px solid var(--line); transition:background .3s ease; }
+.toolkit-row:hover{ background:rgba(255,255,255,.025); }
 .toolkit-row-head{
   display:flex; align-items:center; justify-content:space-between; width:100%; text-align:left;
-  background:none; border:none; color:inherit; cursor:pointer; padding:var(--s-4) 0;
+  background:none; border:none; color:inherit; cursor:pointer; padding:var(--s-4) var(--s-2);
+  transition:padding-left .25s ease;
 }
+.toolkit-row-head:hover{ padding-left:var(--s-3); }
 .toolkit-title{
   font-family:var(--f-display); font-weight:800; text-transform:uppercase;
   font-size:clamp(19px,2.6vw,28px); letter-spacing:-.4px; display:flex; align-items:center; gap:14px;
@@ -21,6 +24,7 @@
 .toolkit-row-head .plus{ width:26px; height:26px; border:1px solid var(--line-strong); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; flex:none; transition:transform .3s ease, border-color .3s ease, color .3s ease; }
 .toolkit-row-head[aria-expanded="true"] .plus{ transform:rotate(45deg); border-color:var(--accent); color:var(--accent); }
 .toolkit-panel{ max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.16,1,.3,1); }
-.toolkit-tags{ display:flex; flex-wrap:wrap; gap:8px; padding:4px 0 var(--s-4) 46px; }
-.toolkit-tag{ font-family:var(--f-mono); font-size:12.5px; color:var(--ink-dim); border:1px solid var(--line-strong); border-radius:4px; padding:6px 11px; background:var(--panel); }
+.toolkit-tags{ display:flex; flex-wrap:wrap; gap:8px; padding:4px var(--s-2) var(--s-4) calc(46px + var(--s-2)); }
+.toolkit-tag{ font-family:var(--f-mono); font-size:12.5px; color:var(--ink-dim); border:1px solid var(--line-strong); border-radius:7px; padding:6px 11px; background:var(--panel); transition:border-color .2s ease, color .2s ease; }
+.toolkit-tag:hover{ border-color:var(--accent-line); color:var(--ink); }
 
