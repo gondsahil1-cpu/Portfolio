@@ -28,6 +28,13 @@
    Every element below keeps its original layout, spacing and colour
    tokens from its own section file (works.css, etc.) — this file only
    ever touches background/border/shadow/backdrop-filter.
+
+   RIM: every glass tier also gets --lg-rim(-sm), a tight near-white
+   inset pair (2px corner hit + 3px glow) borrowed from Apple's
+   liquid-glass reference material. It's what turns a soft ambient
+   blur into something that reads as a bevelled lens catching a point
+   light source, rather than frosted plastic. It's additive — appended
+   onto the existing box-shadow list — so nothing above needs to change.
 ===================================================================== */
 :root{
   /* tier 1 — major panels */
@@ -46,6 +53,23 @@
   --lg-r-xs:10px;
   --lg-r-pill:999px;
 
+  /* crisp corner catch-light — a tight, near-white inset pair that reads
+     as a real bevelled lens edge catching a point light source, layered
+     on top of the softer ambient inset above. This is the detail that
+     makes the surface read as *glass* rather than *frosted plastic*. */
+  --lg-rim:
+    inset 2px 2px 0px -2px rgba(255,255,255,.7),
+    inset 0 0 3px 1px rgba(255,255,255,.5);
+  --lg-rim-hover:
+    inset 2px 2px 0px -2px rgba(255,255,255,.85),
+    inset 0 0 4px 1px rgba(255,255,255,.6);
+  --lg-rim-sm:
+    inset 1px 1px 0px -1px rgba(255,255,255,.6),
+    inset 0 0 2px 1px rgba(255,255,255,.4);
+  --lg-rim-sm-hover:
+    inset 1px 1px 0px -1px rgba(255,255,255,.75),
+    inset 0 0 3px 1px rgba(255,255,255,.5);
+
   /* base tint carries a whisper of the accent so the glass reads as
      *this site's* material rather than a generic frosted white pane */
   --lg-tint:255,255,255;
@@ -53,27 +77,32 @@
   --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.12), rgba(var(--lg-tint-warm),.025) 45%, rgba(var(--lg-tint),.05));
   --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.17), rgba(var(--lg-tint-warm),.04) 45%, rgba(var(--lg-tint),.07));
 
-  /* layered shadow: a close/dark contact shadow + a soft/far ambient
-     shadow + a bright top inset and a much fainter second inset an
-     inch lower, which is what reads as "light passing through a few
-     millimetres of material" rather than a single flat sheen */
+  /* layered shadow: a big soft cast shadow (the panel lifting off the
+     page) + a close/dark contact shadow + a bright top inset and a
+     much fainter second inset an inch lower, which is what reads as
+     "light passing through a few millimetres of material" rather
+     than a single flat sheen */
   --lg-shadow:
-    0 24px 54px -24px rgba(0,0,0,.62), 0 6px 16px -8px rgba(0,0,0,.4),
+    0 60px 100px -24px rgba(0,0,0,.5), 0 24px 54px -24px rgba(0,0,0,.62), 0 6px 16px -8px rgba(0,0,0,.4),
     inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.3),
-    inset 0 12px 24px -20px rgba(255,255,255,.18);
+    inset 0 12px 24px -20px rgba(255,255,255,.18),
+    var(--lg-rim);
   --lg-shadow-hover:
-    0 30px 68px -24px rgba(0,0,0,.7), 0 8px 20px -8px rgba(0,0,0,.46),
+    0 72px 120px -24px rgba(0,0,0,.56), 0 30px 68px -24px rgba(0,0,0,.7), 0 8px 20px -8px rgba(0,0,0,.46),
     inset 0 1px 0 rgba(255,255,255,.44), inset 0 -1px 0 rgba(0,0,0,.32),
-    inset 0 14px 26px -20px rgba(255,255,255,.22);
+    inset 0 14px 26px -20px rgba(255,255,255,.22),
+    var(--lg-rim-hover);
 
   /* lighter-weight shadow used by tiles so small surfaces don't get
      the same heavy drop-shadow as a full card */
   --lg-bg-sm:linear-gradient(168deg, rgba(var(--lg-tint),.095), rgba(var(--lg-tint-warm),.02) 50%, rgba(var(--lg-tint),.04));
   --lg-bg-sm-hover:linear-gradient(168deg, rgba(var(--lg-tint),.15), rgba(var(--lg-tint-warm),.03) 50%, rgba(var(--lg-tint),.06));
   --lg-shadow-sm:
-    0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.24), inset 0 -1px 0 rgba(0,0,0,.22);
+    0 30px 50px -20px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.24), inset 0 -1px 0 rgba(0,0,0,.22),
+    var(--lg-rim-sm);
   --lg-shadow-sm-hover:
-    0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.24);
+    0 34px 58px -20px rgba(0,0,0,.46), 0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.24),
+    var(--lg-rim-sm-hover);
 }
 
 /* ---- backdrop colour now lives on the frame canvas itself (see
@@ -176,7 +205,7 @@ body{ background:transparent; }
   position:relative; isolation:isolate;
   background:var(--lg-bg-sm) !important;
   border-color:rgba(255,255,255,.14) !important;
-  box-shadow:0 4px 10px -6px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2) !important;
+  box-shadow:0 10px 18px -10px rgba(0,0,0,.35), 0 4px 10px -6px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2), var(--lg-rim-sm) !important;
   -webkit-backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
   backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
   transition:background .3s ease, border-color .25s ease, transform .25s ease;
@@ -200,7 +229,7 @@ body{ background:transparent; }
 .btn-primary, .btn-outline, .nav-cta, .resume-link{
   position:relative; isolation:isolate; overflow:hidden;
   border:1px solid rgba(255,255,255,.16) !important;
-  box-shadow:0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.22);
+  box-shadow:0 20px 34px -16px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.22), var(--lg-rim-sm);
   transition:background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
 .btn-outline, .nav-cta, .resume-link{ background:rgba(255,255,255,.06) !important; }
@@ -225,7 +254,7 @@ body{ background:transparent; }
 
 .btn-primary:hover, .btn-outline:hover, .nav-cta:hover, .resume-link:hover{
   border-color:rgba(255,255,255,.3) !important;
-  box-shadow:0 14px 30px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.36);
+  box-shadow:0 26px 44px -16px rgba(0,0,0,.46), 0 14px 30px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.36), var(--lg-rim-sm-hover);
   transform:scale(1.06);
 }
 .btn-primary:active, .btn-outline:active, .nav-cta:active, .resume-link:active{ transform:scale(.97); }
@@ -255,7 +284,8 @@ body{ background:transparent; }
   border-radius:999px !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08), inset 0 -1px 0 rgba(0,0,0,.2),
-    0 16px 40px -20px rgba(0,0,0,.6), 0 2px 10px -4px rgba(0,0,0,.4);
+    0 34px 60px -22px rgba(0,0,0,.55), 0 16px 40px -20px rgba(0,0,0,.6), 0 2px 10px -4px rgba(0,0,0,.4),
+    var(--lg-rim-sm);
   transition:
     background .45s cubic-bezier(.16,1,.3,1),
     border-color .4s ease,
@@ -271,7 +301,8 @@ body{ background:transparent; }
   backdrop-filter:blur(26px) saturate(180%) !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.25),
-    0 10px 26px -14px rgba(0, 0, 0, 0.198);
+    0 10px 26px -14px rgba(0, 0, 0, 0.198),
+    var(--lg-rim-sm);
 }
 /* hover: capsule breathes outward slightly and the glass brightens —
    scoped to fine pointers so touch taps don't get stuck "hovered" */
@@ -281,7 +312,8 @@ body{ background:transparent; }
     border-color:rgba(255,255,255,.24) !important;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.2),
-      0 20px 48px -18px rgba(0,0,0,.65), 0 4px 14px -4px rgba(0,0,0,.45);
+      0 40px 70px -22px rgba(0,0,0,.6), 0 20px 48px -18px rgba(0,0,0,.65), 0 4px 14px -4px rgba(0,0,0,.45),
+      var(--lg-rim-sm-hover);
   }
 }
 /* the SVG-distortion refraction filter is deliberately NOT applied here — it's

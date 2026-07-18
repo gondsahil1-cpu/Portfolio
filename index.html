@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="css/navigation.css?v=2" />
 <link rel="stylesheet" href="css/hero.css?v=2" />
 <link rel="stylesheet" href="css/featured.css?v=2" />
+<link rel="stylesheet" href="css/dashboard.css?v=1" />
 <link rel="stylesheet" href="css/section-shared.css?v=2" />
 <link rel="stylesheet" href="css/text-reel.css?v=2" />
 <link rel="stylesheet" href="css/works.css?v=2" />
@@ -84,7 +85,9 @@
         <ul class="nav-links" id="navLinks">
           <li><a href="#experience">Experience</a></li>
           <li><a href="#works">Works</a></li>
+          <li><a href="#labbench">Lab Bench</a></li>
           <li><a href="#studio">About</a></li>
+          <li><a href="#blog">Blog</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
         <a href="#contact" class="nav-cta btn-primary">Start a build ↗</a>
@@ -100,9 +103,11 @@
 <div class="menu-overlay" id="menuOverlay">
   <a href="#experience"><span>01</span>Experience</a>
   <a href="#works"><span>02</span>Works</a>
-  <a href="#studio"><span>03</span>About</a>
-  <a href="#roadmap"><span>04</span>Roadmap</a>
-  <a href="#contact"><span>05</span>Contact</a>
+  <a href="#labbench"><span>03</span>Lab Bench</a>
+  <a href="#studio"><span>04</span>About</a>
+  <a href="#blog"><span>05</span>Blog</a>
+  <a href="#roadmap"><span>06</span>Roadmap</a>
+  <a href="#contact"><span>07</span>Contact</a>
   <div class="menu-overlay-foot">
     <a href="https://github.com/gondsahil1-cpu" target="_blank" rel="noopener">GitHub</a>
     <a href="https://linkedin.com/in/sahilgond" target="_blank" rel="noopener">LinkedIn</a>
@@ -159,25 +164,24 @@
 </section>
 
 <!-- =========================================================
-  FEATURED PROJECT TEASER
+  ENGINEERING DASHBOARD
+  EDIT ME: these are running totals, not per-project stats — bump
+  them as new builds/hours/boards ship. Numbers count up once the
+  section scrolls into view (same mechanism as the About stat-grid).
 ========================================================= -->
-<section id="featured" class="featured-teaser">
+<section id="dashboard" class="dashboard-section">
   <div class="container">
-    <div class="featured-card reveal">
-      <div class="featured-visual">
-        <svg viewBox="0 0 64 64"><rect x="14" y="20" width="36" height="24" rx="4"/><circle cx="12" cy="32" r="6"/><circle cx="52" cy="32" r="6"/><path d="M22 20V14M42 20V14M20 14h6M40 14h6"/><path d="M28 30h8"/></svg>
-      </div>
-      <div class="featured-body">
-        <div class="section-label" style="margin-bottom:14px;">Flagship Project</div>
-        <h2 class="featured-title">Autonomous Maze Solving Robot</h2>
-        <p class="featured-desc">A differential-drive robot that reads three ultrasonic sensors and makes real-time turn decisions to solve a maze — no remote, no map, no external control.</p>
-        <div class="chip-row" style="margin-bottom:var(--s-4);">
-          <span class="chip">ESP32</span>
-          <span class="chip">3x Ultrasonic Sensors</span>
-          <span class="chip">Autonomous Navigation</span>
-        </div>
-        <a href="#works" class="btn-primary" id="featuredCta">View Case Study ↓</a>
-      </div>
+    <div class="section-head reveal">
+      <div class="section-label">By The Numbers</div>
+      <h2 class="section-heading">The engineering <span class="dim">dashboard.</span></h2>
+      <p class="section-intro">A running tally of what's actually shipped — not a project count that only goes up when a demo video does.</p>
+    </div>
+    <div class="dashboard-stats reveal">
+      <div class="stat"><div class="num" data-count="8">0</div><div class="lbl">Projects Built</div></div>
+      <div class="stat"><div class="num" data-count="450" data-suffix="+">0</div><div class="lbl">Hours Prototyping</div></div>
+      <div class="stat"><div class="num" data-count="5">0</div><div class="lbl">PCBs Designed</div></div>
+      <div class="stat"><div class="num" data-count="20" data-suffix="+">0</div><div class="lbl">Sensors Used</div></div>
+      <div class="stat"><div class="num" data-count="15">0</div><div class="lbl">GitHub Repositories</div></div>
     </div>
   </div>
 </section>
@@ -514,6 +518,76 @@
 </section>
 
 <!-- =========================================================
+  LAB BENCH
+  EDIT ME: the "note" on each card is a starting draft tying the part
+  to a real or roadmap build — swap in your own specifics as builds
+  change. Reuses .pipeline-list / .pipeline-item (defined in works.css
+  and education.css, previously unused) so no new CSS was needed.
+========================================================= -->
+<section id="labbench">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Lab Bench</div>
+      <h2 class="section-heading">Parts I've actually <span class="dim">put hands on.</span></h2>
+      <p class="section-intro">Every module below has been wired, flashed, and debugged inside a real build — not just read about in a datasheet.</p>
+    </div>
+
+    <div class="pipeline-list reveal">
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Microcontroller</span>
+        <div class="pipeline-title">ESP32</div>
+        <p class="pipeline-desc">The primary brain across every build — the RFID Attendance System's auth logic and the Maze Solving Robot's real-time turn decisions both run on it.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">RFID Reader</span>
+        <div class="pipeline-title">RC522</div>
+        <p class="pipeline-desc">Core of the RFID Attendance System — authenticates each tag against a stored ID list and hands off a timestamped, logged scan.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Ultrasonic Sensor</span>
+        <div class="pipeline-title">HC-SR04</div>
+        <p class="pipeline-desc">Three of these (front, left, right) feed the Maze Solving Robot's decision routine for real-time obstacle detection and turn selection.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Magnetic Encoder</span>
+        <div class="pipeline-title">AS5600</div>
+        <p class="pipeline-desc">On the bench for closed-loop position feedback ahead of the Robotic Arm build on the roadmap — contactless angle sensing for joint control.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Display · SSD1306</span>
+        <div class="pipeline-title">OLED</div>
+        <p class="pipeline-desc">Gives the RFID Attendance System its on-device status feedback for every scan, and is doing the same job for the Smart Home Automation build in progress.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">RTC Module</span>
+        <div class="pipeline-title">DS3231</div>
+        <p class="pipeline-desc">Keeps accurate time independent of network access — feeding real timestamps into attendance logging and scheduled routines on the Smart Home system.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Motor Driver</span>
+        <div class="pipeline-title">TB6612FNG</div>
+        <p class="pipeline-desc">A cleaner, lower-loss dual-motor driver than a bulky H-bridge module — evaluating it for the next revision of the differential-drive platform.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Buck Converter</span>
+        <div class="pipeline-title">LM2596</div>
+        <p class="pipeline-desc">Steps battery voltage down to a clean, stable logic-side rail so the MCU and sensors don't brown out when the motors draw current under load.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Micro Gearmotor</span>
+        <div class="pipeline-title">N20 Motors</div>
+        <p class="pipeline-desc">Compact, high-torque drive for smaller chassis builds — lined up for the Line Following Robot next on the roadmap.</p>
+      </div>
+      <div class="pipeline-item">
+        <span class="pipeline-tag">Power Source</span>
+        <div class="pipeline-title">Li-ion Battery &amp; BMS</div>
+        <p class="pipeline-desc">Portable power for every wheeled build, with the BMS guarding against over-discharge and cell imbalance across repeated test runs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
   STUDIO (about + timeline)
 ========================================================= -->
 <!-- =========================================================
@@ -687,6 +761,195 @@
       <li><span class="roadmap-mark">○</span><span class="roadmap-label">Solar Energy Monitoring</span><span class="roadmap-status">Planned</span></li>
       <li><span class="roadmap-mark">○</span><span class="roadmap-label">Custom Embedded Dev Board</span><span class="roadmap-status">Planned</span></li>
     </ul>
+  </div>
+</section>
+
+<!-- =========================================================
+  BLOG
+  EDIT ME: reuses the .works-list / .work-row expand pattern from
+  works.css so it matches the Works/Experience sections with no new
+  CSS. Swap in your own write-ups or link out to a real post as builds
+  progress — these are full first drafts, not placeholders.
+========================================================= -->
+<section id="blog">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-label">Field Notes</div>
+      <h2 class="section-heading">Writing it down <span class="dim">so it stays learned.</span></h2>
+      <p class="section-intro">Notes from the bench — what actually happened while building, not the polished version.</p>
+    </div>
+
+    <div class="works-list reveal">
+      <!-- ---------- POST 1 ---------- -->
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="blog-panel-1">
+          <div class="work-row-left">
+            <span class="work-index">01</span>
+            <div class="work-titles">
+              <div class="work-title">Building a Maze Solving Robot</div>
+              <div class="work-tagline">What actually breaks when there's no map and no remote.</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">Robotics · Navigation</span>
+            <span class="work-explore">Read<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="blog-panel-1">
+          <div class="work-panel-inner">
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.85; max-width:760px;">The hard part of an autonomous maze robot isn't reading a sensor — it's deciding what to do with a reading you don't fully trust. Ultrasonic distance is noisy, corridors reflect sound at odd angles, and a single bad reading turned into a turn command is a wall collision two seconds later.</p>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Three sensors, one decision</div>
+              <p>Front, left, and right ultrasonic sensors feed a simple priority routine: check front first, then compare left and right when the front is blocked. It sounds trivial written out like that, and the first version was — it also drove straight into corners the moment two readings arrived within a few centimeters of each other.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">The fix wasn't code, it was filtering</div>
+              <p>A short median filter across the last few readings, plus a minimum-confidence threshold before committing to a turn, cleaned up almost every false positive. The lesson generalizes: when an autonomous system misbehaves, the instinct is to rewrite the decision logic — half the time the actual problem is what you're feeding it.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Mechanical tolerance matters as much as firmware</div>
+              <p>A slightly uneven chassis introduced drift over long runs that no amount of sensor tuning could fully correct. Squaring the wheelbase turned out to matter as much as the decision algorithm — full write-up on the build is in the Works section above.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- POST 2 ---------- -->
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="blog-panel-2">
+          <div class="work-row-left">
+            <span class="work-index">02</span>
+            <div class="work-titles">
+              <div class="work-title">ESP32 Tips</div>
+              <div class="work-tagline">A running list of things that cost me a debugging session.</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">Embedded · ESP32</span>
+            <span class="work-explore">Read<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="blog-panel-2">
+          <div class="work-panel-inner">
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.85; max-width:760px;">Most ESP32 problems that look like "the board is broken" are actually power, brownout, or GPIO boot-strapping issues. A short list of the ones that have bitten me more than once:</p>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Power first, always</div>
+              <p>Driving motors, RFID readers, and Wi-Fi off the same rail as a weak USB supply causes brownout resets that look like random crashes. A dedicated regulated 5V/3.3V rail for the MCU, separate from anything with a motor on it, fixed more "mystery bugs" than any code change.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Boot-strapping pins bite quietly</div>
+              <p>GPIO0, GPIO2, and a few others have a role during boot — a sensor or LED wired to the wrong pin can silently prevent the board from starting normally, and it's rarely obvious from the symptom alone. Check the boot-strapping table before finalizing a pinout, not after debugging a "dead" board.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">The watchdog is a feature, not an annoyance</div>
+              <p>A blocking loop (a `delay()` inside a sensor poll, a stuck I2C transaction) trips the watchdog and resets the board — which felt like a bug until I realized it was the safety net catching a real hang. Better to design around it than disable it.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- POST 3 ---------- -->
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="blog-panel-3">
+          <div class="work-row-left">
+            <span class="work-index">03</span>
+            <div class="work-titles">
+              <div class="work-title">RFID Attendance, Explained</div>
+              <div class="work-tagline">How a tap actually becomes a logged, trusted record.</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">RFID · Systems</span>
+            <span class="work-explore">Read<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="blog-panel-3">
+          <div class="work-panel-inner">
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.85; max-width:760px;">An RFID tap looks instant, but there are a few steps happening between the tag entering the reader's field and a row landing in a log — and most of the reliability work lives in the parts you don't see.</p>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Read, then verify — don't trust the first read</div>
+              <p>The RC522 reads a tag's UID over its own RF field; the reader compares that UID against a known list on the microcontroller rather than trusting anything the tag itself claims to be. That distinction — authenticating against a local list instead of the tag's self-reported identity — is what makes the system tamper-resistant.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Debounce or you'll double-log everyone</div>
+              <p>A tag held near the reader for even half a second can register as multiple reads. A short debounce window after a valid scan, plus a "same tag, too soon" check, stops a single tap from becoming two attendance entries.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Feedback has to be immediate</div>
+              <p>The OLED confirmation on every scan — valid or invalid — turned out to matter more than any backend feature. A system that logs silently gets abandoned the first time someone isn't sure their tap registered.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- POST 4 ---------- -->
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="blog-panel-4">
+          <div class="work-row-left">
+            <span class="work-index">04</span>
+            <div class="work-titles">
+              <div class="work-title">PID Controllers, Practically</div>
+              <div class="work-tagline">The tuning process no textbook diagram shows you.</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">Control Theory · Motors</span>
+            <span class="work-explore">Read<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="blog-panel-4">
+          <div class="work-panel-inner">
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.85; max-width:760px;">A PID controller reads simple on paper — proportional, integral, derivative, add them up — and then falls apart the first time you tune one against a real motor with real friction and real sensor noise.</p>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Start with P, and expect it to oscillate</div>
+              <p>Proportional gain alone corrects error fast but overshoots and settles into an oscillation around the target — that's expected, not a failure. It's the baseline you tune the other two terms against, not something to "fix" by cranking it up further.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">I kills steady-state error, and it kills stability if you're not careful</div>
+              <p>Integral gain cleans up the small persistent offset P leaves behind, but it accumulates error over time — a real risk of windup if the system is stuck (a wheel against a wall) with error still being integrated. A clamp on the integral term saved more than one run.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">D is the one everyone forgets to filter</div>
+              <p>Derivative gain damps the oscillation P introduces, but it's also the term most sensitive to sensor noise — an unfiltered derivative on a noisy encoder reading amplifies jitter instead of damping it. A light low-pass filter on the input before differentiating made the difference between smooth and twitchy motion.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- POST 5 ---------- -->
+      <article class="work-row">
+        <button class="work-row-head" aria-expanded="false" aria-controls="blog-panel-5">
+          <div class="work-row-left">
+            <span class="work-index">05</span>
+            <div class="work-titles">
+              <div class="work-title">Wall Following Algorithm</div>
+              <div class="work-tagline">Keeping a fixed distance from something you can't see the shape of.</div>
+            </div>
+          </div>
+          <div class="work-row-right">
+            <span class="work-meta-tags">Algorithms · Navigation</span>
+            <span class="work-explore">Read<span class="plus">+</span></span>
+          </div>
+        </button>
+        <div class="work-panel" id="blog-panel-5">
+          <div class="work-panel-inner">
+            <p style="color:var(--ink-dim); font-size:15.5px; line-height:1.85; max-width:760px;">Wall following sounds simpler than full maze-solving — keep a wall on one side, maintain a set distance — but it exposes a different set of problems: what "distance" means changes constantly as the wall angle changes, and the algorithm has no memory of the maze's actual shape.</p>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Right-hand rule, until it isn't enough</div>
+              <p>The simplest version — always keep turning to follow the wall on your right — guarantees you eventually solve a simply-connected maze, but it makes no attempt at an efficient path. It's a good fallback, not a good primary strategy, once the goal shifts from "solve it" to "solve it well."</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">A single side sensor isn't distance, it's a snapshot</div>
+              <p>One side-facing ultrasonic reading tells you the distance to whatever's directly across from it right now — it says nothing about whether the wall is approaching, receding, or about to open into a junction. Comparing consecutive readings (is distance increasing or decreasing) turned a static number into something closer to a trajectory.</p>
+            </div>
+            <div class="work-block" style="margin-top:var(--s-4);">
+              <div class="work-block-title">Junctions are where it actually gets interesting</div>
+              <p>The front sensor opening up while the side sensor still reads a wall is the signal for an intersection, and that's the moment the maze-solving logic (rather than pure wall-following) has to take over the decision. Getting that handoff clean was most of the actual engineering effort.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -1125,7 +1388,7 @@
   // ACTIVE NAV ON SCROLL
   // =========================
   (function(){
-    const sections = ['home','experience','works','toolkit','studio','contact'].map(id => document.getElementById(id)).filter(Boolean);
+    const sections = ['home','experience','works','labbench','toolkit','studio','blog','contact'].map(id => document.getElementById(id)).filter(Boolean);
     const links = document.querySelectorAll('.nav-links a');
     function update(){
       let current = sections[0];

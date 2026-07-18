@@ -1,0 +1,16 @@
+/* =====================================================================
+   ENGINEERING DASHBOARD
+   Sits right under the hero — a 5-across counter grid. Reuses .stat /
+   .num[data-count] / .lbl from studio.css (and the count-up script in
+   index.html, which already targets ".stat .num[data-count]" generically)
+   so no new counter logic is needed here, just the layout.
+===================================================================== */
+.dashboard-stats{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:var(--s-3);
+}
+@media (max-width:900px){
+  .dashboard-stats{ grid-template-columns:repeat(3,1fr); }
+}
+@media (max-width:560px){
+  .dashboard-stats{ grid-template-columns:repeat(2,1fr); }
+}

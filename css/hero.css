@@ -77,11 +77,6 @@
 }
 .btn-outline:hover{ border-color:var(--accent); color:var(--accent); }
 
-.hero-scope{ position:absolute; left:0; right:0; bottom:0; height:86px; opacity:.55; }
-.hero-scope svg{ width:100%; height:100%; }
-.hero-scope path{ stroke:var(--accent); fill:none; stroke-width:1.4; stroke-dasharray:6 5; animation:scopeflow 4.2s linear infinite; }
-@keyframes scopeflow{ to{ stroke-dashoffset:-420; } }
-
 .hero-scroll-cue{
   position:absolute; left:var(--s-5); bottom:var(--s-4); z-index:3;
   display:flex; align-items:center; gap:10px;
@@ -106,6 +101,7 @@
   position:relative; isolation:isolate; justify-self:end; width:100%; max-width:340px;
   opacity:0; transform:translateX(70px);
   transition:opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
+  perspective:1400px;
 }
 .hero-portrait.visible{ opacity:1; transform:translateX(0); }
 @media (max-width:900px){ .hero-portrait{ justify-self:center; max-width:280px; } }
@@ -116,17 +112,85 @@
   filter:blur(42px); pointer-events:none;
 }
 
+/* =====================================================================
+   PORTRAIT DEPTH — decorative layers sunk into the perspective behind
+   the photo (dot-grid, spinning ring, offset frame, floating marks),
+   plus a 3D "stage" wrapper that tilts gently on mouse-move (see
+   index.html HERO CURSOR GLOW script) so the photo genuinely reads as
+   a raised object floating above the graphics, not a flat overlay.
+===================================================================== */
+.portrait-decor{ position:absolute; inset:-14% -18%; pointer-events:none; transform-style:preserve-3d; }
+
+.portrait-decor-grid{
+  position:absolute; right:-6%; bottom:-8%; width:64%; height:64%;
+  background-image:radial-gradient(var(--ink-faint) 1px, transparent 1.4px);
+  background-size:15px 15px; opacity:.32; border-radius:14px;
+  transform:translateZ(-90px);
+  mask-image:radial-gradient(circle at center, #000 55%, transparent 92%);
+  -webkit-mask-image:radial-gradient(circle at center, #000 55%, transparent 92%);
+}
+
+.portrait-decor-ring{
+  position:absolute; left:-9%; top:-7%; width:132px; height:132px;
+  border:1px solid var(--accent-line); border-radius:50%;
+  transform:translateZ(-60px);
+  animation:portraitringspin 26s linear infinite;
+}
+.portrait-decor-ring::before{
+  content:""; position:absolute; inset:16px; border:1px dashed var(--line-strong); border-radius:50%;
+}
+@keyframes portraitringspin{ to{ transform:translateZ(-60px) rotate(360deg); } }
+
+.portrait-decor-frame{
+  position:absolute; inset:5% 9%; border:1.5px solid var(--accent-line); border-radius:12px;
+  transform:translate(24px,28px) translateZ(-30px) rotate(-3deg);
+}
+
+.portrait-decor-mark{
+  position:absolute; width:22px; height:22px; right:4%; top:8%;
+  font-family:var(--f-mono); font-size:18px; line-height:1; color:var(--accent);
+  display:flex; align-items:center; justify-content:center; opacity:.75;
+  transform:translateZ(10px);
+}
+.portrait-decor-mark.alt{ right:auto; left:2%; top:auto; bottom:12%; font-size:12px; opacity:.4; transform:translateZ(-10px); }
+
+.hero-portrait-stage{
+  position:relative; transform-style:preserve-3d;
+  transform:rotateX(var(--tiltx,0deg)) rotateY(var(--tilty,0deg));
+  transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+
 .hero-portrait-frame{
   position:relative; aspect-ratio:3/4; border:1.5px solid var(--line-strong); border-radius:10px;
   overflow:hidden; background:var(--panel);
-  transition:transform .5s cubic-bezier(.22,1,.36,1), border-color .3s ease;
+  transform:translateZ(50px);
+  box-shadow:
+    0 30px 50px -20px rgba(0,0,0,.7),
+    0 10px 22px -10px rgba(0,0,0,.55),
+    0 0 0 1px rgba(255,255,255,.03);
+  transition:transform .5s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .5s ease;
 }
-.hero-portrait:hover .hero-portrait-frame{ transform:translateY(-6px); border-color:var(--accent-line); }
+.hero-portrait:hover .hero-portrait-frame{
+  transform:translateZ(70px) translateY(-6px);
+  border-color:var(--accent-line);
+  box-shadow:
+    0 40px 64px -20px rgba(0,0,0,.75),
+    0 14px 26px -10px rgba(0,0,0,.6),
+    0 0 34px -6px rgba(232,163,61,.4);
+}
 .hero-portrait-frame::after{
   content:""; position:absolute; inset:0; border:1.5px solid var(--accent-line); border-radius:10px;
   transform:translate(16px,16px); z-index:-1; pointer-events:none;
 }
 .hero-portrait-frame img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(55%) contrast(1.05); }
+
+@media (prefers-reduced-motion:reduce){
+  .portrait-decor-ring{ animation:none; }
+  .hero-portrait-stage{ transition:none; }
+}
+@media (max-width:900px){
+  .portrait-decor{ display:none; }
+}
 .hero-portrait-fallback{
   display:none; position:absolute; inset:0; flex-direction:column; align-items:center; justify-content:center;
   gap:12px; color:var(--ink-faint); font-family:var(--f-mono); font-size:11px; text-align:center; padding:var(--s-3);

@@ -47,7 +47,7 @@
 .work-panel{ max-height:0; overflow:hidden; transition:max-height .5s cubic-bezier(.16,1,.3,1); }
 .work-panel-inner{
   padding:var(--s-4) var(--s-5) var(--s-6);
-  border-top:1px solid rgba(255, 255, 255, 0.558);
+  border-top:1px solid rgba(255,255,255,.08);
 }
 @media (max-width:640px){ .work-panel-inner{ padding:var(--s-3) var(--s-3) var(--s-5); } }
 
