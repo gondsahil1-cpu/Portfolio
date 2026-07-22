@@ -38,18 +38,18 @@
 ===================================================================== */
 :root{
   /* tier 1 — major panels */
-  --lg-blur:24px;
+  --lg-blur:12px;
   --lg-sat:172%;
   /* tier 3 — rows & tiles */
-  --lg-blur-md:13px;
+  --lg-blur-md:7px;
   --lg-sat-md:152%;
   /* tier 4 — chips & tags */
-  --lg-blur-sm:8px;
+  --lg-blur-sm:4px;
   --lg-sat-sm:138%;
 
-  --lg-r-lg:32px;
-  --lg-r-md:26px;
-  --lg-r-sm:18px;
+  --lg-r-lg:20px;
+  --lg-r-md:16px;
+  --lg-r-sm:14px;
   --lg-r-xs:10px;
   --lg-r-pill:999px;
 
@@ -72,33 +72,38 @@
 
   /* base tint carries a whisper of the accent so the glass reads as
      *this site's* material rather than a generic frosted white pane */
-  --lg-tint:255,255,255;
-  --lg-tint-warm:238,221,190;
-  --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.16), rgba(var(--lg-tint-warm),.04) 45%, rgba(var(--lg-tint),.07));
-  --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.22), rgba(var(--lg-tint-warm),.055) 45%, rgba(var(--lg-tint),.1));
+  /* base tint switched from white to dark: the frame footage behind
+     these cards is light-coloured, so a white-leaning frost would
+     nearly disappear into it. A dark "smoked glass" tint keeps the
+     card readable as its own object and gives the accent-coloured
+     text (see --ink in base.css) something to sit clearly on top of. */
+  --lg-tint:10,9,7;
+  --lg-tint-warm:54,38,16;
+  --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.24), rgba(var(--lg-tint-warm),.16) 45%, rgba(var(--lg-tint),.3));
+  --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.3), rgba(var(--lg-tint-warm),.2) 45%, rgba(var(--lg-tint),.36));
 
-  /* layered shadow: a big soft cast shadow (the panel lifting off the
-     page) + a close/dark contact shadow + a bright top inset and a
-     much fainter second inset an inch lower, which is what reads as
-     "light passing through a few millimetres of material" rather
-     than a single flat sheen */
+  /* shadow tuned to "small" intensity — one soft cast shadow, one tight
+     contact shadow, the bevel highlights, and a gentle accent-tinted
+     ambient glow around the edge (the "glowIntensity: sm" read from the
+     reference component) instead of the previous heavy multi-layer stack */
   --lg-shadow:
-    0 60px 100px -24px rgba(0,0,0,.5), 0 24px 54px -24px rgba(0,0,0,.62), 0 6px 16px -8px rgba(0,0,0,.4),
-    inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.3),
-    inset 0 16px 30px -20px rgba(255,255,255,.26),
+    0 18px 34px -18px rgba(0,0,0,.32), 0 6px 14px -10px rgba(0,0,0,.3),
+    inset 0 1px 0 rgba(255,255,255,.4), inset 0 -1px 0 rgba(0,0,0,.26),
+    0 0 28px -10px rgba(232,163,61,.22),
     var(--lg-rim);
   --lg-shadow-hover:
-    0 72px 120px -24px rgba(0,0,0,.56), 0 30px 68px -24px rgba(0, 0, 0, 0.392), 0 8px 20px -8px rgba(0,0,0,.46),
-    inset 0 1px 0 rgba(255,255,255,.56), inset 0 -1px 0 rgba(0,0,0,.32),
-    inset 0 18px 32px -20px rgba(255,255,255,.32),
+    0 24px 44px -18px rgba(0,0,0,.38), 0 8px 18px -10px rgba(0,0,0,.36),
+    inset 0 1px 0 rgba(255,255,255,.52), inset 0 -1px 0 rgba(0,0,0,.28),
+    0 0 40px -8px rgba(232,163,61,.32),
     var(--lg-rim-hover);
 
   /* lighter-weight shadow used by tiles so small surfaces don't get
      the same heavy drop-shadow as a full card */
-  --lg-bg-sm:linear-gradient(168deg, rgba(var(--lg-tint),.13), rgba(var(--lg-tint-warm),.03) 50%, rgba(var(--lg-tint),.055));
-  --lg-bg-sm-hover:linear-gradient(168deg, rgba(var(--lg-tint),.19), rgba(var(--lg-tint-warm),.04) 50%, rgba(var(--lg-tint),.08));
+  --lg-bg-sm:linear-gradient(168deg, rgba(var(--lg-tint),.2), rgba(var(--lg-tint-warm),.12) 50%, rgba(var(--lg-tint),.26));
+  --lg-bg-sm-hover:linear-gradient(168deg, rgba(var(--lg-tint),.26), rgba(var(--lg-tint-warm),.16) 50%, rgba(var(--lg-tint),.32));
   --lg-shadow-sm:
-    0 30px 50px -20px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.22),
+    0 12px 24px -14px rgba(0,0,0,.3), 0 4px 10px -8px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.3), inset 0 -1px 0 rgba(0,0,0,.2),
+    0 0 20px -10px rgba(232,163,61,.18),
     var(--lg-rim-sm);
   --lg-shadow-sm-hover:
     0 34px 58px -20px rgba(0,0,0,.46), 0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.24),
@@ -232,7 +237,7 @@ body{ background:transparent; }
   box-shadow:0 20px 34px -16px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.22), var(--lg-rim-sm);
   transition:background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
-.btn-outline, .nav-cta, .resume-link{ background:rgba(255,255,255,.06) !important; }
+.btn-outline, .nav-cta, .resume-link{ background:rgba(10,9,7,.22) !important; }
 .btn-primary{
   background:linear-gradient(168deg, rgba(232,163,61,.92), rgba(232,163,61,.78)) !important;
   color:var(--accent-ink) !important; border-color:rgba(232,163,61,.55) !important;
@@ -278,8 +283,8 @@ body{ background:transparent; }
 .navbar > *{ position:relative; z-index:2; }
 .navbar{
   background:linear-gradient(180deg, rgba(22,21,19,.58), rgba(12,11,10,.42)) !important;
-  -webkit-backdrop-filter:blur(18px) saturate(var(--lg-sat)) !important;
-  backdrop-filter:blur(18px) saturate(var(--lg-sat)) !important;
+  -webkit-backdrop-filter:blur(9px) saturate(var(--lg-sat)) !important;
+  backdrop-filter:blur(9px) saturate(var(--lg-sat)) !important;
   border:1px solid rgba(255, 255, 255, 0.066) !important;
   border-radius:999px !important;
   box-shadow:
@@ -297,8 +302,8 @@ body{ background:transparent; }
    change here (the height/padding shrink is handled in navigation.css) */
 .navbar.nav-compact{
   background:linear-gradient(180deg, rgba(16, 15, 14, 0.205), rgba(9, 9, 8, 0.218)) !important;
-  -webkit-backdrop-filter:blur(26px) saturate(180%) !important;
-  backdrop-filter:blur(26px) saturate(180%) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(180%) !important;
+  backdrop-filter:blur(14px) saturate(180%) !important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.25),
     0 10px 26px -14px rgba(0, 0, 0, 0.198),
@@ -339,10 +344,10 @@ body{ background:transparent; }
 .menu-overlay > *{ position:relative; z-index:2; }
 .menu-overlay{
   background:linear-gradient(165deg, rgba(16,15,14,.9), rgba(9,9,8,.96)) !important;
-  -webkit-backdrop-filter:blur(24px) saturate(var(--lg-sat));
-  backdrop-filter:blur(24px) saturate(var(--lg-sat));
+  -webkit-backdrop-filter:blur(12px) saturate(var(--lg-sat));
+  backdrop-filter:blur(12px) saturate(var(--lg-sat));
 }
-.lightbox{ -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); }
+.lightbox{ -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
 .lightbox-close, .menu-toggle{
   background:var(--lg-bg-sm) !important;
   border-color:rgba(255,255,255,.16) !important;

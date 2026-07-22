@@ -7,15 +7,15 @@
 ===================================================================== */
 
 :root{
-  --bg:#090908;
-  --panel:#111110;
-  --panel-raised:#161615;
-  --ink:#f3f1ea;
-  --ink-dim:#9c988e;
-  --ink-faint:#7c766d;
+  --bg:#09090855;
+  --panel:#11111000;
+  --panel-raised:#16161509;
+  --ink:#fbfaf8;
+  --ink-dim:#2b2924;
+  --ink-faint:#e1ffc1;
   --line:#232220;
   --line-strong:#312f2b;
-  --accent:#e8a33d;
+  --accent:#f3c745;
   --accent-dim:rgba(232,163,61,0.10);
   --accent-line:rgba(232,163,61,0.4);
   --accent-ink:#0b0a08;

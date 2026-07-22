@@ -23,9 +23,9 @@
      the glass panels' blur/refraction has something to catch. Once
      real footage lands this still shows through briefly on load. */
   background:
-    radial-gradient(1100px 700px at 22% -6%, rgba(232,163,61,0.16), transparent 58%),
-    radial-gradient(900px 620px at 88% 18%, rgba(232,163,61,0.08), transparent 60%),
-    linear-gradient(160deg, #201d16 0%, #16140f 38%, #100f0c 70%, #0a0a08 100%);
+    radial-gradient(1100px 700px at 22% -6%, rgba(232,163,61,0.22), transparent 60%),
+    radial-gradient(900px 620px at 88% 18%, rgba(232,163,61,0.13), transparent 62%),
+    linear-gradient(160deg, #3a352a 0%, #2a2620 38%, #201d18 70%, #17150f 100%);
 }
 
 /* Readability scrim over the frames — sections have no opaque
@@ -36,12 +36,12 @@
 .frame-bg-scrim{
   position:fixed; inset:0; z-index:1; pointer-events:none;
   background:
-    linear-gradient(180deg, rgba(9, 9, 8, 0.18) 0%, rgba(9, 9, 8, 0.28) 45%, rgba(9, 9, 8, 0.42) 100%);
+    linear-gradient(180deg, rgba(9, 9, 8, 0.1) 0%, rgba(9, 9, 8, 0.16) 45%, rgba(9, 9, 8, 0.26) 100%);
 }
 
 @media (max-width:900px){
   /* frames are heavier to decode on mobile GPUs and the scrub is less
      legible on a short scroll range anyway — dim a bit further, still
      well short of the old near-opaque black */
-  .frame-bg-scrim{ background:linear-gradient(180deg, rgba(9,9,8,.32) 0%, rgba(9,9,8,.48) 100%); }
+  .frame-bg-scrim{ background:linear-gradient(180deg, rgba(9,9,8,.2) 0%, rgba(9,9,8,.32) 100%); }
 }
