@@ -1818,7 +1818,7 @@
     // Desktop and mobile each get their own footage, frame count and
     // memory budget — mobile stays lighter (fewer frames kept warm,
     // smaller cache, capped DPR below) since it's on weaker GPUs/networks.
-    const FRAME_COUNT      = IS_MOBILE ? 90 : 660;                 // <- set to your exported frame count for each
+    const FRAME_COUNT      = IS_MOBILE ? 646 : 660;                 // <- set to your exported frame count for each
     const FRAME_PATH       = IS_MOBILE
       ? i => `images/frames/mobile/frame_${String(i).padStart(3,'0')}.jpg`
       : i => `images/frames/vaporwave/frame_${String(i).padStart(3,'0')}.jpg`;
