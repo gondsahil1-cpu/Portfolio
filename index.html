@@ -1805,23 +1805,35 @@
   //   3. Set FRAME_COUNT below to however many frames you exported.
   // Until then, this script finds nothing at that path and the canvas
   // just shows the plain --bg colour — nothing else on the site changes.
+  //
+  // MOBILE gets its own separate set below (own folder, own count) —
+  // different footage/crop than desktop, not just the desktop frames
+  // resized. Export it the same way but lighter, e.g.:
+  //   ffmpeg -i mobile-input.mp4 -vf "fps=6,scale=640:-1" -q:v 7 images/frames/mobile/frame_%03d.jpg
+  // and drop the files in images/frames/mobile/.
   // =========================
   (function(){
-    const FRAME_COUNT      = 660;                 // <- set to your exported frame count
-    const FRAME_PATH       = i => `images/frames/vaporwave/frame_${String(i).padStart(3,'0')}.jpg`;
+    const IS_MOBILE = window.matchMedia('(max-width:900px)').matches;
+
+    // Desktop and mobile each get their own footage, frame count and
+    // memory budget — mobile stays lighter (fewer frames kept warm,
+    // smaller cache, capped DPR below) since it's on weaker GPUs/networks.
+    const FRAME_COUNT      = IS_MOBILE ? 90 : 660;                 // <- set to your exported frame count for each
+    const FRAME_PATH       = IS_MOBILE
+      ? i => `images/frames/mobile/frame_${String(i).padStart(3,'0')}.jpg`
+      : i => `images/frames/vaporwave/frame_${String(i).padStart(3,'0')}.jpg`;
     const FRAME_SCOPE      = 'page';               // 'page' = scrub across the whole document; 'hero' = only while the hero section scrolls by
-    const PRELOAD_RADIUS   = 4;                    // frames kept warm on either side of the current index
-    const CACHE_LIMIT      = 40;                   // max decoded frames held in memory at once
+    const PRELOAD_RADIUS   = IS_MOBILE ? 2 : 4;    // frames kept warm on either side of the current index
+    const CACHE_LIMIT      = IS_MOBILE ? 16 : 40;  // max decoded frames held in memory at once
 
     const canvas = document.getElementById('frameBgCanvas');
     if (!canvas) return;
 
-    // Skip the whole frame sequence where bandwidth/memory are precious:
-    // small screens (frame-bg.css already just applies a darker scrim
-    // there) and browsers/users flagging Data Saver. The canvas quietly
-    // stays the plain --bg colour, same as the "no frames yet" fallback.
-    const skipFrames = window.matchMedia('(max-width:900px)').matches ||
-      (navigator.connection && navigator.connection.saveData);
+    // Data Saver users still get the plain --bg fallback regardless of
+    // screen size — everyone else (mobile included) now gets a frame
+    // sequence, just a lighter mobile-specific one instead of being
+    // skipped entirely.
+    const skipFrames = (navigator.connection && navigator.connection.saveData);
     if (skipFrames) {
       window.FrameBG = { setOverride(){}, clearOverride(){} };
       return;
@@ -1843,7 +1855,7 @@
     // quadrupling the pixels drawImage() has to resample every single
     // frame for no visible benefit. Capping it is the single biggest
     // win here for scroll smoothness.
-    const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    const DPR = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1 : 1.5);
 
     function progress(){
       if (overrideProgress !== null) return overrideProgress;
