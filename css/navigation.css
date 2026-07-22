@@ -140,10 +140,17 @@
   transition:max-width .5s cubic-bezier(.16,1,.3,1), opacity .25s ease, margin-left .5s cubic-bezier(.16,1,.3,1);
 }
 /* the capsule always stays open on mobile/touch widths — nav-links are
-   already hidden there and .menu-toggle (the real mobile menu entry
-   point) lives inside .nav-collapsible, so it must stay reachable */
+   already hidden there (see @media rule further down) and .menu-toggle
+   (the real mobile menu entry point) lives inside .nav-collapsible, so
+   it must stay reachable. This overrides the nav-collapsed "pill"
+   state, which is a desktop-only affordance — on mobile it must never
+   collapse away the hamburger, so every property that state touches
+   gets forced back open here. */
 @media (max-width:900px){
-  .nav-collapsible{ display:none; }
+  .nav-collapsible,
+  .navbar.nav-collapsed .nav-collapsible{
+    display:flex; max-width:none; opacity:1; margin-left:var(--s-4); pointer-events:auto;
+  }
 }
 
 .nav-right{ display:flex; align-items:center; gap:var(--s-3); }
