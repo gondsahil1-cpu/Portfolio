@@ -58,24 +58,24 @@
      on top of the softer ambient inset above. This is the detail that
      makes the surface read as *glass* rather than *frosted plastic*. */
   --lg-rim:
-    inset 2px 2px 0px -2px rgba(255,255,255,.7),
-    inset 0 0 3px 1px rgba(255,255,255,.5);
-  --lg-rim-hover:
     inset 2px 2px 0px -2px rgba(255,255,255,.85),
     inset 0 0 4px 1px rgba(255,255,255,.6);
+  --lg-rim-hover:
+    inset 2px 2px 0px -2px rgba(255,255,255,1),
+    inset 0 0 5px 1px rgba(255,255,255,.7);
   --lg-rim-sm:
-    inset 1px 1px 0px -1px rgba(255,255,255,.6),
-    inset 0 0 2px 1px rgba(255,255,255,.4);
+    inset 1px 1px 0px -1px rgba(255,255,255,.72),
+    inset 0 0 3px 1px rgba(255,255,255,.48);
   --lg-rim-sm-hover:
-    inset 1px 1px 0px -1px rgba(255,255,255,.75),
-    inset 0 0 3px 1px rgba(255,255,255,.5);
+    inset 1px 1px 0px -1px rgba(255,255,255,.88),
+    inset 0 0 4px 1px rgba(255,255,255,.58);
 
   /* base tint carries a whisper of the accent so the glass reads as
      *this site's* material rather than a generic frosted white pane */
   --lg-tint:255,255,255;
   --lg-tint-warm:238,221,190;
-  --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.12), rgba(var(--lg-tint-warm),.025) 45%, rgba(var(--lg-tint),.05));
-  --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.17), rgba(var(--lg-tint-warm),.04) 45%, rgba(var(--lg-tint),.07));
+  --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.16), rgba(var(--lg-tint-warm),.04) 45%, rgba(var(--lg-tint),.07));
+  --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.22), rgba(var(--lg-tint-warm),.055) 45%, rgba(var(--lg-tint),.1));
 
   /* layered shadow: a big soft cast shadow (the panel lifting off the
      page) + a close/dark contact shadow + a bright top inset and a
@@ -84,24 +84,24 @@
      than a single flat sheen */
   --lg-shadow:
     0 60px 100px -24px rgba(0,0,0,.5), 0 24px 54px -24px rgba(0,0,0,.62), 0 6px 16px -8px rgba(0,0,0,.4),
-    inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.3),
-    inset 0 12px 24px -20px rgba(255,255,255,.18),
+    inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.3),
+    inset 0 16px 30px -20px rgba(255,255,255,.26),
     var(--lg-rim);
   --lg-shadow-hover:
-    0 72px 120px -24px rgba(0,0,0,.56), 0 30px 68px -24px rgba(0,0,0,.7), 0 8px 20px -8px rgba(0,0,0,.46),
-    inset 0 1px 0 rgba(255,255,255,.44), inset 0 -1px 0 rgba(0,0,0,.32),
-    inset 0 14px 26px -20px rgba(255,255,255,.22),
+    0 72px 120px -24px rgba(0,0,0,.56), 0 30px 68px -24px rgba(0, 0, 0, 0.392), 0 8px 20px -8px rgba(0,0,0,.46),
+    inset 0 1px 0 rgba(255,255,255,.56), inset 0 -1px 0 rgba(0,0,0,.32),
+    inset 0 18px 32px -20px rgba(255,255,255,.32),
     var(--lg-rim-hover);
 
   /* lighter-weight shadow used by tiles so small surfaces don't get
      the same heavy drop-shadow as a full card */
-  --lg-bg-sm:linear-gradient(168deg, rgba(var(--lg-tint),.095), rgba(var(--lg-tint-warm),.02) 50%, rgba(var(--lg-tint),.04));
-  --lg-bg-sm-hover:linear-gradient(168deg, rgba(var(--lg-tint),.15), rgba(var(--lg-tint-warm),.03) 50%, rgba(var(--lg-tint),.06));
+  --lg-bg-sm:linear-gradient(168deg, rgba(var(--lg-tint),.13), rgba(var(--lg-tint-warm),.03) 50%, rgba(var(--lg-tint),.055));
+  --lg-bg-sm-hover:linear-gradient(168deg, rgba(var(--lg-tint),.19), rgba(var(--lg-tint-warm),.04) 50%, rgba(var(--lg-tint),.08));
   --lg-shadow-sm:
-    0 30px 50px -20px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.24), inset 0 -1px 0 rgba(0,0,0,.22),
+    0 30px 50px -20px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.22),
     var(--lg-rim-sm);
   --lg-shadow-sm-hover:
-    0 34px 58px -20px rgba(0,0,0,.46), 0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.32), inset 0 -1px 0 rgba(0,0,0,.24),
+    0 34px 58px -20px rgba(0,0,0,.46), 0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.24),
     var(--lg-rim-sm-hover);
 }
 
@@ -122,7 +122,7 @@ body{ background:transparent; }
 .featured-card, .edu-card, .building-card, .contact-form, .github-card{
   position:relative; isolation:isolate; overflow:hidden;
   background:var(--lg-bg) !important;
-  border:1px solid rgba(255,255,255,.14) !important;
+  border:1px solid rgba(255,255,255,.2) !important;
   box-shadow:var(--lg-shadow) !important;
   -webkit-backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
   backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
@@ -136,7 +136,7 @@ body{ background:transparent; }
    an actual curved, reflective surface instead of frosted paint */
 .featured-card::after, .edu-card::after, .building-card::after, .contact-form::after, .github-card::after{
   content:""; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
-  background:radial-gradient(240px 200px at var(--lg-mx,30%) var(--lg-my,0%), rgba(226, 7, 7, 0.102), transparent 65%);
+  background:radial-gradient(240px 200px at var(--lg-mx,30%) var(--lg-my,0%), rgba(255,255,255,.18), transparent 65%);
   opacity:0; transition:opacity .4s cubic-bezier(.22,1,.36,1);
 }
 .featured-card:hover::after, .edu-card:hover::after, .building-card:hover::after, .contact-form:hover::after, .github-card:hover::after{ opacity:1; }
@@ -144,7 +144,7 @@ body{ background:transparent; }
    flat top-to-bottom fade — reads much closer to a real bevelled edge */
 .featured-card::before, .edu-card::before, .building-card::before, .contact-form::before, .github-card::before{
   content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; z-index:2; pointer-events:none;
-  background:conic-gradient(from 218deg at 50% 50%, rgba(255,255,255,.7), rgba(255,255,255,.04) 30%, rgba(255,255,255,.02) 55%, rgba(255,255,255,.3) 82%, rgba(255,255,255,.7));
+  background:conic-gradient(from 218deg at 50% 50%, rgba(255,255,255,.85), rgba(255,255,255,.06) 30%, rgba(255,255,255,.03) 55%, rgba(255,255,255,.4) 82%, rgba(255,255,255,.85));
   -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor; mask-composite:exclude;
 }
@@ -176,7 +176,7 @@ body{ background:transparent; }
 .work-row, .gallery-item, .stat, .metric, .pipeline-item, .edu-icon, .work-visual{
   position:relative; isolation:isolate;
   background:var(--lg-bg-sm) !important;
-  border-color:rgba(255,255,255,.12) !important;
+  border-color:rgba(255,255,255,.18) !important;
   box-shadow:var(--lg-shadow-sm) !important;
   -webkit-backdrop-filter:blur(var(--lg-blur-md)) saturate(var(--lg-sat-md)) !important;
   backdrop-filter:blur(var(--lg-blur-md)) saturate(var(--lg-sat-md)) !important;
