@@ -121,3 +121,54 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .split-ready .split-word span{ transform:translateY(0); opacity:1; }
 
+/* GitHub */
+
+.github-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    gap:24px;
+    margin-top:48px;
+}
+
+.github-card{
+    width:100%;
+    display:block;
+    border-radius:18px;
+    transition:.35s ease;
+}
+
+.github-card:hover{
+    transform:translateY(-6px);
+}
+
+.github-wide{
+    grid-column:1/-1;
+}
+
+.github-graph{
+    margin-top:28px;
+}
+
+.github-graph img{
+    width:100%;
+    display:block;
+    border-radius:18px;
+}
+
+.github-actions{
+    margin-top:32px;
+    display:flex;
+    justify-content:center;
+}
+
+@media (max-width:768px){
+
+    .github-grid{
+        grid-template-columns:1fr;
+    }
+
+    .github-wide{
+        grid-column:auto;
+    }
+
+}
