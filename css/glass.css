@@ -334,7 +334,7 @@ body{ background:transparent; }
 
 /* mobile full-screen menu and the lightbox are only ever painted while open,
    so a heavier blur here doesn't cost anything on the resting page. */
-.menu-overlay{ position:relative; isolation:isolate; }
+.menu-overlay{ isolation:isolate; }
 .menu-overlay::before{
   content:""; position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0;
   background:radial-gradient(360px 200px at var(--lg-mx,50%) var(--lg-my,0%), rgba(255,255,255,.14), transparent 65%);
