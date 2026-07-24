@@ -221,7 +221,14 @@
 /* hidden at the same breakpoint the hamburger takes over — the mobile
    menu already surfaces Contact, so keeping the full-size CTA here
    just crowds the capsule against the toggle button */
-.nav-cta{ display:none; }
+/* compound selector (not just `.nav-cta`) is required here — the CTA
+   also carries .btn-primary, and hero.css's .btn-primary sets
+   display:inline-flex at the same (single-class) specificity. Loaded
+   after navigation.css, it would otherwise win the cascade on source
+   order alone and this pill would show on mobile too. Matching the
+   two-class specificity used by .nav-cta.btn-primary above makes this
+   win regardless of file load order. */
+.nav-cta.btn-primary{ display:none; }
 
 /* =====================================================================
    MOBILE TOGGLE — its own rounded glass capsule
@@ -248,7 +255,7 @@
    win the cascade instead and both would incorrectly show at every
    width. */
 @media (min-width:901px){
-  .nav-cta{ display:inline-flex; }
+  .nav-cta.btn-primary{ display:inline-flex; }
   .menu-toggle{ display:none; }
 }
 .menu-toggle .bars{ display:flex; flex-direction:column; gap:4px; }
