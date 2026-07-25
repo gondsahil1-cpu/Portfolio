@@ -2330,6 +2330,16 @@
         img.decode().then(draw).catch(() => cache.delete(idx)); // missing/broken frames are silently skipped
       }
 
+      // Warm up the frames the reverse-scrub intro will land ON FIRST.
+      // draw()'s preload only ever requests frames near whatever idx the
+      // scrub currently sits at, and the scrub runs backward from the
+      // LAST frame to frame 0 — so frame 0 (the exact frame needed the
+      // instant the loader hands off to scroll playback) is naturally the
+      // very last thing requested, with almost no time left to arrive on
+      // a cold connection. Kick it and its neighbours off immediately,
+      // independent of the scrub, so they get the full loading-scene
+      // duration to download instead of just the tail end of it.
+      for (let i = 0; i <= PRELOAD_RADIUS; i++) loadFrame(i);
       function evictFar(centerIdx) {
         if (cache.size <= CACHE_LIMIT) return;
         for (const key of cache.keys()) {
