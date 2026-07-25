@@ -46,6 +46,7 @@
 .hero-claim{
   font-family:var(--f-display); font-weight:800; font-size:clamp(16px,2.1vw,22px);
   line-height:1.2; letter-spacing:-.4px; max-width:820px; margin-bottom:var(--s-2);
+  text-shadow:2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .hero-claim .dim{ color:var(--ink-faint); }
 

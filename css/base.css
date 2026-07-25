@@ -13,7 +13,7 @@
   --panel-raised:rgba(255,255,255,.18);
 
   --ink:#111111;
-  --ink-dim:#494842;
+  --ink-dim:#44443f;
   --ink-faint:#000000;
   --ink-lab: #f1e6e6;
   --line:rgba(0,0,0,.08);
@@ -23,7 +23,7 @@
   --ink-nav: rgba(255, 255, 255, 0.964);
 
   
-  --accent:#e6be1d;
+  --accent:#3d54da;
   --accent-dim:rgba(37,99,235,.12);
   --accent-dimexp: rgb(3, 3, 3);
   --accent-line:rgba(37,99,235,.35);
@@ -103,10 +103,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* =====================================================================
    CUSTOM CURSOR (desktop only)
+   Native cursor is switched off site-wide (see the (min-width:901px)
+   block below) and replaced by these two fixed-position elements,
+   driven by the CUSTOM CURSOR script in index.html. Both are
+   pointer-events:none so they never intercept clicks/hover, and sit
+   above everything on the page — including the loader and lightbox —
+   via z-index. They start at opacity:0 and are only faded in by JS
+   once the first real mouse position is known, so there's no flash
+   at 0,0 on load. On touch devices / narrow viewports they're
+   display:none and the native cursor is left alone (see below).
 ===================================================================== */
 .cursor-dot, .cursor-ring{
-  position:fixed; top:0; left:0; pointer-events:none; z-index:9999;
+  position:fixed; top:0; left:0; pointer-events:none; z-index:10050;
   border-radius:50%; transform:translate(-50%,-50%);
+  opacity:0; transition:opacity .25s ease;
 }
 .cursor-dot{ width:6px; height:6px; background:var(--accent); }
 .cursor-ring{
@@ -114,8 +124,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transition:width .25s ease, height .25s ease, border-color .25s ease, opacity .25s ease;
 }
 .cursor-ring.hover{ width:64px; height:64px; border-color:var(--accent); }
+.cursor-dot.active, .cursor-ring.active{ opacity:1; }
+
 @media (max-width:900px), (hover:none){
   .cursor-dot, .cursor-ring{ display:none; }
+}
+
+/* Hide the native cursor everywhere — including form fields, links,
+   and buttons that would otherwise get their own UA cursor — but
+   only on devices that actually have the custom cursor running
+   (fine-pointer, hover-capable, >=901px). Text selection, typing,
+   and all other input behavior are unaffected; only the visible
+   pointer glyph is suppressed. Narrower/touch devices are untouched
+   so the native cursor (or no cursor, on touch) behaves normally. */
+@media (min-width:901px) and (hover:hover) and (pointer:fine){
+  html, body, a, button, input, textarea, select, label,
+  [role="button"], .work-row-head, .toolkit-row-head, .gallery-item{
+    cursor:none !important;
+  }
 }
 
 /* =====================================================================

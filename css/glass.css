@@ -239,7 +239,7 @@ body{ background:transparent; }
 }
 .btn-outline, .nav-cta, .resume-link{ background:rgba(10,9,7,.22) !important; }
 .btn-primary{
-  background:linear-gradient(168deg, rgba(232,163,61,.92), rgba(232,163,61,.78)) !important;
+  background:linear-gradient(168deg, rgba(61, 158, 232, 0.92), rgba(61, 135, 232, 0.78)) !important;
   color:var(--accent-ink) !important; border-color:rgba(232,163,61,.55) !important;
 }
 .btn-primary::before, .btn-outline::before, .nav-cta::before, .resume-link::before{

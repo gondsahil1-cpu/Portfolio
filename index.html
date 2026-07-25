@@ -177,7 +177,7 @@
                   <circle cx="12" cy="8" r="4" />
                   <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
                 </svg>
-                <span>Add your photo at assets/images/sahil-gond.png</span>
+               <!-- <span>Add your photo at assets/images/sahil-gond.png</span>-->
               </div>
               <span class="hero-portrait-tag">Sahil Gond</span>
             </div>
@@ -627,7 +627,7 @@
               <div class="work-row-left">
                 <span class="work-index">02</span>
                 <div class="work-titles">
-                  <span class="work-badge">Flagship Build</span>
+                 
                   <div class="work-title">Autonomous Maze Solving Robot</div>
                   <div class="work-tagline">No remote. No map. No excuses.</div>
                 </div>
@@ -1723,19 +1723,74 @@
 
     // =========================
     // CUSTOM CURSOR
+    // Replaces the native pointer on desktop (base.css hides the
+    // native cursor via `cursor:none` for the same fine-pointer/
+    // hover-capable/>=901px audience checked here). The dot tracks
+    // the raw mouse position 1:1; the ring eases toward it for the
+    // trailing effect. Both start at opacity:0 (see base.css) and
+    // only get `.active` — and therefore become visible — once the
+    // very first real coordinate arrives, with the ring snapped
+    // straight to that position first, so there's no flash/flying-in
+    // from the top-left corner on load. Re-checks on resize so
+    // rotating a tablet past the 900px breakpoint (or plugging in a
+    // mouse) doesn't leave the custom cursor stuck in the wrong state.
     // =========================
     (function () {
-      if (window.matchMedia('(hover:none)').matches || window.innerWidth < 901) return;
       const dot = document.getElementById('cursorDot');
       const ring = document.getElementById('cursorRing');
-      let mx = 0, my = 0, rx = 0, ry = 0;
-      window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
-      function loop() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(loop); }
-      loop();
-      document.querySelectorAll('a, button, .gallery-item, .work-row-head, .toolkit-row-head').forEach(el => {
-        el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-        el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-      });
+      if (!dot || !ring) return;
+
+      const isDesktopPointer = () =>
+        window.matchMedia('(hover:hover) and (pointer:fine)').matches && window.innerWidth >= 901;
+
+      let mx = 0, my = 0, rx = 0, ry = 0, initialized = false, running = false, raf = null;
+
+      function onMouseMove(e) {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+        if (!initialized) {
+          // snap the ring straight to the first known position instead
+          // of easing in from 0,0, then fade both elements in
+          rx = mx; ry = my;
+          ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+          dot.classList.add('active'); ring.classList.add('active');
+          initialized = true;
+        }
+      }
+
+      function loop() {
+        rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        raf = requestAnimationFrame(loop);
+      }
+
+      function enableHoverStates() {
+        document.querySelectorAll('a, button, .gallery-item, .work-row-head, .toolkit-row-head, [role="button"]').forEach(el => {
+          el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+          el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+        });
+      }
+
+      function start() {
+        if (running) return;
+        running = true;
+        window.addEventListener('mousemove', onMouseMove);
+        if (!raf) loop();
+      }
+
+      function stop() {
+        running = false;
+        window.removeEventListener('mousemove', onMouseMove);
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        initialized = false;
+        dot.classList.remove('active'); ring.classList.remove('active'); ring.classList.remove('hover');
+      }
+
+      function sync() { if (isDesktopPointer()) start(); else stop(); }
+
+      sync();
+      enableHoverStates();
+      window.addEventListener('resize', sync);
     })();
 
     // =========================
@@ -1783,7 +1838,7 @@
 
     // =========================
     // HERO CURSOR GLOW
-    // =========================
+    /* =========================
     (function () {
       const hero = document.getElementById('home');
       const glow = document.getElementById('heroGlow');
@@ -1817,7 +1872,7 @@
           if (!raf) loop();
         }
       }, { passive: true });
-    })();
+    })();*/
 
 
     // =========================
@@ -2210,7 +2265,7 @@
       // Desktop and mobile each get their own footage, frame count and
       // memory budget — mobile stays lighter (fewer frames kept warm,
       // smaller cache, capped DPR below) since it's on weaker GPUs/networks.
-      const FRAME_COUNT = IS_MOBILE ? 646 : 728;                 // <- set to your exported frame count for each
+      const FRAME_COUNT = IS_MOBILE ? 646 : 220;                 // <- set to your exported frame count for each
       const FRAME_PATH = IS_MOBILE
         ? i => `images/frames/mobile/frame_${String(i).padStart(3, '0')}.jpg`
         : i => `images/frames/swiss/frame_${String(i).padStart(3, '0')}.jpg`;
