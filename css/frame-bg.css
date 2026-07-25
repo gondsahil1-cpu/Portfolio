@@ -17,17 +17,13 @@
   position:fixed; inset:0; z-index:0;
   width:100%; height:100%;
   display:block;
-  /* until real frames exist at images/frames/, this gradient IS the
-     background — it needs to read as a lit scene on its own, not a
-     flat near-black fill, both so the page itself is visible and so
-     the glass panels' blur/refraction has something to catch. Once
-     real footage lands this still shows through briefly on load. */
-  background:
-    radial-gradient(1100px 700px at 22% -6%, rgba(232,163,61,0.22), transparent 60%),
-    radial-gradient(900px 620px at 88% 18%, rgba(232,163,61,0.13), transparent 62%),
-    linear-gradient(160deg, #3a352a 0%, #2a2620 38%, #201d18 70%, #17150f 100%);
+  /* Whenever the canvas has nothing painted yet (before the first frame
+     decodes, or on a slow/cold connection), this is what shows through.
+     Matched to the actual frame footage's own pale, neutral tone — not
+     a decorative placeholder — so a delayed frame is a non-event rather
+     than a jarring dark-to-light flash. */
+  background:#d9dadd;
 }
-
 /* Readability scrim over the frames — sections have no opaque
    background of their own, so text needs this to stay legible over
    whatever is playing behind it. Kept light now that the canvas
