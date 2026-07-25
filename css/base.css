@@ -7,18 +7,29 @@
 ===================================================================== */
 
 :root{
-  --bg:#09090855;
-  --panel:#11111000;
-  --panel-raised:#16161509;
-  --ink:#fbfaf8;
-  --ink-dim:#fff3d5;
-  --ink-faint:#ffca57;
-  --line:#232220;
-  --line-strong:#312f2b;
-  --accent:#ff9e61;
-  --accent-dim:rgba(232,163,61,0.10);
-  --accent-line:rgba(232,163,61,0.4);
-  --accent-ink:#0b0a08;
+  --bg:rgba(255,255,255,.08);
+
+  --panel:rgba(255,255,255,.08);
+  --panel-raised:rgba(255,255,255,.18);
+
+  --ink:#111111;
+  --ink-dim:#494842;
+  --ink-faint:#000000;
+  --ink-lab: #f1e6e6;
+  --line:rgba(0,0,0,.08);
+  --line-strong:rgba(0,0,0,.18);
+  --ink-faintengg: rgba(224, 163, 78, 0.998);
+  --ink-faintenggp: rgba(241, 241, 236, 0.964);
+  --ink-nav: rgba(255, 255, 255, 0.964);
+
+  
+  --accent:#e6be1d;
+  --accent-dim:rgba(37,99,235,.12);
+  --accent-dimexp: rgb(3, 3, 3);
+  --accent-line:rgba(37,99,235,.35);
+
+
+  --accent-ink:#FFFFFF;
 
   --f-display:'Archivo', ui-sans-serif, system-ui, sans-serif;
   --f-body:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;

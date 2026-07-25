@@ -14,6 +14,10 @@ section{ padding:var(--s-16) 0; position:relative; z-index:2; }
   font-family:var(--f-mono); font-size:12px; letter-spacing:2px; text-transform:uppercase;
   color:var(--accent); display:flex; align-items:center; gap:10px; margin-bottom:var(--s-3);
 }
+.section-labelexp{
+  font-family:var(--f-mono); font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--accent-dimexp); display:flex; align-items:center; gap:10px; margin-bottom:var(--s-3);
+}
 .section-label::before{ content:""; width:16px; height:1px; background:var(--accent); }
 
 .section-heading{
