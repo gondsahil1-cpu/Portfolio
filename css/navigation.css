@@ -85,8 +85,8 @@
   -webkit-tap-highlight-color:transparent;
 }
 .logo-mark{
-  width:30px; height:30px; border:1px solid var(--line-strong); border-radius:9px;
-  display:flex; align-items:center; justify-content:center; background:var(--panel);
+  width:30px; height:30px; border:1px solid rgba(20,22,30,.16); border-radius:9px;
+  display:flex; align-items:center; justify-content:center; background:rgba(20,22,30,.05);
   overflow:hidden; position:relative;
   transition:transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .5s cubic-bezier(.34,1.56,.64,1), border-color .4s ease, width .4s cubic-bezier(.16,1,.3,1), height .4s cubic-bezier(.16,1,.3,1);
 }
@@ -104,13 +104,14 @@
 .logo-text{
   font-family:var(--f-mono); font-size:13.5px; letter-spacing:.4px; font-weight:600; transition:font-size .4s ease;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:block; max-width:100%;
+  color:var(--ink-nav);
 }
-.logo-text span{ color:var(--accent); }
+.logo-text span{ color:var(--accent-on-dark); }
 
 .logo-mark-btn:hover .logo-mark{
   transform:scale(1.08) rotate(-2deg);
-  border-color:var(--accent-line);
-  box-shadow:0 0 0 1px var(--accent-line), 0 0 18px -2px rgba(255, 168, 37, 0.55);
+  border-color:var(--accent-on-dark-line);
+  box-shadow:0 0 0 1px var(--accent-on-dark-line), 0 0 18px -2px rgba(157, 178, 255, 0.55);
 }
 .logo-mark-btn:active .logo-mark{ transform:scale(.96) rotate(0deg); }
 
@@ -182,8 +183,8 @@
 .nav-links a::after{ content:none; }
 
 .nav-links a:hover{
-  color:var(--ink);
-  background:rgba(80, 74, 71, 0.687);
+  color:var(--ink-nav);
+  background:rgba(20,22,30,.07);
 }
 
 .nav-links a.active{
@@ -202,7 +203,7 @@
   padding:9px 18px; font-size:12.5px;
   box-shadow:
     0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.22),
-    0 0 0 1px rgba(232,163,61,.15), 0 0 22px -6px rgba(232, 164, 61, 0.268);
+    0 0 0 1px rgba(157,178,255,.18), 0 0 22px -6px rgba(157, 178, 255, 0.3);
   transition:padding .4s cubic-bezier(.16,1,.3,1), font-size .4s ease, transform .3s ease, box-shadow .3s ease, opacity .3s ease;
 }
 .nav-cta.btn-primary:hover{
@@ -215,7 +216,7 @@
   transform:none;
   box-shadow:
     0 14px 30px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.36),
-    0 0 0 1px rgba(46, 46, 46, 0.25), 0 0 30px -4px rgba(61, 57, 52, 0.7);
+    0 0 0 1px rgba(157, 178, 255, 0.3), 0 0 30px -4px rgba(157, 178, 255, 0.5);
 }
 .navbar.nav-compact .nav-cta.btn-primary{ padding:7px 15px; font-size:11.5px; }
 /* hidden at the same breakpoint the hamburger takes over — the mobile
@@ -235,9 +236,8 @@
 ===================================================================== */
 .menu-toggle{
   display:flex; align-items:center; gap:9px; flex:none;
-  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
   border-radius:999px; cursor:pointer;
-  font-family:var(--f-mono); font-size:11.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--ink);
+  font-family:var(--f-mono); font-size:11.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--ink-nav);
   padding:9px 16px 9px 14px;
   transition:background .3s ease, border-color .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
 }
@@ -245,7 +245,6 @@
   .menu-toggle{ padding:8px 12px 8px 11px; gap:7px; }
   .menu-toggle span:not(.bars){ font-size:10.5px; }
 }
-.menu-toggle:hover{ background:rgba(255,255,255,.09); border-color:rgba(255,255,255,.2); }
 .menu-toggle:active{ transform:scale(.96); }
 /* nav-cta (desktop "Start a build" pill) and menu-toggle (mobile
    hamburger) are complements of each other — this breakpoint must
@@ -259,7 +258,7 @@
   .menu-toggle{ display:none; }
 }
 .menu-toggle .bars{ display:flex; flex-direction:column; gap:4px; }
-.menu-toggle .bars span{ width:16px; height:1.5px; background:var(--ink); display:block; transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .3s ease; }
+.menu-toggle .bars span{ width:16px; height:1.5px; background:var(--ink-nav); display:block; transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .3s ease; }
 .menu-toggle.open .bars span:nth-child(1){ transform:translateY(5.5px) rotate(45deg); }
 .menu-toggle.open .bars span:nth-child(2){ opacity:0; }
 .menu-toggle.open .bars span:nth-child(3){ transform:translateY(-5.5px) rotate(-45deg); }
@@ -269,7 +268,7 @@
    MOBILE FULL-SCREEN MENU — soft blur-in, staggered link entrance
 ===================================================================== */
 .menu-overlay{
-  position:fixed; inset:0; z-index:999; background:var(--bg);
+  position:fixed; inset:0; z-index:999;
   display:flex; flex-direction:column; justify-content:center; overflow-y:auto;
   padding:110px var(--s-5) var(--s-5);
   opacity:0; visibility:hidden;
@@ -280,8 +279,8 @@
 
 .menu-overlay a{
   font-family:var(--f-display); font-weight:900; font-size:clamp(34px,11vw,58px);
-  text-decoration:none; color:white `; display:block; padding:8px 0;
-  border-bottom:1px solid var(--line);
+  text-decoration:none; color:var(--ink-on-dark); display:block; padding:8px 0;
+  border-bottom:1px solid rgba(20,22,30,.14);
   opacity:0; transform:translateY(28px);
   transition:opacity .5s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
 }
@@ -306,15 +305,15 @@
   transition-delay:.4s;
 }
 
-.menu-overlay a span{ color:var(--accent); font-family:var(--f-mono); font-size:14px; margin-right:14px; }
+.menu-overlay a span{ color:var(--accent-on-dark); font-family:var(--f-mono); font-size:14px; margin-right:14px; }
 .menu-overlay-foot{
   display:flex; gap:var(--s-4); margin-top:var(--s-6);
   opacity:0; transform:translateY(20px);
   transition:opacity .5s cubic-bezier(.16,1,.3,1) .42s, transform .55s cubic-bezier(.16,1,.3,1) .42s;
 }
 .menu-overlay.open .menu-overlay-foot{ opacity:1; transform:translateY(0); }
-.menu-overlay-foot a{ font-family:var(--f-mono); font-size:13px; color:var(--ink-dim); border:none; padding:0; opacity:1; transform:none; transition:color .2s ease; }
-.menu-overlay-foot a:hover{ color:var(--accent); }
+.menu-overlay-foot a{ font-family:var(--f-mono); font-size:13px; color:var(--ink-on-dark-dim); border:none; padding:0; opacity:1; transform:none; transition:color .2s ease; }
+.menu-overlay-foot a:hover{ color:var(--accent-on-dark); }
 
 @media (prefers-reduced-motion:reduce){
   .navbar, .nav-inner, .logo-mark, .nav-links a, .menu-toggle, .menu-toggle .bars span,

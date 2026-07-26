@@ -32,12 +32,12 @@
 .frame-bg-scrim{
   position:fixed; inset:0; z-index:1; pointer-events:none;
   background:
-    linear-gradient(180deg, rgba(9, 9, 8, 0.1) 0%, rgba(9, 9, 8, 0.16) 45%, rgba(9, 9, 8, 0.26) 100%);
+    linear-gradient(180deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.42) 45%, rgba(255,255,255,.56) 100%);
 }
 
 @media (max-width:900px){
   /* frames are heavier to decode on mobile GPUs and the scrub is less
-     legible on a short scroll range anyway — dim a bit further, still
-     well short of the old near-opaque black */
-  .frame-bg-scrim{ background:linear-gradient(180deg, rgba(9,9,8,.2) 0%, rgba(9,9,8,.32) 100%); }
+     legible on a short scroll range anyway — lighten a bit further so
+     the dark ink text keeps strong contrast even mid-scrub */
+  .frame-bg-scrim{ background:linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.62) 100%); }
 }

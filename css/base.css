@@ -7,27 +7,42 @@
 ===================================================================== */
 
 :root{
-  --bg:rgba(255,255,255,.08);
+  /* ---- surfaces on the LIGHT frame background ----
+     The frame scrub (frame-bg.css) is a pale, low-saturation
+     white/mint/lavender sequence, so plain text and translucent
+     panels sitting directly on it need to skew dark, not light. */
+  --bg:rgba(255,255,255,.14);
 
-  --panel:rgba(255,255,255,.08);
-  --panel-raised:rgba(255,255,255,.18);
+  --panel:rgba(255,255,255,.42);
+  --panel-raised:rgba(255,255,255,.56);
 
-  --ink:#111111;
-  --ink-dim:#44443f;
-  --ink-faint:#000000;
-  --ink-lab: #f1e6e6;
-  --line:rgba(0,0,0,.08);
-  --line-strong:rgba(0,0,0,.18);
-  --ink-faintengg: rgba(224, 163, 78, 0.998);
-  --ink-faintenggp: rgba(241, 241, 236, 0.964);
-  --ink-nav: rgba(255, 255, 255, 0.964);
+  --ink:#14161c;
+  --ink-dim:#454955;
+  --ink-faint:#5a5e68;
+  --ink-lab:#33363d;
+  --line:rgba(20,22,30,.12);
+  --line-strong:rgba(20,22,30,.30);
+  --ink-faintengg: #5a5e68;
+  --ink-faintenggp: #33363d;
 
-  
-  --accent:#3d54da;
-  --accent-dim:rgba(37,99,235,.12);
-  --accent-dimexp: rgb(3, 3, 3);
-  --accent-line:rgba(37,99,235,.35);
+  /* ---- surfaces that used to be dark "smoked glass" ----
+     navbar, buttons, and the major cards (glass.css) now use the
+     same light frosted glass as the rest of the site, so these
+     tokens are just aliases onto the normal ink tokens above. Kept
+     as separate custom properties (rather than deleted) so every
+     file that already references --ink-on-dark / --accent-on-dark
+     still resolves correctly without a find-and-replace pass. */
+  --ink-nav: var(--ink);
+  --ink-on-dark: var(--ink);
+  --ink-on-dark-dim: var(--ink-dim);
+  --ink-on-dark-faint: var(--ink-faint);
 
+  --accent:#3346d1;
+  --accent-dim:rgba(51,70,209,.10);
+  --accent-dimexp: #14161c;
+  --accent-line:rgba(51,70,209,.35);
+  --accent-on-dark:var(--accent);
+  --accent-on-dark-line:var(--accent-line);
 
   --accent-ink:#FFFFFF;
 
@@ -117,13 +132,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   position:fixed; top:0; left:0; pointer-events:none; z-index:10050;
   border-radius:50%; transform:translate(-50%,-50%);
   opacity:0; transition:opacity .25s ease;
+  mix-blend-mode:difference;
 }
-.cursor-dot{ width:6px; height:6px; background:var(--accent); }
+.cursor-dot{ width:6px; height:6px; background:#ffffff; }
 .cursor-ring{
-  width:34px; height:34px; border:1px solid var(--ink-dim);
+  width:34px; height:34px; border:1px solid #ffffff;
   transition:width .25s ease, height .25s ease, border-color .25s ease, opacity .25s ease;
 }
-.cursor-ring.hover{ width:64px; height:64px; border-color:var(--accent); }
+.cursor-ring.hover{ width:64px; height:64px; border-color:#ffffff; }
 .cursor-dot.active, .cursor-ring.active{ opacity:1; }
 
 @media (max-width:900px), (hover:none){

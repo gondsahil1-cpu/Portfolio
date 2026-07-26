@@ -70,17 +70,12 @@
     inset 1px 1px 0px -1px rgba(255,255,255,.88),
     inset 0 0 4px 1px rgba(255,255,255,.58);
 
-  /* base tint carries a whisper of the accent so the glass reads as
-     *this site's* material rather than a generic frosted white pane */
-  /* base tint switched from white to dark: the frame footage behind
-     these cards is light-coloured, so a white-leaning frost would
-     nearly disappear into it. A dark "smoked glass" tint keeps the
-     card readable as its own object and gives the accent-coloured
-     text (see --ink in base.css) something to sit clearly on top of. */
-  --lg-tint:10,9,7;
-  --lg-tint-warm:54,38,16;
-  --lg-bg:linear-gradient(168deg, rgba(var(--lg-tint),.24), rgba(var(--lg-tint-warm),.16) 45%, rgba(var(--lg-tint),.3));
-  --lg-bg-hover:linear-gradient(168deg, rgba(var(--lg-tint),.3), rgba(var(--lg-tint-warm),.2) 45%, rgba(var(--lg-tint),.36));
+  /* base tint: light frosted glass, same family as --lg-bg-sm below
+     but a touch more opaque/blurred to give the major panels extra
+     weight — everything now reads as one consistent light-glass
+     material, chrome included, instead of a separate dark tier. */
+  --lg-bg:linear-gradient(168deg, rgba(255,255,255,.5), rgba(255,255,255,.38) 45%, rgba(255,255,255,.56));
+  --lg-bg-hover:linear-gradient(168deg, rgba(255,255,255,.6), rgba(255,255,255,.48) 45%, rgba(255,255,255,.66));
 
   /* shadow tuned to "small" intensity — one soft cast shadow, one tight
      contact shadow, the bevel highlights, and a gentle accent-tinted
@@ -89,21 +84,21 @@
   --lg-shadow:
     0 18px 34px -18px rgba(0,0,0,.32), 0 6px 14px -10px rgba(0,0,0,.3),
     inset 0 1px 0 rgba(255,255,255,.4), inset 0 -1px 0 rgba(0,0,0,.26),
-    0 0 28px -10px rgba(232,163,61,.22),
+    0 0 28px -10px rgba(157,178,255,.24),
     var(--lg-rim);
   --lg-shadow-hover:
     0 24px 44px -18px rgba(0,0,0,.38), 0 8px 18px -10px rgba(0,0,0,.36),
     inset 0 1px 0 rgba(255,255,255,.52), inset 0 -1px 0 rgba(0,0,0,.28),
-    0 0 40px -8px rgba(232,163,61,.32),
+    0 0 40px -8px rgba(157,178,255,.34),
     var(--lg-rim-hover);
 
   /* lighter-weight shadow used by tiles so small surfaces don't get
      the same heavy drop-shadow as a full card */
-  --lg-bg-sm:linear-gradient(168deg, rgba(var(--lg-tint),.2), rgba(var(--lg-tint-warm),.12) 50%, rgba(var(--lg-tint),.26));
-  --lg-bg-sm-hover:linear-gradient(168deg, rgba(var(--lg-tint),.26), rgba(var(--lg-tint-warm),.16) 50%, rgba(var(--lg-tint),.32));
+  --lg-bg-sm:linear-gradient(168deg, rgba(255,255,255,.42), rgba(255,255,255,.3) 50%, rgba(255,255,255,.48));
+  --lg-bg-sm-hover:linear-gradient(168deg, rgba(255,255,255,.54), rgba(255,255,255,.4) 50%, rgba(255,255,255,.58));
   --lg-shadow-sm:
     0 12px 24px -14px rgba(0,0,0,.3), 0 4px 10px -8px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.3), inset 0 -1px 0 rgba(0,0,0,.2),
-    0 0 20px -10px rgba(232,163,61,.18),
+    0 0 20px -10px rgba(157,178,255,.2),
     var(--lg-rim-sm);
   --lg-shadow-sm-hover:
     0 34px 58px -20px rgba(0,0,0,.46), 0 14px 28px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.42), inset 0 -1px 0 rgba(0,0,0,.24),
@@ -124,10 +119,10 @@ body{ background:transparent; }
 }
 
 /* ============================ MAJOR PANELS — the only cards with real backdrop-filter ============================ */
-.featured-card, .edu-card, .building-card, .contact-form, .github-card{
+.featured-card, .building-card, .contact-form, .github-card{
   position:relative; isolation:isolate; overflow:hidden;
   background:var(--lg-bg) !important;
-  border:1px solid rgba(255,255,255,.2) !important;
+  border:1px solid rgba(20,22,30,.16) !important;
   box-shadow:var(--lg-shadow) !important;
   -webkit-backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
   backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
@@ -139,89 +134,98 @@ body{ background:transparent; }
    pointer (--lg-mx/--lg-my are set by index.html's pointermove
    handler), the single biggest thing that makes a flat blur read as
    an actual curved, reflective surface instead of frosted paint */
-.featured-card::after, .edu-card::after, .building-card::after, .contact-form::after, .github-card::after{
+.featured-card::after, .building-card::after, .contact-form::after, .github-card::after{
   content:""; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
   background:radial-gradient(240px 200px at var(--lg-mx,30%) var(--lg-my,0%), rgba(255,255,255,.18), transparent 65%);
   opacity:0; transition:opacity .4s cubic-bezier(.22,1,.36,1);
 }
-.featured-card:hover::after, .edu-card:hover::after, .building-card:hover::after, .contact-form:hover::after, .github-card:hover::after{ opacity:1; }
+.featured-card:hover::after, .building-card:hover::after, .contact-form:hover::after, .github-card:hover::after{ opacity:1; }
 /* border catches light from one direction (conic sweep) rather than a
    flat top-to-bottom fade — reads much closer to a real bevelled edge */
-.featured-card::before, .edu-card::before, .building-card::before, .contact-form::before, .github-card::before{
+.featured-card::before, .building-card::before, .contact-form::before, .github-card::before{
   content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; z-index:2; pointer-events:none;
   background:conic-gradient(from 218deg at 50% 50%, rgba(255,255,255,.85), rgba(255,255,255,.06) 30%, rgba(255,255,255,.03) 55%, rgba(255,255,255,.4) 82%, rgba(255,255,255,.85));
   -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor; mask-composite:exclude;
 }
-.featured-card > *, .edu-card > *, .building-card > *, .contact-form > *, .github-card > *{ position:relative; z-index:3; }
+.featured-card > *, .building-card > *, .contact-form > *, .github-card > *{ position:relative; z-index:3; }
 
-.featured-card:hover, .edu-card:hover, .building-card:hover, .contact-form:hover, .github-card:hover{
+.featured-card:hover, .building-card:hover, .contact-form:hover, .github-card:hover{
   --lg-s:1.015;
   background:var(--lg-bg-hover) !important;
-  border-color:rgba(255,255,255,.24) !important;
+  border-color:rgba(20,22,30,.24) !important;
   box-shadow:var(--lg-shadow-hover) !important;
 }
 
 /* true optical refraction — SVG feDisplacementMap bends whatever sits behind the panel.
-   Kept only on these five panels (desktop only); nothing else pays for it. */
+   Kept only on these four panels (desktop only); nothing else pays for it. */
 @media (min-width:901px){
-  .featured-card, .edu-card, .building-card, .contact-form, .github-card{
+  .featured-card, .building-card, .contact-form, .github-card{
     -webkit-backdrop-filter:url(#lg-distortion) blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
     backdrop-filter:url(#lg-distortion) blur(var(--lg-blur)) saturate(var(--lg-sat)) !important;
   }
 }
 .featured-card{ border-radius:var(--lg-r-lg) !important; }
-.edu-card, .building-card, .contact-form, .github-card{ border-radius:var(--lg-r-lg) !important; }
+.building-card, .contact-form, .github-card{ border-radius:var(--lg-r-lg) !important; }
 
 /* ============================ WORK CARDS + TILES (medium blur) ============================
    Work rows (Experience/Works) are full self-padded cards now (see
-   works.css); gallery tiles and the small stat/metric/pipeline/icon
-   cells get the same medium-blur treatment since only a handful are
-   ever on screen at once. */
-.work-row, .gallery-item, .stat, .metric, .pipeline-item, .edu-icon, .work-visual{
+   works.css); gallery tiles and the small stat/metric/pipeline cells
+   get the same medium-blur treatment since only a handful are ever
+   on screen at once. Kept as LIGHT frosted glass (not the deep dark
+   tint used by the five major panels) — dark ink text sits directly
+   on top, per base.css's tokens. */
+.work-row, .edu-card, .gallery-item, .stat, .metric, .pipeline-item, .work-visual{
   position:relative; isolation:isolate;
   background:var(--lg-bg-sm) !important;
-  border-color:rgba(255,255,255,.18) !important;
+  border-color:rgba(20,22,30,.16) !important;
   box-shadow:var(--lg-shadow-sm) !important;
   -webkit-backdrop-filter:blur(var(--lg-blur-md)) saturate(var(--lg-sat-md)) !important;
   backdrop-filter:blur(var(--lg-blur-md)) saturate(var(--lg-sat-md)) !important;
   transition:background .35s ease, border-color .3s ease, box-shadow .35s ease, transform .3s ease;
 }
-.work-row:hover, .gallery-item:hover, .stat:hover, .metric:hover, .pipeline-item:hover{
+.work-row:hover, .edu-card:hover, .gallery-item:hover, .stat:hover, .metric:hover, .pipeline-item:hover{
   background:var(--lg-bg-sm-hover) !important;
-  border-color:rgba(255,255,255,.2) !important;
+  border-color:rgba(20,22,30,.24) !important;
   box-shadow:var(--lg-shadow-sm-hover) !important;
 }
-.work-row{ border-radius:var(--lg-r-md) !important; }
+.work-row, .edu-card{ border-radius:var(--lg-r-md) !important; }
 .gallery-item{ border-radius:var(--lg-r-xs) !important; }
 .stat, .metric, .pipeline-item{ border-radius:var(--lg-r-xs) !important; }
-.edu-icon{ border-radius:8px !important; }
 .work-visual{ border-radius:var(--lg-r-sm) !important; }
 
 /* the work row header acts as the site's expand/collapse "tab"; give
    it the same corner radius as its parent so the glass seam is continuous */
 .work-row-head{ border-radius:inherit; }
 
+/* edu-icon now sits on the light frosted edu-card (same tier as the
+   tiles above), so it uses the page's normal dark-on-light ink tokens
+   instead of the on-dark ones — see education.css for the border/
+   stroke colour swap that goes with this. No separate glass override
+   needed here; it reads fine as a plain bordered swatch, same as
+   .toolkit-title .ti. */
+
 /* ============================ CHIPS & TAGS (light blur) ============================
    Small, frequently-repeated pills: the "Flagship Build" work badge
-   and the generic tech-stack chip. Kept to the lightest blur tier
-   since these can repeat a dozen+ times on one screen at once. */
+   and the generic tech-stack chip. Same light frosted-glass material
+   as the tiles above, just a lighter blur tier since these can repeat
+   a dozen+ times on one screen at once. */
 .chip, .work-badge{
   position:relative; isolation:isolate;
   background:var(--lg-bg-sm) !important;
-  border-color:rgba(255,255,255,.14) !important;
-  box-shadow:0 10px 18px -10px rgba(0,0,0,.35), 0 4px 10px -6px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2), var(--lg-rim-sm) !important;
+  border-color:rgba(20,22,30,.14) !important;
+  box-shadow:0 10px 18px -10px rgba(0,0,0,.16), 0 4px 10px -6px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.5), var(--lg-rim-sm) !important;
   -webkit-backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
   backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
   transition:background .3s ease, border-color .25s ease, transform .25s ease;
 }
 .chip:hover{
   background:var(--lg-bg-sm-hover) !important;
-  border-color:rgba(255,255,255,.24) !important;
+  border-color:rgba(20,22,30,.22) !important;
   transform:translateY(-1px);
 }
-/* accent-tinted badge keeps its amber cast — glass adds the frost, not a colour change */
-.work-badge{ background:linear-gradient(168deg, rgba(232,163,61,.24), rgba(232,163,61,.08)) !important; border-color:rgba(232,163,61,.4) !important; }
+/* accent-tinted badge keeps its cool cast — glass adds the frost, not a colour change */
+.work-badge{ background:linear-gradient(168deg, rgba(51,70,209,.14), rgba(51,70,209,.04)) !important; border-color:rgba(51,70,209,.35) !important; }
 
 /* nav-links pills (see NAVIGATION below) double as the top-level "tabs" —
    give the active/hover pill state the same light glass tier */
@@ -233,14 +237,19 @@ body{ background:transparent; }
 /* ============================ BUTTONS — translucent tint, no blur ============================ */
 .btn-primary, .btn-outline, .nav-cta, .resume-link{
   position:relative; isolation:isolate; overflow:hidden;
-  border:1px solid rgba(255,255,255,.16) !important;
   box-shadow:0 20px 34px -16px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.22), var(--lg-rim-sm);
   transition:background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
-.btn-outline, .nav-cta, .resume-link{ background:rgba(10,9,7,.22) !important; }
+/* outline/nav-cta/resume-link now sit on light glass, so they get a
+   dark-tinted border (matches the light-tile border approach above)
+   instead of the white border that only reads against a dark fill */
+.btn-outline, .nav-cta, .resume-link{
+  background:rgba(255,255,255,.5) !important; color:var(--ink-on-dark) !important;
+  border:1px solid rgba(20,22,30,.18) !important;
+}
 .btn-primary{
-  background:linear-gradient(168deg, rgba(61, 158, 232, 0.92), rgba(61, 135, 232, 0.78)) !important;
-  color:var(--accent-ink) !important; border-color:rgba(232,163,61,.55) !important;
+  background:linear-gradient(168deg, rgba(51, 70, 209, 0.94), rgba(51, 70, 209, 0.8)) !important;
+  color:var(--accent-ink) !important; border:1px solid rgba(157,178,255,.5) !important;
 }
 .btn-primary::before, .btn-outline::before, .nav-cta::before, .resume-link::before{
   content:""; position:absolute; inset:0; border-radius:inherit; z-index:1; pointer-events:none; opacity:0;
@@ -257,9 +266,15 @@ body{ background:transparent; }
 }
 .btn-primary:hover::after, .btn-outline:hover::after, .nav-cta:hover::after, .resume-link:hover::after{ transform:translateX(140%); }
 
-.btn-primary:hover, .btn-outline:hover, .nav-cta:hover, .resume-link:hover{
+.btn-primary:hover{
   border-color:rgba(255,255,255,.3) !important;
   box-shadow:0 26px 44px -16px rgba(0,0,0,.46), 0 14px 30px -14px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.36), var(--lg-rim-sm-hover);
+  transform:scale(1.06);
+}
+.btn-outline:hover, .nav-cta:hover, .resume-link:hover{
+  background:rgba(255,255,255,.62) !important;
+  border-color:rgba(20,22,30,.26) !important;
+  box-shadow:0 26px 44px -16px rgba(0,0,0,.2), 0 14px 30px -14px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.5), var(--lg-rim-sm-hover);
   transform:scale(1.06);
 }
 .btn-primary:active, .btn-outline:active, .nav-cta:active, .resume-link:active{ transform:scale(.97); }
@@ -282,14 +297,14 @@ body{ background:transparent; }
 .navbar:hover::before{ opacity:1; }
 .navbar > *{ position:relative; z-index:2; }
 .navbar{
-  background:linear-gradient(180deg, rgba(22,21,19,.58), rgba(12,11,10,.42)) !important;
+  background:linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.48)) !important;
   -webkit-backdrop-filter:blur(9px) saturate(var(--lg-sat)) !important;
   backdrop-filter:blur(9px) saturate(var(--lg-sat)) !important;
-  border:1px solid rgba(255, 255, 255, 0.066) !important;
+  border:1px solid rgba(20,22,30,.14) !important;
   border-radius:999px !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.08), inset 0 -1px 0 rgba(0,0,0,.2),
-    0 34px 60px -22px rgba(0,0,0,.55), 0 16px 40px -20px rgba(0,0,0,.6), 0 2px 10px -4px rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(0,0,0,.06),
+    0 34px 60px -22px rgba(0,0,0,.22), 0 16px 40px -20px rgba(0,0,0,.24), 0 2px 10px -4px rgba(0,0,0,.16),
     var(--lg-rim-sm);
   transition:
     background .45s cubic-bezier(.16,1,.3,1),
@@ -301,12 +316,12 @@ body{ background:transparent; }
 /* Dynamic-Island "busy" state: denser glass, tighter shadow, no scale
    change here (the height/padding shrink is handled in navigation.css) */
 .navbar.nav-compact{
-  background:linear-gradient(180deg, rgba(16, 15, 14, 0.205), rgba(9, 9, 8, 0.218)) !important;
+  background:linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.68)) !important;
   -webkit-backdrop-filter:blur(14px) saturate(180%) !important;
   backdrop-filter:blur(14px) saturate(180%) !important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.25),
-    0 10px 26px -14px rgba(0, 0, 0, 0.198),
+    inset 0 1px 0 rgba(255,255,255,.45), inset 0 -1px 0 rgba(0,0,0,.08),
+    0 10px 26px -14px rgba(0, 0, 0, 0.16),
     var(--lg-rim-sm);
 }
 /* hover: capsule breathes outward slightly and the glass brightens —
@@ -314,10 +329,10 @@ body{ background:transparent; }
 @media (hover:hover) and (pointer:fine){
   .navbar:hover{
     --nav-scale:1.025;
-    border-color:rgba(255,255,255,.24) !important;
+    border-color:rgba(20,22,30,.22) !important;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.2),
-      0 40px 70px -22px rgba(0,0,0,.6), 0 20px 48px -18px rgba(0,0,0,.65), 0 4px 14px -4px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.6), inset 0 -1px 0 rgba(0,0,0,.08),
+      0 40px 70px -22px rgba(0,0,0,.26), 0 20px 48px -18px rgba(0,0,0,.28), 0 4px 14px -4px rgba(0,0,0,.2),
       var(--lg-rim-sm-hover);
   }
 }
@@ -343,25 +358,25 @@ body{ background:transparent; }
 .menu-overlay.open::before{ opacity:1; }
 .menu-overlay > *{ position:relative; z-index:2; }
 .menu-overlay{
-  background:linear-gradient(165deg, rgba(16,15,14,.9), rgba(9,9,8,.96)) !important;
+  background:linear-gradient(165deg, rgba(255,255,255,.78), rgba(255,255,255,.86)) !important;
   -webkit-backdrop-filter:blur(12px) saturate(var(--lg-sat));
   backdrop-filter:blur(12px) saturate(var(--lg-sat));
 }
 .lightbox{ -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
 .lightbox-close, .menu-toggle{
-  background:var(--lg-bg-sm) !important;
-  border-color:rgba(255,255,255,.16) !important;
+  background:linear-gradient(168deg, rgba(255,255,255,.56), rgba(255,255,255,.46)) !important;
+  border-color:rgba(20,22,30,.16) !important;
   box-shadow:var(--lg-shadow-sm) !important;
   -webkit-backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
   backdrop-filter:blur(var(--lg-blur-sm)) saturate(var(--lg-sat-sm)) !important;
   transition:background .3s ease, border-color .25s ease, transform .3s ease, box-shadow .3s ease;
 }
 .lightbox-close:hover, .menu-toggle:hover{
-  background:var(--lg-bg-sm-hover) !important;
-  border-color:rgba(255,255,255,.26) !important;
+  background:linear-gradient(168deg, rgba(255,255,255,.66), rgba(255,255,255,.56)) !important;
+  border-color:rgba(20,22,30,.24) !important;
 }
 
 /* ============================ TIMELINE — soft glow connectors (box-shadow only, no filter) ============================ */
 .timeline-track{ background:rgba(255,255,255,.08); }
-.timeline-fill{ box-shadow:0 0 14px 2px rgba(232,163,61,.55); }
-.timeline-step.active .timeline-dot{ box-shadow:0 0 0 5px rgba(232,163,61,.16), 0 0 14px 2px rgba(232,163,61,.55); }
+.timeline-fill{ box-shadow:0 0 14px 2px rgba(51,70,209,.5); }
+.timeline-step.active .timeline-dot{ box-shadow:0 0 0 5px rgba(51,70,209,.14), 0 0 14px 2px rgba(51,70,209,.5); }

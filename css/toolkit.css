@@ -18,6 +18,7 @@
 .toolkit-title{
   font-family:var(--f-display); font-weight:800; text-transform:uppercase;
   font-size:clamp(19px,2.6vw,28px); letter-spacing:-.4px; display:flex; align-items:center; gap:14px;
+  text-shadow:0 1px 2px rgba(255,255,255,.85), 0 2px 16px rgba(255,255,255,.6);
 }
 .toolkit-title .ti{ width:32px; height:32px; border:1px solid var(--line-strong); border-radius:6px; display:flex; align-items:center; justify-content:center; flex:none; }
 .toolkit-title .ti svg{ width:16px; height:16px; stroke:var(--accent); fill:none; stroke-width:1.6; }
