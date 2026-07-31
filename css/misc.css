@@ -31,6 +31,87 @@ footer{ border-top:1px solid var(--line); padding:var(--s-4) 0; }
 .footer-social a{ font-family:var(--f-mono); font-size:12.5px; color:var(--ink-dim); text-decoration:none; text-shadow:0 1px 2px rgba(255,255,255,.8), 0 2px 10px rgba(255,255,255,.55); }
 .footer-social a:hover{ color:var(--accent); }
 
+/* =====================================================================
+   RESUME DOWNLOAD BUTTON — animated pill/checkbox toggle. Recoloured
+   onto the site's tokens (accent blue instead of purple, ink instead
+   of white label text since it sits on the light frame background,
+   not a dark page). The success ring stays green — that colour reads
+   as "done" regardless of theme. JS in index.html (RESUME DOWNLOAD
+   BUTTON block) wires the checkbox to a real file download and resets
+   it once the animation completes.
+===================================================================== */
+.dl-btn{ display:inline-flex; align-items:center; justify-content:center; }
+.dl-btn-label{
+  background-color:transparent; border:2px solid var(--accent);
+  display:flex; align-items:center; border-radius:50px; width:180px;
+  cursor:pointer; transition:all .4s ease; padding:5px; position:relative;
+}
+.dl-btn-label::before{
+  content:""; position:absolute; top:0; bottom:0; left:0; right:0;
+  background-color:#fff; width:8px; height:8px; transition:all .4s ease;
+  border-radius:100%; margin:auto; opacity:0; visibility:hidden;
+}
+.dl-btn-input{ display:none; }
+.dl-btn-title{
+  font-family:var(--f-mono); font-size:13.5px; letter-spacing:.3px; color:var(--ink);
+  transition:all .4s ease; position:absolute; right:20px; bottom:15px; text-align:center;
+}
+.dl-btn-title:last-child{ opacity:0; visibility:hidden; }
+.dl-btn-circle{
+  height:45px; width:45px; border-radius:50%; background-color:var(--accent);
+  display:flex; justify-content:center; align-items:center; transition:all .4s ease;
+  position:relative; box-shadow:0 0 0 0 rgba(255,255,255,1); overflow:hidden; flex:none;
+}
+.dl-btn-circle .dl-btn-icon{
+  color:var(--accent-ink); width:22px; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); transition:all .4s ease;
+}
+.dl-btn-circle .dl-btn-square{
+  aspect-ratio:1; width:15px; border-radius:2px; background-color:var(--accent-ink);
+  opacity:0; visibility:hidden; position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%); transition:all .4s ease;
+}
+.dl-btn-circle::before{
+  content:""; position:absolute; left:0; top:0; background-color:#212e94;
+  width:100%; height:0; transition:all .4s ease;
+}
+.dl-btn-label:has(.dl-btn-input:checked){ width:57px; animation:dl-btn-installed .4s ease 3.5s forwards; }
+.dl-btn-label:has(.dl-btn-input:checked)::before{ animation:dl-btn-rotate 3s ease-in-out .4s forwards; }
+.dl-btn-input:checked + .dl-btn-circle{
+  animation:dl-btn-pulse 1s forwards, dl-btn-circle-delete .2s ease 3.5s forwards;
+  rotate:180deg;
+}
+.dl-btn-input:checked + .dl-btn-circle::before{ animation:dl-btn-installing 3s ease-in-out forwards; }
+.dl-btn-input:checked + .dl-btn-circle .dl-btn-icon{ opacity:0; visibility:hidden; }
+.dl-btn-input:checked ~ .dl-btn-circle .dl-btn-square{ opacity:1; visibility:visible; }
+.dl-btn-input:checked ~ .dl-btn-title{ opacity:0; visibility:hidden; }
+.dl-btn-input:checked ~ .dl-btn-title:last-child{ animation:dl-btn-show-message .4s ease 3.5s forwards; }
+
+/* smaller variant used inline next to the contact-ctas primary button */
+.dl-btn-sm .dl-btn-label{ width:160px; }
+.dl-btn-sm .dl-btn-circle{ height:40px; width:40px; }
+.dl-btn-sm .dl-btn-title{ font-size:12.5px; }
+.dl-btn-sm .dl-btn-label:has(.dl-btn-input:checked){ width:52px; }
+
+@keyframes dl-btn-pulse{
+  0%{ scale:.95; box-shadow:0 0 0 0 rgba(255,255,255,.7); }
+  70%{ scale:1; box-shadow:0 0 0 16px rgba(255,255,255,0); }
+  100%{ scale:.95; box-shadow:0 0 0 0 rgba(255,255,255,0); }
+}
+@keyframes dl-btn-installing{ from{ height:0; } to{ height:100%; } }
+@keyframes dl-btn-rotate{
+  0%{ transform:rotate(-90deg) translate(27px) rotate(0); opacity:1; visibility:visible; }
+  99%{ transform:rotate(270deg) translate(27px) rotate(270deg); opacity:1; visibility:visible; }
+  100%{ opacity:0; visibility:hidden; }
+}
+@keyframes dl-btn-installed{ 100%{ width:172px; border-color:rgb(35,174,35); } }
+@keyframes dl-btn-circle-delete{ 100%{ opacity:0; visibility:hidden; } }
+@keyframes dl-btn-show-message{ 100%{ opacity:1; visibility:visible; right:60px; } }
+@media (prefers-reduced-motion:reduce){
+  .dl-btn-label, .dl-btn-label::before, .dl-btn-circle, .dl-btn-circle::before,
+  .dl-btn-icon, .dl-btn-square, .dl-btn-title{ animation:none !important; transition:none !important; }
+}
+
 /* skip link */
 .skip-link{
   position:absolute; left:-999px; top:0; background:var(--accent); color:var(--accent-ink);
