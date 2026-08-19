@@ -20,7 +20,6 @@
   width:56px; height:56px; border:1px solid var(--line-strong); border-radius:8px;
   display:flex; align-items:center; justify-content:center; flex:none;
 }
-.edu-icon svg{ width:26px; height:26px; stroke:var(--accent); fill:none; stroke-width:1.5; }
 .edu-degree{ font-family:var(--f-display); font-weight:800; font-size:clamp(19px,2.6vw,26px); letter-spacing:-.4px; margin-bottom:4px; color:var(--ink); }
 .edu-school{ font-size:14.5px; color:var(--ink-dim); }
 .edu-stats{ display:flex; gap:var(--s-5); }
