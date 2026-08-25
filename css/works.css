@@ -90,8 +90,8 @@
   aspect-ratio:4/3; overflow:hidden; cursor:pointer; transition:border-color .2s ease;
 }
 .gallery-item:hover{ border-color:var(--accent-line); z-index:5; }
-.gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(35%) contrast(1.05); }
-.gallery-item video{ width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(35%) contrast(1.05); }
+.gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+.gallery-item video{ width:100%; height:100%; object-fit:cover; display:block; }
 .gallery-fallback{
   display:none; position:absolute; inset:0; flex-direction:column; align-items:center; justify-content:center;
   gap:8px; padding:var(--s-2); text-align:center; background:transparent;
@@ -115,8 +115,62 @@
 
 .work-actions{ margin-top:var(--s-4); }
 
-/* pipeline (roadmap) */
+/* =====================================================================
+   LAB BENCH — hover-reveal component cards
+   A framed photo (accent-colour "mat" border, like a picture frame)
+   with a permanent tag/title caption; the fuller description tucks
+   away below the fold and reveals on hover, so the grid stays
+   scannable at a glance but rewards a closer look. Still sits on the
+   same medium-blur glass tier as the tiles above it — glass.css
+   targets .pipeline-item directly for the frosted background/border/
+   shadow/radius; this file only lays out the photo + reveal inside
+   that frame.
+===================================================================== */
 .pipeline-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s-3); margin-top:var(--s-6); }
 @media (max-width:860px){ .pipeline-list{ grid-template-columns:1fr 1fr; } }
 @media (max-width:560px){ .pipeline-list{ grid-template-columns:1fr; } }
-.pipeline-item{ border:1px solid var(--line); border-radius:8px; padding:var(--s-4); }
+
+.pipeline-item{
+  position:relative; isolation:isolate; overflow:hidden;
+  border:1px solid var(--line); padding:9px; aspect-ratio:3/4; cursor:pointer;
+}
+.pipeline-item:hover{ transform:translateY(-4px); }
+
+/* the framed photo — accent border reads as the picture-frame "mat",
+   the glass background showing through the surrounding padding */
+.pipeline-visual{
+  position:relative; width:100%; height:100%; overflow:hidden;
+  border-radius:7px; border:1.5px solid var(--accent-line);
+  background:rgba(20,22,30,.06);
+  transition:border-color .3s ease;
+}
+.pipeline-item:hover .pipeline-visual{ border-color:var(--accent); }
+
+.pipeline-visual img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
+  filter:grayscale(45%) contrast(1.05);
+  transition:transform .6s cubic-bezier(.16,1,.3,1), filter .5s ease;
+}
+.pipeline-item:hover .pipeline-visual img{ transform:scale(1.08); filter:grayscale(0%) contrast(1.05); }
+
+.pipeline-visual-fallback{
+  display:none; position:absolute; inset:0; flex-direction:column; align-items:center; justify-content:center;
+  gap:8px; background:linear-gradient(160deg, rgba(51,70,209,.1), rgba(20,22,30,.04));
+}
+.pipeline-visual-fallback svg{ width:30px; height:30px; stroke:var(--accent); fill:none; stroke-width:1.4; }
+.pipeline-visual-fallback span{ font-family:var(--f-mono); font-size:10px; color:var(--ink-faint); letter-spacing:.4px; text-align:center; padding:0 var(--s-3); }
+
+/* caption — tag + title always visible over the gradient scrim;
+   description is the part that reveals on hover */
+.pipeline-overlay{
+  position:absolute; left:9px; right:9px; bottom:9px; z-index:2; pointer-events:none;
+  padding:14px 14px 12px; border-radius:0 0 6px 6px;
+  background:linear-gradient(180deg, transparent, rgba(10,11,16,.5) 45%, rgba(10,11,16,.88) 100%);
+}
+.pipeline-desc{
+  max-height:0; opacity:0; overflow:hidden;
+  transition:max-height .4s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+}
+.pipeline-item:hover .pipeline-desc{ max-height:180px; opacity:1; }
+/* touch devices can't hover — show the full caption by default there */
+@media (hover:none){ .pipeline-desc{ max-height:180px; opacity:1; } }

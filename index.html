@@ -425,10 +425,6 @@
           <h2 class="section-heading">Where the fundamentals <span class="dim">came from.</span></h2>
         </div>
         <div class="edu-card reveal">
-          <div><svg viewBox="0 0 24 24">
-              <path d="M22 10L12 5 2 10l10 5 10-5Z" />
-              <path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" />
-            </svg></div>
           <div>
             <div class="edu-degree">Diploma in Electrical Engineering</div>
             <div class="edu-school">Government Polytechnic Daman · Daman, Dadra and Nagar Haveli and Daman and Diu</div>
@@ -451,10 +447,6 @@
 
         </div>
         <div class="edu-card reveal">
-          <div><svg viewBox="0 0 24 24">
-              <path d="M22 10L12 5 2 10l10 5 10-5Z" />
-              <path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" />
-            </svg></div>
           <div>
             <div class="edu-degree">PLC Programming Course</div>
             <div class="edu-school">Indo German Tool Room · Ahemdabad, Gujarat</div>
@@ -473,10 +465,6 @@
 
         </div>
         <div class="edu-card reveal">
-          <div><svg viewBox="0 0 24 24">
-              <path d="M22 10L12 5 2 10l10 5 10-5Z" />
-              <path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" />
-            </svg></div>
           <div>
             <div class="edu-degree">Studying Bachelor in Electrical Engineering</div>
             <div class="edu-school">Government Engineering Collage · Valsad, Gujarat</div>
@@ -808,10 +796,14 @@
 
     <!-- =========================================================
   LAB BENCH
-  EDIT ME: the "note" on each card is a starting draft tying the part
-  to a real or roadmap build — swap in your own specifics as builds
-  change. Reuses .pipeline-list / .pipeline-item (defined in works.css
-  and education.css, previously unused) so no new CSS was needed.
+  EDIT ME: each card is an accent-framed photo (.pipeline-visual) with
+  a tag/title caption that's always visible and a description that
+  reveals on hover (always shown on touch — see @media(hover:none) in
+  works.css). Point each <img src> at a real part photo in
+  assets/images/labbench/; until then the onerror fallback below it
+  shows a placeholder icon instead of a broken image. Layout lives in
+  works.css (.pipeline-list/.pipeline-item/.pipeline-visual/.pipeline-overlay),
+  caption typography in education.css (.pipeline-tag/.pipeline-title/.pipeline-desc).
 ========================================================= -->
     <section id="labbench">
       <div class="container">
@@ -822,66 +814,168 @@
             just read about in a datasheet.</p>
         </div>
 
+        <div class="work-block-title" style="margin-bottom:var(--s-2);">Component photos — add real photos to
+          assets/images/labbench/</div>
         <div class="pipeline-list reveal">
           <div class="pipeline-item">
-            <span class="pipeline-tag">Microcontroller</span>
-            <div class="pipeline-title">ESP32</div>
-            <p class="pipeline-desc">The primary brain across every build — the RFID Attendance System's auth logic and
-              the Maze Solving Robot's real-time turn decisions both run on it.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/esp32.webp" alt="ESP32 microcontroller board"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>ESP32</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Microcontroller</span>
+              <div class="pipeline-title">ESP32</div>
+              <p class="pipeline-desc">The primary brain across every build — the RFID Attendance System's auth logic
+                and the Maze Solving Robot's real-time turn decisions both run on it.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">RFID Reader</span>
-            <div class="pipeline-title">RC522</div>
-            <p class="pipeline-desc">Core of the RFID Attendance System — authenticates each tag against a stored ID
-              list and hands off a timestamped, logged scan.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/RFID.webp" alt="RC522 RFID reader module"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>RC522</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">RFID Reader</span>
+              <div class="pipeline-title">RC522</div>
+              <p class="pipeline-desc">Core of the RFID Attendance System — authenticates each tag against a stored ID
+                list and hands off a timestamped, logged scan.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">Ultrasonic Sensor</span>
-            <div class="pipeline-title">HC-SR04</div>
-            <p class="pipeline-desc">Three of these (front, left, right) feed the Maze Solving Robot's decision routine
-              for real-time obstacle detection and turn selection.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/HCSR04.webp" alt="HC-SR04 ultrasonic distance sensor"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>HC-SR04</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Ultrasonic Sensor</span>
+              <div class="pipeline-title">HC-SR04</div>
+              <p class="pipeline-desc">Three of these (front, left, right) feed the Maze Solving Robot's decision
+                routine for real-time obstacle detection and turn selection.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">Magnetic Encoder</span>
-            <div class="pipeline-title">AS5600</div>
-            <p class="pipeline-desc">On the bench for closed-loop position feedback ahead of the Robotic Arm build on
-              the roadmap — contactless angle sensing for joint control.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/AS5600.webp" alt="AS5600 magnetic angle encoder"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>AS5600</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Magnetic Encoder</span>
+              <div class="pipeline-title">AS5600</div>
+              <p class="pipeline-desc">On the bench for closed-loop position feedback ahead of the Robotic Arm build
+                on the roadmap — contactless angle sensing for joint control.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">Display · SSD1306</span>
-            <div class="pipeline-title">OLED</div>
-            <p class="pipeline-desc">Gives the RFID Attendance System its on-device status feedback for every scan, and
-              is doing the same job for the Smart Home Automation build in progress.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/OLED.webp" alt="SSD1306 OLED display module"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>OLED</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Display · SSD1306</span>
+              <div class="pipeline-title">OLED</div>
+              <p class="pipeline-desc">Gives the RFID Attendance System its on-device status feedback for every scan,
+                and is doing the same job for the Smart Home Automation build in progress.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">RTC Module</span>
-            <div class="pipeline-title">DS3231</div>
-            <p class="pipeline-desc">Keeps accurate time independent of network access — feeding real timestamps into
-              attendance logging and scheduled routines on the Smart Home system.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/DS3231.webp" alt="DS3231 real-time clock module"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>DS3231</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">RTC Module</span>
+              <div class="pipeline-title">DS3231</div>
+              <p class="pipeline-desc">Keeps accurate time independent of network access — feeding real timestamps
+                into attendance logging and scheduled routines on the Smart Home system.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">Motor Driver</span>
-            <div class="pipeline-title">TB6612FNG</div>
-            <p class="pipeline-desc">A cleaner, lower-loss dual-motor driver than a bulky H-bridge module — evaluating
-              it for the next revision of the differential-drive platform.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/TB6612FNG.webp" alt="TB6612FNG dual motor driver"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>TB6612FNG</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Motor Driver</span>
+              <div class="pipeline-title">TB6612FNG</div>
+              <p class="pipeline-desc">A cleaner, lower-loss dual-motor driver than a bulky H-bridge module —
+                evaluating it for the next revision of the differential-drive platform.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">Buck Converter</span>
-            <div class="pipeline-title">LM2596</div>
-            <p class="pipeline-desc">Steps battery voltage down to a clean, stable logic-side rail so the MCU and
-              sensors don't brown out when the motors draw current under load.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/LM2526.webp" alt="LM2596 buck converter module"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>LM2596</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Buck Converter</span>
+              <div class="pipeline-title">LM2596</div>
+              <p class="pipeline-desc">Steps battery voltage down to a clean, stable logic-side rail so the MCU and
+                sensors don't brown out when the motors draw current under load.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">Micro Gearmotor</span>
-            <div class="pipeline-title">N20 Motors</div>
-            <p class="pipeline-desc">Compact, high-torque drive for smaller chassis builds — lined up for the Line
-              Following Robot next on the roadmap.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/N20.webp" alt="N20 micro gearmotors"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>N20 Motors</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Micro Gearmotor</span>
+              <div class="pipeline-title">N20 Motors</div>
+              <p class="pipeline-desc">Compact, high-torque drive for smaller chassis builds — lined up for the Line
+                Following Robot next on the roadmap.</p>
+            </div>
           </div>
           <div class="pipeline-item">
-            <span class="pipeline-tag">Power Source</span>
-            <div class="pipeline-title">Li-ion Battery &amp; BMS</div>
-            <p class="pipeline-desc">Portable power for every wheeled build, with the BMS guarding against
-              over-discharge and cell imbalance across repeated test runs.</p>
+            <div class="pipeline-visual">
+              <img src="assets/images/labbench/Battery.webp" alt="Li-ion battery pack with BMS"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div class="pipeline-visual-fallback"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                  <path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3" />
+                </svg><span>Li-ion Battery</span></div>
+            </div>
+            <div class="pipeline-overlay">
+              <span class="pipeline-tag">Power Source</span>
+              <div class="pipeline-title">Li-ion Battery &amp; BMS</div>
+              <p class="pipeline-desc">Portable power for every wheeled build, with the BMS guarding against
+                over-discharge and cell imbalance across repeated test runs.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -2234,7 +2328,7 @@
             const big = document.createElement('img');
             big.src = img.src;
             big.alt = img.alt;
-            big.style.cssText = 'max-width:min(80vw,700px); max-height:80vh; border-radius:6px; filter:grayscale(35%) contrast(1.05);';
+            big.style.cssText = 'max-width:min(80vw,700px); max-height:80vh; border-radius:6px;';
             content.appendChild(big);
           } else {
             const svg = fallback.querySelector('svg');
