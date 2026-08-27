@@ -796,14 +796,26 @@
 
     <!-- =========================================================
   LAB BENCH
-  EDIT ME: each card is an accent-framed photo (.pipeline-visual) with
-  a tag/title caption that's always visible and a description that
-  reveals on hover (always shown on touch — see @media(hover:none) in
-  works.css). Point each <img src> at a real part photo in
-  assets/images/labbench/; until then the onerror fallback below it
-  shows a placeholder icon instead of a broken image. Layout lives in
-  works.css (.pipeline-list/.pipeline-item/.pipeline-visual/.pipeline-overlay),
-  caption typography in education.css (.pipeline-tag/.pipeline-title/.pipeline-desc).
+  EDIT ME: each card is a photo (.pipeline-visual) with a tag/title
+  caption that's always visible and a description that reveals on
+  hover (always shown on touch — see @media(hover:none) in works.css).
+  Point each <img src> at a real part photo in assets/images/labbench/;
+  until then the onerror fallback below it shows a placeholder icon
+  instead of a broken image. Layout lives in works.css
+  (.pipeline-list/.pipeline-item/.pipeline-dots/.pipeline-visual/
+  .pipeline-overlay), caption typography in education.css
+  (.pipeline-tag/.pipeline-title/.pipeline-desc).
+
+  CARD STYLE: a near-literal port of a Uiverse.io "hover-me" glass
+  card — dark translucent tint (not the site's usual light glass),
+  short + skewed at rest, squares up and grows taller on hover, with
+  white border-bottom/border-left accents instead of a border. There's
+  no accent-blue border on the photo any more (.pipeline-visual is
+  border:none now) — the dark card + white edges do the framing.
+  The three <span class="dot dot-red/yellow/green"> in each card are
+  purely decorative (aria-hidden) — a little "device window" label
+  sat over the photo's corner. Motion + colour live entirely in
+  works.css; nothing here needs editing to keep that effect.
 ========================================================= -->
     <section id="labbench">
       <div class="container">
@@ -818,6 +830,11 @@
           assets/images/labbench/</div>
         <div class="pipeline-list reveal">
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/esp32.webp" alt="ESP32 microcontroller board"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -834,6 +851,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/RFID.webp" alt="RC522 RFID reader module"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -850,6 +872,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/HCSR04.webp" alt="HC-SR04 ultrasonic distance sensor"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -866,6 +893,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/AS5600.webp" alt="AS5600 magnetic angle encoder"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -882,6 +914,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/OLED.webp" alt="SSD1306 OLED display module"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -898,6 +935,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/DS3231.webp" alt="DS3231 real-time clock module"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -914,6 +956,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/TB6612FNG.webp" alt="TB6612FNG dual motor driver"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -930,6 +977,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/LM2526.webp" alt="LM2596 buck converter module"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -946,6 +998,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/N20.webp" alt="N20 micro gearmotors"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
@@ -962,6 +1019,11 @@
             </div>
           </div>
           <div class="pipeline-item">
+            <div class="pipeline-dots" aria-hidden="true">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
             <div class="pipeline-visual">
               <img src="assets/images/labbench/Battery.webp" alt="Li-ion battery pack with BMS"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />

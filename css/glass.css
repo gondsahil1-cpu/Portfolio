@@ -175,7 +175,12 @@ body{ background:transparent; }
    on screen at once. Kept as LIGHT frosted glass (not the deep dark
    tint used by the five major panels) — dark ink text sits directly
    on top, per base.css's tokens. */
-.work-row, .edu-card, .gallery-item, .stat, .metric, .pipeline-item, .work-visual{
+/* .pipeline-item (Lab Bench) deliberately opts OUT of this shared
+   tile treatment — it now carries its own bespoke, darker-tinted
+   glass card (background/border/backdrop-filter) directly in
+   works.css, ported from a Uiverse.io card design. Keeping it here
+   too would fight that with !important at equal specificity. */
+.work-row, .edu-card, .gallery-item, .stat, .metric, .work-visual{
   position:relative; isolation:isolate;
   background:var(--lg-bg-sm) !important;
   border-color:rgba(20,22,30,.16) !important;
@@ -184,14 +189,14 @@ body{ background:transparent; }
   backdrop-filter:blur(var(--lg-blur-md)) saturate(var(--lg-sat-md)) !important;
   transition:background .35s ease, border-color .3s ease, box-shadow .35s ease, transform .3s ease;
 }
-.work-row:hover, .edu-card:hover, .gallery-item:hover, .stat:hover, .metric:hover, .pipeline-item:hover{
+.work-row:hover, .edu-card:hover, .gallery-item:hover, .stat:hover, .metric:hover{
   background:var(--lg-bg-sm-hover) !important;
   border-color:rgba(20,22,30,.24) !important;
   box-shadow:var(--lg-shadow-sm-hover) !important;
 }
 .work-row, .edu-card{ border-radius:var(--lg-r-md) !important; }
 .gallery-item{ border-radius:var(--lg-r-xs) !important; }
-.stat, .metric, .pipeline-item{ border-radius:var(--lg-r-xs) !important; }
+.stat, .metric{ border-radius:var(--lg-r-xs) !important; }
 .work-visual{ border-radius:var(--lg-r-sm) !important; }
 
 /* the work row header acts as the site's expand/collapse "tab"; give
