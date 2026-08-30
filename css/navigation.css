@@ -2,14 +2,13 @@
    NAVIGATION
    Floating "dynamic island" style capsule navbar: fixed, centered,
    width fits its content, shrinks/blurs on scroll-down and expands
-   back on scroll-up. Glass material (background/blur/border/shadow)
-   for .navbar/.nav-links/.menu-overlay lives in glass.css — this file
-   is shape, layout and micro-interaction only.
+   back on scroll-up. Glass material for .navbar/.nav-links/.menu-overlay
+   lives in glass.css — this file is shape, layout and interaction only.
 
    States driven from index.html's inline script:
      .nav-loaded   -> added one frame after paint, plays the entrance
-     .nav-compact  -> added while the user is scrolling down past the
-                      top of the page, removed near top or on scroll-up
+     .nav-compact  -> added while scrolled down past the top, removed
+                      near the top or on scroll-up
 ========================================================================= */
 
 /* =====================================================================
@@ -25,10 +24,9 @@
   overflow:hidden;
   opacity:0;
 
-  /* translate keeps the capsule horizontally centered at all times;
-     --nav-y and --nav-scale are the only things any other rule
-     (entrance, hover, glass.css) should ever touch — never redeclare
-     `transform` elsewhere, or it silently cancels the centering. */
+  /* translate keeps the capsule centered; --nav-y and --nav-scale are
+     the only things other rules should touch — never redeclare
+     `transform` elsewhere or it cancels the centering */
   --nav-y:-14px;
   --nav-scale:1;
   transform:translate(-50%, var(--nav-y)) scale(var(--nav-scale));
@@ -44,8 +42,7 @@
   opacity:1;
   --nav-y:0;
 }
-/* dynamic-island shrink: nudge upward + let glass.css's compact rule
-   handle the padding/blur/opacity delta */
+/* dynamic-island shrink: nudge upward, glass.css handles the rest */
 .navbar.nav-loaded.nav-compact{
   top:8px;
 }
@@ -76,10 +73,10 @@
 ===================================================================== */
 .logo{ display:flex; align-items:center; gap:10px; min-width:0; flex:1 1 auto; overflow:hidden; }
 
-/* logo-mark-btn is the real interactive element now — a plain button
-   reset wrapped around the visual .logo-mark box, so it can double as
-   the capsule's expand/collapse control without hijacking the #home
-   link (that lives on .logo-text-link instead). */
+/* logo-mark-btn is the real interactive element — a plain button
+   reset around the visual .logo-mark box, doubling as the capsule's
+   expand/collapse control without hijacking the #home link (that
+   lives on .logo-text-link instead) */
 .logo-mark-btn{
   background:none; border:none; padding:0; margin:0; display:flex; cursor:pointer; flex:none;
   -webkit-tap-highlight-color:transparent;
@@ -92,8 +89,8 @@
 }
 .navbar.nav-compact .logo-mark{ width:27px; height:27px; }
 .logo-mark svg{ width:15px; height:15px; }
-/* the photo handed off from the loader — starts invisible so the
-   flying clone reads as the thing "arriving"; faded in once it lands */
+/* photo handed off from the loader — starts invisible so the flying
+   clone reads as the thing "arriving", fades in once it lands */
 .logo-mark img{
   width:100%; height:100%; object-fit:cover; border-radius:inherit; display:block;
   opacity:0; transition:opacity .35s ease;
@@ -116,10 +113,10 @@
 .logo-mark-btn:active .logo-mark{ transform:scale(.96) rotate(0deg); }
 
 /* =====================================================================
-   FLYING PHOTO — a fixed-position clone JS animates from the loader's
-   position to .logo-mark's position (see index.html finishLoading()).
-   Pure top/left/width/height transition (a manual FLIP), so it works
-   whether the navbar has settled at its final spot or not.
+   FLYING PHOTO — a fixed-position clone JS animates from the loader
+   to .logo-mark (see index.html finishLoading()). Plain top/left/
+   width/height transition (a manual FLIP), works whether or not the
+   navbar has settled into its final spot yet.
 ===================================================================== */
 .logo-flight{
   position:fixed; z-index:10001; overflow:hidden; border-radius:8px; pointer-events:none;
@@ -134,11 +131,11 @@
 ===================================================================== */
 /* =====================================================================
    NAV COLLAPSIBLE — everything except the logo (links, CTA, mobile
-   toggle). Toggled by .navbar.nav-collapsed, set from JS: once on load
-   (so the capsule starts as a small pill while the photo flies in),
-   and afterwards by clicking .logo-mark-btn. max-width + opacity gives
-   the Dynamic-Island "grow open" read without animating layout width
-   directly (the navbar itself is width:max-content and just follows).
+   toggle). Toggled by .navbar.nav-collapsed, set from JS: once on
+   load (capsule starts as a small pill while the photo flies in),
+   then by clicking .logo-mark-btn. max-width + opacity gives the
+   Dynamic-Island "grow open" feel without animating layout width
+   directly (navbar is width:max-content and just follows along).
 ===================================================================== */
 .nav-collapsible{
   display:flex; align-items:center; overflow:hidden; min-width:0; flex:0 1 auto;
@@ -149,13 +146,11 @@
   max-width:0; opacity:0; margin-left:0; pointer-events:none;
   transition:max-width .5s cubic-bezier(.16,1,.3,1), opacity .25s ease, margin-left .5s cubic-bezier(.16,1,.3,1);
 }
-/* the capsule always stays open on mobile/touch widths — nav-links are
-   already hidden there (see @media rule further down) and .menu-toggle
-   (the real mobile menu entry point) lives inside .nav-collapsible, so
-   it must stay reachable. This overrides the nav-collapsed "pill"
-   state, which is a desktop-only affordance — on mobile it must never
-   collapse away the hamburger, so every property that state touches
-   gets forced back open here. */
+/* the capsule stays open on mobile/touch widths — nav-links are
+   already hidden there and .menu-toggle (the mobile menu entry
+   point) lives inside .nav-collapsible, so it has to stay reachable.
+   This overrides the nav-collapsed "pill" state, a desktop-only
+   affordance that must never collapse away the hamburger. */
 @media (max-width:900px){
   .nav-collapsible,
   .navbar.nav-collapsed .nav-collapsible{
@@ -179,7 +174,7 @@
     border-color .35s ease,
     transform .35s cubic-bezier(.34,1.56,.64,1);
 }
-/* underline animation removed on purpose — replaced by pill fill */
+/* underline animation removed — replaced by pill fill */
 .nav-links a::after{ content:none; }
 
 .nav-links a:hover{
@@ -207,25 +202,20 @@
   transition:padding .4s cubic-bezier(.16,1,.3,1), font-size .4s ease, transform .3s ease, box-shadow .3s ease, opacity .3s ease;
 }
 .nav-cta.btn-primary:hover{
-  /* overrides glass.css's generic .nav-cta:hover{ transform:scale(1.06) } —
-     this pill sits right against nav-collapsible's overflow:hidden edge,
-     so any scale-up gets visibly clipped there. Higher-specificity
-     selector here (two classes vs one) wins the cascade for `transform`
-     specifically, while still inheriting glass.css's background/border
-     hover treatment normally. */
+  /* overrides glass.css's .nav-cta:hover scale(1.06) — this pill sits
+     right against nav-collapsible's overflow:hidden edge and any
+     scale-up gets clipped there. The two-class selector wins the
+     cascade on `transform` while still inheriting the hover tint. */
 
 }
 .navbar.nav-compact .nav-cta.btn-primary{ padding:7px 15px; font-size:11.5px; }
 /* hidden at the same breakpoint the hamburger takes over — the mobile
-   menu already surfaces Contact, so keeping the full-size CTA here
-   just crowds the capsule against the toggle button */
-/* compound selector (not just `.nav-cta`) is required here — the CTA
-   also carries .btn-primary, and hero.css's .btn-primary sets
-   display:inline-flex at the same (single-class) specificity. Loaded
-   after navigation.css, it would otherwise win the cascade on source
-   order alone and this pill would show on mobile too. Matching the
-   two-class specificity used by .nav-cta.btn-primary above makes this
-   win regardless of file load order. */
+   menu already surfaces Contact, so the full-size CTA would just
+   crowd the capsule against the toggle button */
+/* needs the compound selector — hero.css's .btn-primary also sets
+   display:inline-flex at single-class specificity, and loads after
+   this file, so it'd otherwise win on source order and show on
+   mobile too. Matching specificity here wins regardless of load order. */
 .nav-cta.btn-primary{ display:none; }
 
 /* =====================================================================
@@ -243,13 +233,10 @@
   .menu-toggle span:not(.bars){ font-size:10.5px; }
 }
 .menu-toggle:active{ transform:scale(.96); }
-/* nav-cta (desktop "Start a build" pill) and menu-toggle (mobile
-   hamburger) are complements of each other — this breakpoint must
-   stay physically AFTER both base rules above (.nav-cta{display:none}
-   and .menu-toggle{display:flex}) since all three share identical
-   specificity; if it moved earlier in the file the base rules would
-   win the cascade instead and both would incorrectly show at every
-   width. */
+/* nav-cta (desktop CTA) and menu-toggle (mobile hamburger) are
+   complements — this breakpoint has to stay physically after both
+   base rules above since they share identical specificity, or the
+   base rules win the cascade and both show at every width. */
 @media (min-width:901px){
   .nav-cta.btn-primary{ display:inline-flex; }
   .menu-toggle{ display:none; }
@@ -281,8 +268,8 @@
   opacity:0; transform:translateY(28px);
   transition:opacity .5s cubic-bezier(.16,1,.3,1), transform .55s cubic-bezier(.16,1,.3,1);
 }
-/* staggered reveal — each link a little later than the last; the
-   close animation reuses the same transition so it reverses smoothly */
+/* staggered reveal — each link a little later than the last; close
+   reuses the same transition so it reverses smoothly */
 .menu-overlay.open a{ opacity:1; transform:translateY(0); }
 .menu-overlay a:nth-child(1){ transition-delay:.06s; }
 .menu-overlay a:nth-child(2){ transition-delay:.11s; }

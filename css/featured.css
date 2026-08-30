@@ -1,11 +1,6 @@
 /* =====================================================================
-   MARQUEE + FEATURED PROJECT TEASER
-   The scrolling text marquee band and the single large 'featured
-   project' card shown just below the hero.
-===================================================================== */
-
-/* =====================================================================
    FEATURED PROJECT TEASER
+   The single large 'featured project' card shown just below the hero.
 ===================================================================== */
 .featured-teaser{ padding:var(--s-8) 0; }
 .featured-card{

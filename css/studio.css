@@ -3,10 +3,6 @@
    About-section layout, the stat grid, the 'currently building' list,
    and the scroll-filled career timeline.
 ===================================================================== */
-
-/* =====================================================================
-   STUDIO (about)
-===================================================================== */
 .studio-lead{
   font-family:var(--f-display); font-weight:800; font-size:clamp(24px,3.6vw,40px);
   line-height:1.28; letter-spacing:-.6px; max-width:840px; margin-bottom:var(--s-6);

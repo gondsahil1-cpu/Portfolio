@@ -32,13 +32,11 @@ footer{ border-top:1px solid var(--line); padding:var(--s-4) 0; }
 .footer-social a:hover{ color:var(--accent); }
 
 /* =====================================================================
-   RESUME DOWNLOAD BUTTON — animated pill/checkbox toggle. Recoloured
-   onto the site's tokens (accent blue instead of purple, ink instead
-   of white label text since it sits on the light frame background,
-   not a dark page). The success ring stays green — that colour reads
-   as "done" regardless of theme. JS in index.html (RESUME DOWNLOAD
-   BUTTON block) wires the checkbox to a real file download and resets
-   it once the animation completes.
+   RESUME DOWNLOAD BUTTON — animated pill/checkbox toggle, recoloured
+   onto the site's tokens (accent blue, ink label text since it sits
+   on the light frame background). Success ring stays green regardless
+   of theme. JS in index.html wires the checkbox to a real download
+   and resets it once the animation completes.
 ===================================================================== */
 .dl-btn{ display:inline-flex; align-items:center; justify-content:center; }
 .dl-btn-label{

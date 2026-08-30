@@ -1,40 +1,27 @@
 /* =====================================================================
    LIQUID GLASS SYSTEM
-   Loaded last so it wins the cascade at equal specificity. Layout,
-   spacing, typography, section order and animations elsewhere are
-   untouched — this file only touches material/surface.
+   Loaded last so it wins the cascade at equal specificity. Only
+   touches background/border/shadow/backdrop-filter — layout, spacing,
+   type and animation stay in each section's own file.
 
-   SCOPE (trimmed): glass is now reserved for surfaces that genuinely
-   read as "floating" over the frame background — a handful of large
-   panels, the work cards, gallery tiles, and site chrome. Rows that
-   are really just a list of text (Toolkit, Roadmap, contact links,
-   the "currently building" bullet list) were flattened back to plain
-   underlined rows — see each section's own CSS file for their (now
-   glass-free) hover treatment.
+   Glass is reserved for surfaces that read as "floating": the five
+   major panels, work cards/gallery tiles, site chrome, and chip/tag
+   pills. Plain text rows (toolkit, roadmap, contact links, the
+   "currently building" list) got flattened back to underlined rows —
+   see their own CSS files for that.
 
-     1) MAJOR PANELS — five large, singular content cards (featured
-        project, education, currently-building, contact form, github
-        stats): full blur + optical refraction + a cursor-tracked
-        specular glint (desktop only).
-     2) SITE CHROME — navbar (always on screen), mobile menu + lightbox
-        (only ever painted on demand): full/medium blur.
-     3) WORK CARDS + TILES — work rows (Experience/Works), gallery
-        tiles, stat/metric/pipeline cells, icon tiles: medium blur —
-        there are only ever a handful expanded/visible at once.
-     4) CHIPS & TAGS — small, frequently-repeated pills (.chip,
-        .work-badge): light blur, tuned down specifically because
-        these can repeat a dozen+ times on one screen.
+     1) MAJOR PANELS — featured project, education, currently-building,
+        contact form, github stats: full blur + refraction + a
+        cursor-tracked specular glint (desktop only).
+     2) SITE CHROME — navbar, mobile menu, lightbox: full/medium blur.
+     3) WORK CARDS + TILES — work rows, gallery tiles, stat/metric/
+        pipeline cells: medium blur (only a handful ever visible).
+     4) CHIPS & TAGS — small repeated pills: light blur, tuned down
+        since these can repeat a dozen+ times per screen.
 
-   Every element below keeps its original layout, spacing and colour
-   tokens from its own section file (works.css, etc.) — this file only
-   ever touches background/border/shadow/backdrop-filter.
-
-   RIM: every glass tier also gets --lg-rim(-sm), a tight near-white
-   inset pair (2px corner hit + 3px glow) borrowed from Apple's
-   liquid-glass reference material. It's what turns a soft ambient
-   blur into something that reads as a bevelled lens catching a point
-   light source, rather than frosted plastic. It's additive — appended
-   onto the existing box-shadow list — so nothing above needs to change.
+   Every tier also gets --lg-rim(-sm), a tight near-white inset pair
+   borrowed from Apple's liquid-glass reference — it's what makes the
+   blur read as a bevelled lens instead of frosted plastic.
 ===================================================================== */
 :root{
   /* tier 1 — major panels */
@@ -53,10 +40,8 @@
   --lg-r-xs:10px;
   --lg-r-pill:999px;
 
-  /* crisp corner catch-light — a tight, near-white inset pair that reads
-     as a real bevelled lens edge catching a point light source, layered
-     on top of the softer ambient inset above. This is the detail that
-     makes the surface read as *glass* rather than *frosted plastic*. */
+  /* crisp corner catch-light — a tight near-white inset that reads as a
+     bevelled lens edge, layered over the softer ambient inset below */
   --lg-rim:
     inset 2px 2px 0px -2px rgba(255,255,255,.85),
     inset 0 0 4px 1px rgba(255,255,255,.6);
@@ -70,17 +55,13 @@
     inset 1px 1px 0px -1px rgba(255,255,255,.88),
     inset 0 0 4px 1px rgba(255,255,255,.58);
 
-  /* base tint: light frosted glass, same family as --lg-bg-sm below
-     but a touch more opaque/blurred to give the major panels extra
-     weight — everything now reads as one consistent light-glass
-     material, chrome included, instead of a separate dark tier. */
+  /* base tint: light frosted glass, a touch more opaque than
+     --lg-bg-sm below to give the major panels extra weight */
   --lg-bg:linear-gradient(168deg, rgba(255,255,255,.5), rgba(255,255,255,.38) 45%, rgba(255,255,255,.56));
   --lg-bg-hover:linear-gradient(168deg, rgba(255,255,255,.6), rgba(255,255,255,.48) 45%, rgba(255,255,255,.66));
 
-  /* shadow tuned to "small" intensity — one soft cast shadow, one tight
-     contact shadow, the bevel highlights, and a gentle accent-tinted
-     ambient glow around the edge (the "glowIntensity: sm" read from the
-     reference component) instead of the previous heavy multi-layer stack */
+  /* soft cast shadow + tight contact shadow + bevel highlights + a
+     gentle accent glow around the edge */
   --lg-shadow:
     0 18px 34px -18px rgba(0,0,0,.32), 0 6px 14px -10px rgba(0,0,0,.3),
     inset 0 1px 0 rgba(255,255,255,.4), inset 0 -1px 0 rgba(0,0,0,.26),
@@ -105,9 +86,8 @@
     var(--lg-rim-sm-hover);
 }
 
-/* ---- backdrop colour now lives on the frame canvas itself (see
-   frame-bg.css); body no longer paints its own background so the
-   canvas underneath is never covered ---- */
+/* backdrop colour lives on the frame canvas now (frame-bg.css) — body
+   stays transparent so the canvas underneath is never covered */
 body{ background:transparent; }
 
 /* fine film-grain over everything so the kept glass — and the video
@@ -131,9 +111,7 @@ body{ background:transparent; }
   will-change:transform;
 }
 /* cursor-tracked specular glint — a soft hotspot that follows the
-   pointer (--lg-mx/--lg-my are set by index.html's pointermove
-   handler), the single biggest thing that makes a flat blur read as
-   an actual curved, reflective surface instead of frosted paint */
+   pointer (--lg-mx/--lg-my set by index.html's pointermove handler) */
 .featured-card::after, .building-card::after, .contact-form::after, .github-card::after{
   content:""; position:absolute; inset:0; z-index:1; pointer-events:none; border-radius:inherit;
   background:radial-gradient(240px 200px at var(--lg-mx,30%) var(--lg-my,0%), rgba(255,255,255,.18), transparent 65%);
@@ -169,17 +147,12 @@ body{ background:transparent; }
 .building-card, .contact-form, .github-card{ border-radius:var(--lg-r-lg) !important; }
 
 /* ============================ WORK CARDS + TILES (medium blur) ============================
-   Work rows (Experience/Works) are full self-padded cards now (see
-   works.css); gallery tiles and the small stat/metric/pipeline cells
-   get the same medium-blur treatment since only a handful are ever
-   on screen at once. Kept as LIGHT frosted glass (not the deep dark
-   tint used by the five major panels) — dark ink text sits directly
-   on top, per base.css's tokens. */
-/* .pipeline-item (Lab Bench) deliberately opts OUT of this shared
-   tile treatment — it now carries its own bespoke, darker-tinted
-   glass card (background/border/backdrop-filter) directly in
-   works.css, ported from a Uiverse.io card design. Keeping it here
-   too would fight that with !important at equal specificity. */
+   Work rows, gallery tiles, and the stat/metric/pipeline cells share
+   this medium-blur tile treatment — light frosted glass, dark ink text
+   on top (base.css tokens), since only a handful are ever on screen. */
+/* .pipeline-item (Lab Bench) opts out — it has its own darker glass
+   card directly in works.css, so this would fight it at equal
+   specificity. */
 .work-row, .edu-card, .gallery-item, .stat, .metric, .work-visual{
   position:relative; isolation:isolate;
   background:var(--lg-bg-sm) !important;
@@ -199,22 +172,18 @@ body{ background:transparent; }
 .stat, .metric{ border-radius:var(--lg-r-xs) !important; }
 .work-visual{ border-radius:var(--lg-r-sm) !important; }
 
-/* the work row header acts as the site's expand/collapse "tab"; give
-   it the same corner radius as its parent so the glass seam is continuous */
+/* work row header acts as the expand/collapse tab; match the parent's
+   corner radius so the glass seam is continuous */
 .work-row-head{ border-radius:inherit; }
 
-/* edu-icon now sits on the light frosted edu-card (same tier as the
-   tiles above), so it uses the page's normal dark-on-light ink tokens
-   instead of the on-dark ones — see education.css for the border/
-   stroke colour swap that goes with this. No separate glass override
-   needed here; it reads fine as a plain bordered swatch, same as
-   .toolkit-title .ti. */
+/* edu-icon sits on the light edu-card (same tier as the tiles above)
+   and uses the normal ink tokens — see education.css. No glass
+   override needed, it reads fine as a plain bordered swatch. */
 
 /* ============================ CHIPS & TAGS (light blur) ============================
-   Small, frequently-repeated pills: the "Flagship Build" work badge
-   and the generic tech-stack chip. Same light frosted-glass material
-   as the tiles above, just a lighter blur tier since these can repeat
-   a dozen+ times on one screen at once. */
+   Small repeated pills — the work badge and generic tech chip. Same
+   light frosted glass as the tiles above, just a lighter blur tier
+   since these can repeat a dozen+ times per screen. */
 .chip, .work-badge{
   position:relative; isolation:isolate;
   background:var(--lg-bg-sm) !important;
@@ -245,9 +214,8 @@ body{ background:transparent; }
   box-shadow:0 20px 34px -16px rgba(0,0,0,.4), 0 10px 22px -14px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.22), var(--lg-rim-sm);
   transition:background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
-/* outline/nav-cta/resume-link now sit on light glass, so they get a
-   dark-tinted border (matches the light-tile border approach above)
-   instead of the white border that only reads against a dark fill */
+/* outline/nav-cta/resume-link sit on light glass, so they get a
+   dark-tinted border instead of one meant for a dark fill */
 .btn-outline, .nav-cta, .resume-link{
   background:rgba(255,255,255,.5) !important; color:var(--ink-on-dark) !important;
   border:1px solid rgba(20,22,30,.18) !important;
@@ -286,13 +254,10 @@ body{ background:transparent; }
 .btn-primary, .btn-outline, .nav-cta, .resume-link{ border-radius:var(--lg-r-pill) !important; }
 
 /* ============================ NAVIGATION — the one always-visible glass surface ============================
-   Floating capsule now, not a full-width bar: border wraps all four
-   sides and the corner radius is pill-shaped. A dedicated "compact"
-   variant (toggled by JS on scroll-down, see index.html) turns up the
-   blur/saturation and tightens the surface, mimicking the Dynamic
-   Island's "shrink while busy" read. Hover breathes the capsule
-   outward by ~2–3% so it feels alive, same physics language as the
-   buttons below. */
+   Floating pill capsule, not a full-width bar. A "compact" variant
+   (toggled by JS on scroll-down) turns up the blur/saturation for the
+   Dynamic-Island "shrink while busy" look. Hover breathes it outward
+   ~2-3%, same physics language as the buttons below. */
 .navbar{ isolation:isolate; will-change:transform; }
 .navbar::before{
   content:""; position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0; border-radius:inherit;
@@ -341,13 +306,13 @@ body{ background:transparent; }
       var(--lg-rim-sm-hover);
   }
 }
-/* the SVG-distortion refraction filter is deliberately NOT applied here — it's
-   reserved for the five major panels above; the nav is fixed and repaints on
-   every scroll frame, so it gets the cheaper plain blur only. */
+/* SVG-distortion refraction is skipped here on purpose — reserved for
+   the five major panels; the nav repaints every scroll frame so it
+   gets the cheaper plain blur */
 
-/* nav-links pill sits on top of the already-blurred navbar — a second nested
-   blur there would compound cost for no visible gain, so it's tint + border only.
-   Individual link pills (hover/active fill) are styled in navigation.css. */
+/* nav-links sits on the already-blurred navbar — a second nested
+   blur would cost more for no visible gain, so it's tint + border
+   only. Hover/active pill fill is in navigation.css. */
 .nav-links{
   background:transparent; border:none; padding:0; box-shadow:none;
 }

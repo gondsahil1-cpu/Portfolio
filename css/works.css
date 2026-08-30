@@ -2,19 +2,15 @@
    WORKS
    The expandable project list: rows, badges, visuals, chip tags,
    photo gallery grid, and metric strips used inside each case study.
-===================================================================== */
 
-/* =====================================================================
-   WORKS
    Each .work-row is a self-contained card (glass treatment lives in
    glass.css) — real padding on the head + panel keeps text clear of
-   the rounded corners instead of sitting flush against them, and a
-   flex `gap` replaces the old flush border-bottom list rhythm so each
-   card reads as its own object, not a continuous list.
+   the rounded corners, and a flex `gap` gives each card its own
+   presence instead of a continuous list rhythm.
 
-   These rows sit on LIGHT frosted glass (see glass.css --lg-bg-sm),
-   not the dark tint used by the five major panels — so everything
-   inside uses the page's normal dark ink tokens.
+   These rows sit on LIGHT frosted glass (glass.css --lg-bg-sm), not
+   the dark tint the five major panels use, so everything inside uses
+   the normal dark ink tokens.
 ===================================================================== */
 .works-list{ display:flex; flex-direction:column; gap:var(--s-3); }
 .work-row{ overflow:hidden; }
@@ -117,25 +113,13 @@
 
 /* =====================================================================
    LAB BENCH — hover-reveal component cards
-   .pipeline-item is a Uiverse.io "hover-me" glass card (three
-   traffic-light dots, grows taller on hover) instead of the site's
-   shared glass-tile look — see the note pulled out of glass.css's
-   WORK CARDS + TILES block. Deliberate departures from the original
-   snippet, flagged inline below:
-     1) NO SKEW — the original rests at skewX(10deg) and squares up on
-        hover. Kept the sides a perfect rectangle in both states
-        instead (dropped the skew entirely) so nothing about the card
-        shape ever looks slanted; a small lift/scale on hover stands
-        in for that "squaring up" motion cue.
-     2) a DARKER tint (rgba(18,20,26,..) instead of the original's
-        light rgba(198,198,198,..)) and no accent-blue border anywhere
-        — the previous version framed each photo in --accent-line
-        (blue); that's gone.
-     3) width stays 100% (the grid column controls it) instead of the
-        original's fixed 190px, since these sit in a responsive
-        3-across grid rather than flowing free-form.
-   Height-growth on hover otherwise matches the original: short at
-   rest, grows taller on hover.
+   .pipeline-item is a glass card (three traffic-light dots, grows
+   taller on hover) with its own bespoke tint — separate from the
+   site's shared glass-tile look (see the opt-out note in glass.css's
+   WORK CARDS + TILES block). No skew on the sides, ever — a small
+   lift/scale on hover carries the motion instead. Darker tint, no
+   accent-blue border. Width is 100% since these sit in a responsive
+   3-across grid. Short at rest, grows taller on hover.
 ===================================================================== */
 .pipeline-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s-3); margin-top:var(--s-6); }
 @media (max-width:860px){ .pipeline-list{ grid-template-columns:1fr 1fr; } }
@@ -145,8 +129,8 @@
   position:relative; isolation:isolate; overflow:hidden;
   padding:9px; cursor:pointer;
   border-radius:10px;
-  height:140px; /* was aspect-ratio:3/4 — much shorter at rest, like the original's 120px */
-  background:rgba(18,20,26,.52); /* darker translucent tint, was the light --lg-bg-sm tier */
+  height:140px; /* short at rest */
+  background:rgba(18,20,26,.52); /* dark translucent tint */
   -webkit-backdrop-filter:blur(5px) saturate(130%);
   backdrop-filter:blur(5px) saturate(130%);
   border-bottom:3px solid rgba(255,255,255,.4);
@@ -160,10 +144,9 @@
   transform:translateY(-4px);
   filter:drop-shadow(-30px 36px 24px rgba(0,0,0,.38));
 }
-/* touch devices never trigger :hover, so they'd be stuck at the
-   short resting height forever — sit at the taller size permanently
-   there instead, since .pipeline-desc is always shown on touch too
-   (see its own @media(hover:none) further below) and needs the room */
+/* touch devices never trigger :hover, so they'd be stuck short
+   forever — sit at the taller size permanently instead, since
+   .pipeline-desc is always shown on touch too and needs the room */
 @media (hover:none){
   .pipeline-item{ height:260px; filter:none; }
 }
@@ -171,10 +154,9 @@
   .pipeline-item{ transform:none !important; transition:none; filter:none !important; }
 }
 
-/* traffic-light dots — ported from the Uiverse card's .align row,
-   sat over the photo's top-left corner like a little device-window
-   label instead of a title bar over blank text. Purely decorative
-   (aria-hidden in the markup), so pointer-events are switched off. */
+/* traffic-light dots sit over the photo's top-left corner like a
+   little device-window label. Purely decorative (aria-hidden in the
+   markup), so pointer-events are switched off. */
 .pipeline-dots{
   position:absolute; top:10px; left:10px; z-index:3;
   display:flex; gap:6px; pointer-events:none;
@@ -184,10 +166,9 @@
 .pipeline-dots .dot-yellow{ background:#ffbd44; }
 .pipeline-dots .dot-green{ background:#00ca4e; }
 
-/* the framed photo — no border of its own any more (that was the
-   blue --accent-line "mat"); the dark card showing through the 9px
-   padding gutter, plus the white border-bottom/border-left above,
-   now does that framing job instead */
+/* the framed photo — no border of its own; the dark card showing
+   through the 9px padding gutter, plus the border-bottom/border-left
+   above, does the framing job instead */
 .pipeline-visual{
   position:relative; width:100%; height:100%; overflow:hidden;
   border-radius:6px; border:none;

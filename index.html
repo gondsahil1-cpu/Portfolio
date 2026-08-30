@@ -29,9 +29,7 @@
   <link rel="stylesheet" href="css/project-status.css?v=2" />
   <link rel="stylesheet" href="css/misc.css?v=2" />
   <link rel="stylesheet" href="css/frame-bg.css?v=1" />
-  <!-- glass.css loaded last on purpose: it overrides the base component
-     styles above (with !important) for the handful of elements that
-     still get real glass treatment. See its header comment for scope. -->
+  <!-- glass.css loads last so its !important overrides win -->
   <link rel="stylesheet" href="css/glass.css?v=2" />
   
 </head>
@@ -83,8 +81,7 @@
   <nav class="navbar">
     <div class="nav-inner">
       <div class="logo">
-        <!-- the photo/microchip mark is now a real button: it toggles the
-           capsule open/closed. #home lives on the text next to it instead. -->
+        <!-- logo mark toggles the nav capsule; #home link lives on the text next to it -->
         <button type="button" class="logo-mark-btn" id="logoMarkBtn" aria-expanded="false"
           aria-controls="navCollapsible" aria-label="Expand navigation">
           <span class="logo-mark" id="logoMark">
@@ -198,9 +195,7 @@
 
     <!-- =========================================================
   ENGINEERING DASHBOARD
-  EDIT ME: these are running totals, not per-project stats — bump
-  them as new builds/hours/boards ship. Numbers count up once the
-  section scrolls into view (same mechanism as the About stat-grid).
+  EDIT ME: running totals, bump as new builds/hours ship.
 ========================================================= -->
     <section id="dashboard" class="dashboard-section">
       <div class="container">
@@ -1744,10 +1739,8 @@
       const minDuration = 3200; // ms, floor so the scene always reads intentionally
       const start = performance.now();
 
-      // Shrink the picture down to the navbar mark's actual size (30px,
-      // set in navigation.css's .logo-mark) over the same span the bar
-      // fills and the frames reverse-scrub — so all three read as one
-      // motion instead of the shrink happening afterward on its own.
+      // shrink the loader photo down to the navbar mark's size (30px,
+      // see .logo-mark) in step with the bar fill + frame scrub
       if (loaderMark) {
         loaderMark.style.transition =
           `width ${minDuration}ms cubic-bezier(.16,1,.3,1), height ${minDuration}ms cubic-bezier(.16,1,.3,1), ` +
@@ -1765,12 +1758,9 @@
         progress = Math.min(100, Math.max(progress, target));
         fill.style.width = progress + '%';
         pct.textContent = String(progress).padStart(2, '0') + '%';
-        // Reverse-scrub the frame background in lockstep with the bar:
-        // 0% loaded -> last frame, 100% loaded -> frame 1. window.FrameBG
-        // is defined by the SCROLL-SCRUBBED FRAME SEQUENCE script further
-        // down this same <script> block (it runs synchronously above this
-        // callback's first invocation, so it's always present by the time
-        // tick() actually fires).
+        // scrub the frame bg backward as the bar fills (0% -> last
+        // frame, 100% -> frame 1). window.FrameBG comes from the frame-
+        // sequence script further down — it's already defined by now.
         if (window.FrameBG) window.FrameBG.setOverride(1 - progress / 100);
         if (progress < 100 || elapsed < minDuration) {
           requestAnimationFrame(tick);
@@ -1784,10 +1774,9 @@
         loader.classList.add('hide');
         document.body.classList.remove('is-loading');
         if (window.__revealNav) window.__revealNav();
-        // Hand off from the reverse intro to scroll-driven playback. The
-        // reverse scrub above always lands on override=0 (frame 1) right
-        // as this fires, and scroll progress is 0 (frame 1) at scrollY 0,
-        // so the release is seamless — no jump.
+        // hand off to scroll-driven playback — the reverse scrub always
+        // lands on frame 1, same as scroll progress at scrollY 0, so
+        // there's no jump
         if (window.FrameBG) window.FrameBG.clearOverride();
         flyLoaderPicToNav();
         setTimeout(() => {
@@ -1801,11 +1790,9 @@
 
       // =========================
       // LOADER PHOTO -> NAVBAR MARK
-      // Clones the loading-screen photo, flies it (via a plain top/left/
-      // width/height transition — a manual FLIP) from its position in the
-      // loader to the navbar's logo mark, then hands off to the "dynamic
-      // island" expand by removing .nav-collapsed. If the photo never
-      // loaded, or motion is reduced, skip straight to the expand.
+      // clones the loading photo and flies it (manual FLIP) into the
+      // navbar logo mark, then expands the nav capsule. skips straight
+      // to the expand if the photo never loaded or motion is reduced.
       // =========================
       function flyLoaderPicToNav() {
         const navbar = document.querySelector('.navbar');
@@ -1836,15 +1823,13 @@
 
         const startRect = loaderPic.getBoundingClientRect();
 
-        // wait a frame so the navbar (already fading in behind the loader)
-        // has a settled position to read as the flight's landing spot
+        // wait a frame so the navbar has a settled position to fly into
         requestAnimationFrame(() => {
           const endRect = navMark.getBoundingClientRect();
 
-          // startRect is already ~30x30 here — the loader-mark shrink
-          // transition above ran in lockstep with the loading bar and
-          // finished right as this fires — so the only thing left to
-          // animate is the position, not the size.
+          // startRect is already ~30x30 (the shrink transition above
+          // already finished), so only position needs animating here,
+          // not size
           const clone = document.createElement('div');
           clone.className = 'logo-flight';
           clone.style.top = startRect.top + 'px';
@@ -1881,31 +1866,26 @@
     })();
 
     // =========================
-    // NAVBAR — floating capsule: entrance + scroll-direction "Dynamic
-    // Island" behaviour (shrinks going down, expands back going up).
-    // Uses direction, not just a scroll-position threshold, and only
-    // reads scrollY inside rAF to stay off the main-thread hot path.
+    // NAVBAR — floating capsule entrance + "Dynamic Island" scroll
+    // behavior (shrinks past a scroll threshold, expands back near the
+    // top). reads scrollY inside rAF to keep it off the main thread.
     // =========================
     (function () {
       const nav = document.querySelector('.navbar');
       if (!nav) return;
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Starts as a compact pill (logo mark only) — the loading-screen
-      // script hands its photo off here, then expands the capsule open.
-      // The fade/slide entrance itself (.nav-loaded) is triggered by the
-      // loading-scene script's finishLoading(), not here, so the navbar
-      // stays fully hidden until the loader is done rather than fading
-      // in underneath it.
+      // starts collapsed to a pill; loading-scene script flies the
+      // photo in and expands it. the fade/slide entrance (.nav-loaded)
+      // is triggered from finishLoading() so the navbar stays hidden
+      // until the loader's done.
       nav.classList.add('nav-collapsed');
       window.__revealNav = () => nav.classList.add('nav-loaded');
 
-      // Position-based, not direction-based: once you've scrolled past
-      // the threshold the capsule stays shrunk/up for the rest of the
-      // page, however far down you go — it only relaxes back to full
-      // size when you're back near the very top. (Direction-based
-      // toggling used to flicker under momentum/trackpad scroll, where
-      // scrollY jitters by a few px even while moving "down".)
+      // position-based, not direction-based — stays shrunk once past
+      // the threshold no matter how far down you scroll, only relaxes
+      // near the top. direction-based toggling used to flicker on
+      // trackpad scroll.
       let ticking = false;
       const THRESHOLD = 24;
       function apply() {
@@ -1921,9 +1901,8 @@
     })();
 
     // =========================
-    // LOGO MARK — manual expand/collapse toggle for the navbar capsule.
-    // Desktop only: on mobile the capsule always stays open since
-    // .menu-toggle (the mobile menu entry point) lives inside it.
+    // LOGO MARK — manual expand/collapse toggle for the nav capsule.
+    // desktop only; mobile keeps it open since .menu-toggle lives inside.
     // =========================
     (function () {
       const navbar = document.querySelector('.navbar');
@@ -1938,18 +1917,11 @@
     })();
 
     // =========================
-    // CUSTOM CURSOR
-    // Replaces the native pointer on desktop (base.css hides the
-    // native cursor via `cursor:none` for the same fine-pointer/
-    // hover-capable/>=901px audience checked here). The dot tracks
-    // the raw mouse position 1:1; the ring eases toward it for the
-    // trailing effect. Both start at opacity:0 (see base.css) and
-    // only get `.active` — and therefore become visible — once the
-    // very first real coordinate arrives, with the ring snapped
-    // straight to that position first, so there's no flash/flying-in
-    // from the top-left corner on load. Re-checks on resize so
-    // rotating a tablet past the 900px breakpoint (or plugging in a
-    // mouse) doesn't leave the custom cursor stuck in the wrong state.
+    // CUSTOM CURSOR — replaces the native pointer on desktop (base.css
+    // hides it with cursor:none for the same audience). dot tracks the
+    // mouse 1:1, ring eases toward it. both stay hidden until the first
+    // real coordinate arrives, snapping the ring there to avoid a
+    // top-left flash. re-checked on resize for breakpoint/mouse changes.
     // =========================
     (function () {
       const dot = document.getElementById('cursorDot');
@@ -1965,8 +1937,8 @@
         mx = e.clientX; my = e.clientY;
         dot.style.left = mx + 'px'; dot.style.top = my + 'px';
         if (!initialized) {
-          // snap the ring straight to the first known position instead
-          // of easing in from 0,0, then fade both elements in
+          // snap the ring to the first known position instead of
+          // easing from 0,0
           rx = mx; ry = my;
           ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
           dot.classList.add('active'); ring.classList.add('active');
@@ -2010,11 +1982,10 @@
     })();
 
     // =========================
-    // LIQUID GLASS — pointer-tracked specular glint
-    // The glint radial gradient already exists in CSS (var(--lg-mx/--lg-my));
-    // this is what actually drives it to the cursor instead of sitting at
-    // a fixed 50%/50%. (3D tilt-on-hover has been removed — panels no
-    // longer rotate with the pointer, only the glint follows it.)
+    // LIQUID GLASS — pointer-tracked specular glint. the radial
+    // gradient lives in CSS (--lg-mx/--lg-my); this drives it to the
+    // cursor instead of sitting at a fixed 50/50. (3D tilt-on-hover
+    // was removed — only the glint follows the pointer now.)
     // =========================
     (function () {
       if (window.matchMedia('(hover:none)').matches) return;
@@ -2032,9 +2003,9 @@
     })();
 
     // =========================
-    // HERO SPLIT TITLE
-    // (markup is built immediately; the 'split-ready' class that
-    // actually animates it in is added by the loading scene above)
+    // HERO SPLIT TITLE — markup builds immediately; 'split-ready'
+    // (which triggers the animation) gets added by the loading scene
+    // above.
     // =========================
     (function () {
       const el = document.getElementById('heroTitle');
@@ -2122,9 +2093,8 @@
     })();
 
     // =========================
-    // SCROLL REVEAL
-    // (hero-copy elements are intentionally excluded — the loading
-    // scene above controls when those animate in)
+    // SCROLL REVEAL — hero-copy is excluded; the loading scene above
+    // controls those separately.
     // =========================
     (function () {
       const els = Array.from(document.querySelectorAll('.reveal:not(.visible)'))
@@ -2136,10 +2106,10 @@
     })();
 
     // =========================
-    // TEXT REEL — section titles animate in like a combination-lock:
-    // each character spins through a short run of random letters before
-    // settling on the real one. Runs once per heading, only once it has
-    // scrolled into view, and is skipped entirely for reduced motion.
+    // TEXT REEL — headings animate in like a combination lock: each
+    // character spins through random letters before landing on the
+    // real one. runs once per heading, on scroll into view, skipped
+    // for reduced motion.
     // =========================
     (function () {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -2147,27 +2117,19 @@
       const hosts = document.querySelectorAll('.section-heading, .contact-heading, .statement-heading, .featured-title');
       if (!hosts.length) return;
 
-      // Measures the rendered width of a single character in a given
-      // element's actual font/weight/size + letter-spacing, using a shared
-      // offscreen canvas. Each character cell gets locked to this width.
-      // Without it, .reel-char (inline-block) auto-sizes to the WIDEST
-      // glyph among the 5-8 random "spin" letters + the real final letter
-      // stacked inside it — so a slot that happens to roll a wide letter
-      // like W/M/0 but settles on a narrow one like i/l/. keeps that wide
-      // box forever, leaving a stray gap around the settled character.
-      // That's what was reading as random extra space between words.
+      // measures a character's rendered width (shared offscreen canvas)
+      // so each .reel-char cell can be locked to it — otherwise
+      // inline-block auto-sizes to the widest spin letter and leaves a
+      // gap once it lands on a narrower one.
       const measureCanvas = document.createElement('canvas');
       const measureCtx = measureCanvas.getContext('2d');
       function charWidth(ch, font, letterSpacing) {
         measureCtx.font = font;
         return measureCtx.measureText(ch).width + letterSpacing;
       }
-      // These heading classes are all styled with text-transform:uppercase,
-      // but the source text in the HTML is normal mixed case. The canvas
-      // measurement above has no idea about that CSS rule, so without this
-      // it measures e.g. lowercase "i" (narrow) while the browser actually
-      // paints "I" (wider) in that same cell — the box ends up too small
-      // for the real glyph, which is what was clipping/overlapping letters.
+      // headings are text-transform:uppercase but the source HTML is
+      // mixed case — measure the actual painted (uppercased) glyph,
+      // not the raw one, or the cell ends up too narrow and clips letters.
       function visualChar(ch, textTransform) {
         if (textTransform === 'uppercase') return ch.toUpperCase();
         if (textTransform === 'lowercase') return ch.toLowerCase();
@@ -2196,9 +2158,8 @@
         track.appendChild(final);
         wrap.appendChild(track);
 
-        // lock the cell's width to the FINAL character only, as actually
-        // painted (post text-transform), so mid-spin letters (which may be
-        // wider) clip/center instead of permanently stretching the box
+        // lock the cell width to the final (post-transform) character
+        // only, so wider mid-spin letters clip instead of stretching the box
         wrap.style.width = (Math.ceil(charWidth(visualChar(ch, textTransform), font, letterSpacing)) + 1) + 'px';
 
         // each character gets its own duration + delay so the reel
@@ -2223,13 +2184,10 @@
         let i = 0;
         textNodes.forEach(node => {
           const frag = document.createDocumentFragment();
-          // Each reel-char/reel-space is its own inline-block, and adjacent
-          // inline-blocks are independently breakable by default — the browser
-          // has no idea a run of them forms "one word", so it was free to wrap
-          // the line between any two characters, including mid-word. Splitting
-          // on whitespace and wrapping each word's characters in one atomic
-          // .reel-word container (nowrap, shrink-to-fit) restores normal
-          // word-wrapping: breaks can only happen at the actual spaces.
+          // adjacent inline-blocks wrap independently by default, so the
+          // browser could break mid-word. wrapping each word's
+          // characters in one atomic .reel-word container restores
+          // normal wrapping.
           const parts = node.textContent.split(/(\s+)/);
           parts.forEach(part => {
             if (part === '') return;
@@ -2246,29 +2204,14 @@
         });
       }
 
-      // Google Fonts loads with display=swap, so at the moment this script
-      // runs, Archivo/Space Grotesk may still be a system-font fallback.
-      // Measuring character widths against that fallback, then having the
-      // real webfont swap in moments later, is what made letters clip and
-      // overlap each other — the fixed-width cell no longer matched the
-      // glyph once the actual font arrived. document.fonts.ready resolves
-      // once all requested webfonts have actually loaded and applied, so
-      // measurement happens against the real rendered font.
-      // (document.fonts.ready resolves immediately in browsers without the
-      // Font Loading API, so this degrades safely.)
+      // wait for document.fonts.ready before measuring — Google Fonts
+      // loads with display=swap, so measuring against the fallback font
+      // (before the real one swaps in) was clipping letters. degrades
+      // safely in browsers without the Font Loading API.
       const start = () => {
-        // Previously every heading on the page — hero-adjacent or ten
-        // sections down — was reelify()'d in one synchronous pass the
-        // moment fonts resolved, each one splitting text into a wrap
-        // of ~8 spans per character. On a page with several headings
-        // that's hundreds of DOM nodes created and measured in a single
-        // blocking task, right around when the page is also settling
-        // in from load — a natural spot for a visible stutter.
-        //
-        // Building each heading's reel DOM only once it's actually
-        // about to scroll into view spreads that cost across the whole
-        // scroll session instead of paying it all up front, and a
-        // heading that's never scrolled to never pays it at all.
+        // build each heading's reel DOM only when it's about to scroll
+        // into view, instead of all at once on load — spreads the DOM
+        // cost out and skips headings nobody scrolls to.
         const io = new IntersectionObserver(entries => {
           entries.forEach(entry => {
             if (!entry.isIntersecting) return;
@@ -2279,12 +2222,11 @@
             el.setAttribute('aria-label', label); // keeps the real words for screen readers
             el.classList.add('reel-host');
             reelify(el);
-            // give the browser one frame to lay out the freshly-built
-            // spans before kicking off the animation, so the first
-            // spin frame doesn't land in the same task as the DOM build
+            // give the browser a frame to lay out the new spans before
+            // starting the animation
             requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('reel-run')));
           });
-        }, { threshold: 0.01, rootMargin: '250px 0px' }); // 250px lookahead gives the spin time to finish before the heading is actually on screen
+        }, { threshold: 0.01, rootMargin: '250px 0px' }); // lookahead gives the spin time to finish before it's on screen
         hosts.forEach(el => io.observe(el));
       };
 
@@ -2438,49 +2380,32 @@
 
     // =========================
     // SCROLL-SCRUBBED FRAME SEQUENCE (background)
+    // Draws one still frame onto a full-viewport canvas per scroll
+    // tick — a "product page scroll video" without an actual <video>
+    // (can't be scrubbed frame-accurately across browsers).
     //
-    // Draws one still frame at a time onto a full-viewport canvas as the
-    // page scrolls — the "product page scroll video" effect, without an
-    // actual <video> (video elements can't be scrubbed frame-accurately
-    // and reliably across browsers on scroll; a preloaded image sequence
-    // can).
-    //
-    // LOADING STRATEGY — lazy/windowed, not "fetch all 450 up front":
-    //   Only the frames near whatever index is currently on screen (plus
-    //   a small look-ahead/behind buffer) are ever requested, and decoded
-    //   frames are evicted from memory once they fall far outside that
-    //   window. A visitor who never scrolls past the hero never triggers
-    //   more than a couple dozen frame requests, not the whole sequence.
-    //   The full 450-frame set is only ever downloaded cumulatively if
-    //   someone scrubs through the entire page — never all at once on
-    //   load, which is what was producing the 650MB of eager requests.
+    // Loads lazily/windowed: only frames near the current index (plus
+    // a small buffer) are fetched, and decoded frames outside that
+    // window get evicted. Nobody downloads the full set unless they
+    // scrub the whole page.
     //
     // TO ADD YOUR OWN FOOTAGE:
-    //   1. Export the video as a numbered JPG sequence, e.g. with ffmpeg:
+    //   1. Export a numbered JPG sequence with ffmpeg:
     //        ffmpeg -i input.mp4 -vf "fps=6,scale=960:-1" -q:v 6 images/frames/frame_%04d.jpg
-    //      6fps over a ~15-20s clip gives ~90-120 frames, which is plenty
-    //      for a smooth scrub without loading hundreds of images. Target
-    //      roughly 15-40KB per frame (scale=960, -q:v 5-7) — a full-bleed
-    //      background frame sitting under a dark scrim doesn't need
-    //      1600px width or near-lossless quality to read well. At ~120
-    //      frames x ~25KB that's ~3MB total instead of hundreds of MB.
-    //   2. Put the numbered files in images/frames/ alongside this file.
-    //   3. Set FRAME_COUNT below to however many frames you exported.
-    // Until then, this script finds nothing at that path and the canvas
-    // just shows the plain --bg colour — nothing else on the site changes.
+    //      ~90-120 frames at 15-40KB each is plenty for a smooth scrub.
+    //   2. Drop the files in images/frames/ alongside this file.
+    //   3. Set FRAME_COUNT below to your frame count.
+    // Until then the canvas just shows the plain --bg colour.
     //
-    // MOBILE gets its own separate set below (own folder, own count) —
-    // different footage/crop than desktop, not just the desktop frames
-    // resized. Export it the same way but lighter, e.g.:
+    // MOBILE uses its own separate footage/count below (own folder),
+    // not the desktop frames resized. Export lighter, e.g.:
     //   ffmpeg -i mobile-input.mp4 -vf "fps=6,scale=640:-1" -q:v 7 images/frames/mobile/frame_%03d.jpg
-    // and drop the files in images/frames/mobile/.
     // =========================
     (function () {
       const IS_MOBILE = window.matchMedia('(max-width:900px)').matches;
 
-      // Desktop and mobile each get their own footage, frame count and
-      // memory budget — mobile stays lighter (fewer frames kept warm,
-      // smaller cache, capped DPR below) since it's on weaker GPUs/networks.
+      // mobile gets a lighter budget (fewer warm frames, smaller cache,
+      // capped DPR) since it's usually on weaker GPUs/networks
       const FRAME_COUNT = IS_MOBILE ? 148 : 220;                 // <- set to your exported frame count for each
       const FRAME_PATH = IS_MOBILE
         ? i => `images/frames/mobile/frame_${String(i).padStart(3, '0')}.webp`
@@ -2492,32 +2417,27 @@
       const canvas = document.getElementById('frameBgCanvas');
       if (!canvas) return;
 
-      // Data Saver users still get the plain --bg fallback regardless of
-      // screen size — everyone else (mobile included) now gets a frame
-      // sequence, just a lighter mobile-specific one instead of being
-      // skipped entirely.
+      // Data Saver users get the plain --bg fallback; everyone else
+      // gets a frame sequence (mobile just gets a lighter one)
       const skipFrames = (navigator.connection && navigator.connection.saveData);
       if (skipFrames) {
         window.FrameBG = { setOverride() { }, clearOverride() { } };
         return;
       }
 
-      // { alpha:false } lets the browser skip alpha compositing on every
-      // paint (this canvas is always fully opaque under the scrim), and
-      // { desynchronized:true } opts out of the implicit tear-protection
-      // buffer copy where supported — both are pure wins for a canvas
-      // that redraws on every scroll tick.
+      // alpha:false skips compositing (canvas is always opaque under
+      // the scrim); desynchronized:true skips the tear-protection
+      // buffer copy where supported — both help since this redraws
+      // every scroll tick
       const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
       const cache = new Map();      // 0-based frame index -> Image
       let lastDrawnIdx = null;      // last successfully painted index, used as a fallback while neighbours are still in flight
       let paintedIdx = null;        // index actually on screen right now — lets draw() no-op when scroll fires but the target frame hasn't changed
       let overrideProgress = null;  // 0..1, set by the loader's reverse intro; null = follow scroll
 
-      // Full devicePixelRatio (2-3 on most phones/laptops now) is wasted
-      // resolution for a blurred, scrim-covered background image — it was
-      // quadrupling the pixels drawImage() has to resample every single
-      // frame for no visible benefit. Capping it is the single biggest
-      // win here for scroll smoothness.
+      // full devicePixelRatio is wasted resolution for a blurred, scrim-
+      // covered background — capping it is the biggest win for scroll
+      // smoothness here
       const DPR = Math.min(window.devicePixelRatio || 1, IS_MOBILE ? 1 : 1.5);
 
       function progress() {
@@ -2539,22 +2459,15 @@
         img.decoding = 'async';
         img.src = FRAME_PATH(idx + 1);
         cache.set(idx, img);
-        // img.decode() hands the JPEG decode off the main thread and
-        // resolves only once the bitmap is actually ready to paint —
-        // no main-thread decode hitch on the frame it lands, unlike
-        // waiting on the synchronous-feeling 'load' event.
+        // img.decode() offloads the JPEG decode and resolves once the
+        // bitmap's actually ready to paint, avoiding a hitch on 'load'
         img.decode().then(draw).catch(() => cache.delete(idx)); // missing/broken frames are silently skipped
       }
 
-      // Warm up the frames the reverse-scrub intro will land ON FIRST.
-      // draw()'s preload only ever requests frames near whatever idx the
-      // scrub currently sits at, and the scrub runs backward from the
-      // LAST frame to frame 0 — so frame 0 (the exact frame needed the
-      // instant the loader hands off to scroll playback) is naturally the
-      // very last thing requested, with almost no time left to arrive on
-      // a cold connection. Kick it and its neighbours off immediately,
-      // independent of the scrub, so they get the full loading-scene
-      // duration to download instead of just the tail end of it.
+      // warm up frame 0 (and neighbours) immediately — the reverse
+      // scrub runs backward from the last frame, so frame 0 would
+      // otherwise be the very last thing requested, right when the
+      // loader hands off
       for (let i = 0; i <= PRELOAD_RADIUS; i++) loadFrame(i);
       function evictFar(centerIdx) {
         if (cache.size <= CACHE_LIMIT) return;
@@ -2578,12 +2491,8 @@
       function draw() {
         const idx = Math.min(FRAME_COUNT - 1, Math.max(0, Math.round(progress() * (FRAME_COUNT - 1))));
 
-        // Many scroll ticks round to the same frame index (a rAF fires
-        // far more often than the index actually advances). Re-running
-        // the preload loop, the eviction scan, and a full clearRect+
-        // drawImage for a frame that's already on screen was the other
-        // big source of per-scroll jank — bail out immediately if
-        // nothing would actually change.
+        // most scroll ticks round to the same frame index — bail out
+        // early instead of re-running preload/eviction/redraw for nothing
         if (idx === paintedIdx) return;
 
         // fetch the current frame plus a small buffer around it
@@ -2597,22 +2506,20 @@
           paintedIdx = idx;
           return;
         }
-        // exact frame still in flight — hold the last painted frame
-        // instead of flashing back to plain --bg every time the index
-        // moves faster than the network can keep up.
+        // target frame still loading — hold the last painted one
+        // instead of flashing back to --bg
         if (lastDrawnIdx !== null) {
           const fallback = cache.get(lastDrawnIdx);
           if (fallback && fallback.complete && fallback.naturalWidth) paint(fallback);
         }
-        // don't mark paintedIdx here — the real target frame is still
-        // loading, so the next draw() (idx unchanged) must retry it
-        // rather than getting bailed out by the guard above.
+        // don't set paintedIdx — the target frame's still loading, so
+        // the next draw() call needs to retry instead of bailing out above
       }
 
       function resize() {
         canvas.width = window.innerWidth * DPR;
         canvas.height = window.innerHeight * DPR;
-        paintedIdx = null; // canvas was just cleared by the resize itself, force a repaint
+        paintedIdx = null; // force a repaint after resize clears the canvas
         draw();
       }
 
@@ -2634,9 +2541,8 @@
       window.addEventListener('scroll', onScroll, { passive: true });
       resize();
 
-      // Lets the loading-scene script scrub these frames in reverse
-      // (independent of scroll position) during the intro, then hand
-      // back to scroll-driven playback once loading finishes.
+      // lets the loading-scene script scrub frames in reverse during
+      // the intro, then hand back to scroll-driven playback
       window.FrameBG = {
         setOverride(v) { overrideProgress = Math.min(1, Math.max(0, v)); draw(); },
         clearOverride() { overrideProgress = null; draw(); }
@@ -2644,11 +2550,9 @@
     })();
 
     // =========================
-    // RESUME DOWNLOAD BUTTON
-    // Toggle-style widget (see dl-btn in misc.css) doubles as the
-    // actual download trigger: checking it fires a real file download,
-    // then the checkbox auto-resets once the "Downloaded" animation
-    // finishes so the button is ready to use again.
+    // RESUME DOWNLOAD BUTTON — the dl-btn toggle (misc.css) doubles as
+    // the download trigger; checkbox auto-resets once the animation
+    // finishes.
     // =========================
     (function () {
       const RESUME_URL = 'assets/resume-sahil-gond.pdf';

@@ -1,34 +1,27 @@
 /* =====================================================================
    FRAME BACKGROUND
-   Replaces the old gradient-blob ambient background (lg-blobs /
-   lg-ambient in glass.css, now removed) with a scroll-scrubbed video
-   frame sequence: a full-viewport <canvas> that draws one still frame
-   at a time as the page scrolls, the same technique behind most
-   "product page" scroll videos. See index.html's SCROLL-SCRUBBED FRAME
-   SEQUENCE script for the loader/scrub logic and how to point it at
-   your own exported frames.
+   A scroll-scrubbed video frame sequence: a full-viewport <canvas>
+   that draws one still frame at a time as the page scrolls, the same
+   trick behind most "product page" scroll videos. See index.html's
+   SCROLL-SCRUBBED FRAME SEQUENCE script for the scrub logic and how
+   to point it at your own exported frames.
 
-   Until frames exist at images/frames/, the canvas simply shows the
-   plain --bg colour set below — the site looks and works exactly as
-   it does today, nothing breaks.
+   Until frames exist at images/frames/, the canvas just shows the
+   plain --bg colour below — nothing breaks.
 ===================================================================== */
 
 .frame-bg-canvas{
   position:fixed; inset:0; z-index:0;
   width:100%; height:100%;
   display:block;
-  /* Whenever the canvas has nothing painted yet (before the first frame
-     decodes, or on a slow/cold connection), this is what shows through.
-     Matched to the actual frame footage's own pale, neutral tone — not
-     a decorative placeholder — so a delayed frame is a non-event rather
-     than a jarring dark-to-light flash. */
+  /* shows through before the first frame decodes, or on a slow
+     connection — matched to the footage's own pale tone so a delayed
+     frame is a non-event, not a dark-to-light flash */
   background:#d9dadd;
 }
-/* Readability scrim over the frames — sections have no opaque
-   background of their own, so text needs this to stay legible over
-   whatever is playing behind it. Kept light now that the canvas
-   fallback above is already a visible gradient rather than solid
-   black; tune back up once real, brighter footage is in. */
+/* readability scrim over the frames — sections have no opaque
+   background of their own, so text needs this to stay legible.
+   kept light for now; tune up once brighter footage is in */
 .frame-bg-scrim{
   position:fixed; inset:0; z-index:1; pointer-events:none;
   background:
@@ -37,7 +30,7 @@
 
 @media (max-width:900px){
   /* frames are heavier to decode on mobile GPUs and the scrub is less
-     legible on a short scroll range anyway — lighten a bit further so
-     the dark ink text keeps strong contrast even mid-scrub */
+     legible on a short scroll range — lighten further so ink text
+     keeps strong contrast mid-scrub */
   .frame-bg-scrim{ background:linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(255,255,255,.62) 100%); }
 }

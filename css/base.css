@@ -1,16 +1,13 @@
 /* =====================================================================
    BASE
-   Design tokens (colour, type, spacing), global resets, the boot-up
-   loading scene, the custom cursor (desktop), and the generic
-   scroll-reveal / split-text utilities used across every section.
-   Loaded first — every other file depends on the --tokens defined here.
+   Design tokens, global resets, the boot-up loading scene, the custom
+   cursor (desktop), and the scroll-reveal / split-text utilities used
+   everywhere. Loaded first — everything else depends on these tokens.
 ===================================================================== */
 
 :root{
-  /* ---- surfaces on the LIGHT frame background ----
-     The frame scrub (frame-bg.css) is a pale, low-saturation
-     white/mint/lavender sequence, so plain text and translucent
-     panels sitting directly on it need to skew dark, not light. */
+  /* the frame scrub (frame-bg.css) is a pale white/mint/lavender
+     sequence, so text and panels sitting on it need to skew dark */
   --bg:rgba(255,255,255,.14);
 
   --panel:rgba(255,255,255,.42);
@@ -25,13 +22,10 @@
   --ink-faintengg: #5a5e68;
   --ink-faintenggp: #33363d;
 
-  /* ---- surfaces that used to be dark "smoked glass" ----
-     navbar, buttons, and the major cards (glass.css) now use the
-     same light frosted glass as the rest of the site, so these
-     tokens are just aliases onto the normal ink tokens above. Kept
-     as separate custom properties (rather than deleted) so every
-     file that already references --ink-on-dark / --accent-on-dark
-     still resolves correctly without a find-and-replace pass. */
+  /* navbar/buttons/cards used to be dark "smoked glass" — now they're
+     the same light frosted glass as everything else, so these are just
+     aliases onto the ink tokens above. Kept as their own properties so
+     every file still referencing --ink-on-dark etc. keeps working. */
   --ink-nav: var(--ink);
   --ink-on-dark: var(--ink);
   --ink-on-dark-dim: var(--ink-dim);
@@ -72,12 +66,9 @@ body.is-loading{ overflow:hidden; height:100vh; }
    LOADING SCENE
 ===================================================================== */
 .loader{
-  /* transparent on purpose — the frame-sequence canvas (frame-bg.css,
-     z-index:0) and its dark readability scrim (z-index:1) sit directly
-     underneath at z-index 10000's base layer and are meant to show
-     through here during the reverse-scrub intro. If no frames exist
-     yet, frame-bg.css's canvas falls back to plain --bg, so this still
-     looks identical to a solid loader with nothing else changed. */
+  /* transparent on purpose — the frame canvas + scrim underneath (see
+     frame-bg.css) show through during the reverse-scrub intro. Falls
+     back to plain --bg if no frames exist, so nothing else changes. */
   position:fixed; inset:0; z-index:10000; background:transparent;
   display:flex; align-items:center; justify-content:center;
   transition:opacity .6s ease, visibility .6s ease;
@@ -118,15 +109,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* =====================================================================
    CUSTOM CURSOR (desktop only)
-   Native cursor is switched off site-wide (see the (min-width:901px)
-   block below) and replaced by these two fixed-position elements,
-   driven by the CUSTOM CURSOR script in index.html. Both are
-   pointer-events:none so they never intercept clicks/hover, and sit
-   above everything on the page — including the loader and lightbox —
-   via z-index. They start at opacity:0 and are only faded in by JS
-   once the first real mouse position is known, so there's no flash
-   at 0,0 on load. On touch devices / narrow viewports they're
-   display:none and the native cursor is left alone (see below).
+   Native cursor is switched off site-wide and replaced by these two
+   fixed elements, driven by the CUSTOM CURSOR script in index.html.
+   Both are pointer-events:none and sit above everything via z-index.
+   Start at opacity:0, faded in by JS once a real position is known —
+   no flash at 0,0 on load. Touch/narrow viewports get display:none
+   and keep the native cursor.
 ===================================================================== */
 .cursor-dot, .cursor-ring{
   position:fixed; top:0; left:0; pointer-events:none; z-index:10050;
@@ -146,13 +134,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .cursor-dot, .cursor-ring{ display:none; }
 }
 
-/* Hide the native cursor everywhere — including form fields, links,
-   and buttons that would otherwise get their own UA cursor — but
-   only on devices that actually have the custom cursor running
-   (fine-pointer, hover-capable, >=901px). Text selection, typing,
-   and all other input behavior are unaffected; only the visible
-   pointer glyph is suppressed. Narrower/touch devices are untouched
-   so the native cursor (or no cursor, on touch) behaves normally. */
+/* hide the native cursor everywhere — form fields, links, buttons —
+   but only on devices actually running the custom cursor (fine
+   pointer, hover-capable, >=901px). Doesn't touch text selection or
+   typing, just the visible pointer glyph. Touch/narrow devices keep
+   their normal cursor behavior. */
 @media (min-width:901px) and (hover:hover) and (pointer:fine){
   html, body, a, button, input, textarea, select, label,
   [role="button"], .work-row-head, .toolkit-row-head, .gallery-item{
