@@ -1,0 +1,176 @@
+<div class="grain" aria-hidden="true"></div>
+
+<div class="cursor" aria-hidden="true"><div class="ring"></div><div class="dot"></div></div>
+
+<nav class="nav" aria-label="Primary">
+  <a href="#index" data-to="index" class="on">Index</a>
+  <a href="#about" data-to="about">About</a>
+  <a href="#projects" data-to="projects">Projects</a>
+  <a href="#engineering" data-to="engineering">Engineering</a>
+  <a href="#contact" data-to="contact">Contact</a>
+</nav>
+
+<div class="hud mono" aria-hidden="true">
+  <div class="tc"><span class="t">00:00.0 / 00:32.3</span><span class="scene">— BLACK</span></div>
+  <span class="hint">SCROLL = TIMELINE</span>
+</div>
+<div class="hud-line" aria-hidden="true"></div>
+
+<main>
+  <h1 class="sr">Sahil Gond — Electrical Engineering, Embedded Systems, Robotics and Automation</h1>
+
+  <!-- ═════════ CINEMATIC PINNED INTRO ═════════ -->
+  <section class="cine" id="index" data-section="index" aria-label="Introduction"></section>
+
+  <!-- ═════════ 01 ABOUT ═════════ -->
+  <section class="sec about" id="about" data-section="about">
+    <div class="shape shape-about" data-shape="sun" style="right:-20vw;top:6vh;width:min(62vw,980px);aspect-ratio:1"><canvas></canvas></div>
+    <div class="sec-head mono"><b>[01]</b><span>About</span><i class="ruler"></i><span>Sahil Gond / EE</span></div>
+    <h2 class="statement rl" data-text="Where a sensor reading must become a decision, and a decision must become motion.">Where a sensor reading must become a decision, and a decision must become motion.</h2>
+
+    <div class="about-grid">
+      <div class="col"><span class="mono">— Who</span><p class="rl" data-text="I'm an Electrical Engineering student with a focus on embedded systems, robotics, and automation. I'm drawn to problems that live at the boundary of hardware and software.">I'm an Electrical Engineering student with a focus on embedded systems, robotics, and automation. I'm drawn to problems that live at the boundary of hardware and software.</p></div>
+      <div class="col"><span class="mono">— Where it started</span><p class="rl" data-text="I'm just a kid who once dismantled his RC car to understand how it worked. That curiosity never really went away.">I'm just a kid who once dismantled his RC car to understand how it worked. That curiosity never really went away.</p></div>
+      <div class="col"><span class="mono">— Today</span><p class="rl" data-text="It shows up as ESP32 firmware, motor drivers, sensor stacks and live dashboards — systems that sense the world, make a decision, and move.">It shows up as ESP32 firmware, motor drivers, sensor stacks and live dashboards — systems that sense the world, make a decision, and move.</p></div>
+    </div>
+
+    <figure class="sdm" aria-label="Signal chain: sense, decide, move">
+      <svg viewBox="0 0 1000 250" fill="none" role="img">
+        <!-- SENSE -->
+        <circle class="line" cx="80" cy="80" r="52" pathLength="1"/>
+        <path class="line" d="M42 80 C 56 40, 68 40, 80 80 S 104 120, 118 80" pathLength="1"/>
+        <!-- link 1 -->
+        <path class="line" d="M146 80 H 392" pathLength="1"/>
+        <path class="line" d="M380 70 L 394 80 L 380 90" pathLength="1"/>
+        <path class="line d" d="M186 80 v-8 M226 80 v-8 M266 80 v-8 M306 80 v-8 M346 80 v-8" pathLength="1"/>
+        <!-- DECIDE -->
+        <rect class="line" x="440" y="30" width="120" height="100" rx="8" pathLength="1"/>
+        <rect class="line" x="468" y="58" width="64" height="44" rx="3" pathLength="1"/>
+        <path class="line" d="M460 30 v-14 M480 30 v-14 M500 30 v-14 M520 30 v-14 M540 30 v-14 M460 130 v14 M480 130 v14 M500 130 v14 M520 130 v14 M540 130 v14 M440 50 h-14 M440 70 h-14 M440 90 h-14 M440 110 h-14 M560 50 h14 M560 70 h14 M560 90 h14 M560 110 h14" pathLength="1"/>
+        <!-- link 2 -->
+        <path class="line" d="M608 80 H 854" pathLength="1"/>
+        <path class="line" d="M842 70 L 856 80 L 842 90" pathLength="1"/>
+        <path class="line d" d="M648 80 v-8 M688 80 v-8 M728 80 v-8 M768 80 v-8 M808 80 v-8" pathLength="1"/>
+        <!-- MOVE -->
+        <circle class="line" cx="920" cy="80" r="52" pathLength="1"/>
+        <circle class="line" cx="920" cy="80" r="16" pathLength="1"/>
+        <path class="line d" d="M920 28 v16 M920 116 v16 M868 80 h16 M956 80 h16 M883 43 l11 11 M946 106 l11 11 M957 43 l-11 11 M894 106 l-11 11" pathLength="1"/>
+
+        <g class="sdm-t">
+          <text class="cap-h" x="0" y="190">01 · SENSE</text>
+          <text class="cap-l" x="0" y="212">IR · ULTRASONIC · LOAD · MPU9250 · RFID</text>
+          <text class="cap-h" x="440" y="190">02 · DECIDE</text>
+          <text class="cap-l" x="440" y="212">ESP32 · FIRMWARE · NUMERICAL METHODS</text>
+          <text class="cap-h" x="810" y="190">03 · MOVE</text>
+          <text class="cap-l" x="810" y="212">TB6612FNG · MOTORS · GSM · DASHBOARD</text>
+        </g>
+      </svg>
+    </figure>
+  </section>
+
+  <!-- ═════════ 02 PROJECTS ═════════ -->
+  <section class="sec projects" id="projects" data-section="projects">
+    <div class="sec-head mono"><b>[02]</b><span>Projects</span><i class="ruler"></i><span data-count>04 files</span></div>
+    <div class="proj-head"><h2 class="rl" data-manual><em>Selected</em> work</h2></div>
+    <div class="proj-list"></div>
+  </section>
+
+  <!-- ═════════ 03 ENGINEERING ═════════ -->
+  <section class="sec eng" id="engineering" data-section="engineering">
+    <div class="sec-head mono"><b>[03]</b><span>Engineering</span><i class="ruler"></i><span><i class="sdot"></i>Disciplines</span></div>
+    <div class="eng-words"></div>
+  </section>
+
+  <!-- ═════════ 04 SKILLS ═════════ -->
+  <section class="sec skills" id="skills" data-section="skills">
+    <div class="sec-head mono"><b>[04]</b><span>Skills</span><i class="ruler"></i><span>Toolchain</span></div>
+    <div class="sk-list"></div>
+  </section>
+
+  <!-- ═════════ 05 EXPERIENCE ═════════ -->
+  <section class="sec" id="experience" data-section="experience">
+    <div class="sec-head mono"><b>[05]</b><span>Experience</span><i class="ruler"></i><span>Field log</span></div>
+    <div class="xp-list"></div>
+  </section>
+
+  <!-- ═════════ 06 CONTACT ═════════ -->
+  <section class="sec contact" id="contact" data-section="contact">
+    <div class="shape shape-contact" data-shape="sun" style="left:50%;bottom:-30vw;width:min(100vw,1560px);aspect-ratio:1;margin-left:min(-50vw,-780px)"><canvas></canvas></div>
+    <div class="sec-head mono"><b>[06]</b><span>Contact</span><i class="ruler"></i><span>Open for builds</span></div>
+    <h2 class="big rl" data-text="Let's build something.">Let's build something.</h2>
+    <div class="c-info">
+      <div class="c-name">
+        <h3>Sahil Gond</h3>
+        <p class="mono">Electrical Engineering<br>Embedded Systems<br>Robotics<br>Automation</p>
+      </div>
+      <div class="c-links"></div>
+    </div>
+    <div class="end" aria-hidden="true"></div>
+  </section>
+</main>
+
+<div class="endfade" aria-hidden="false">
+  <div class="eof-c"><b>Sense · Decide · Move</b><span class="mono">End of file — Sahil Gond</span></div>
+  <div class="eof mono"><span>05.10.2024</span><a data-email href="#"></a></div>
+</div>
+
+<!-- case-file overlay -->
+<div class="case" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Project details" aria-hidden="true">
+  <button class="x mono" type="button" data-close>Close ✕</button>
+  <div class="case-in"></div>
+</div>
+
+<!-- stage template (cloned once, or twice in reduced-motion mode) -->
+<template id="stage-tpl">
+  <div class="pan">
+    <div class="layer l-orb">
+      <div class="frame">
+        <div class="orb"><div class="fill"><canvas class="orb-c"></canvas></div><div class="dim"></div></div>
+      </div>
+    </div>
+    <div class="layer l-back">
+      <canvas class="bg"></canvas>
+      <div class="vig"></div>
+      <div class="frame"><div class="title" role="presentation" data-text="SAHIL GOND"></div></div>
+    </div>
+    <div class="layer l-person">
+      <div class="frame"><img class="person" alt="Portrait of Sahil Gond checking his wristwatch" width="948" height="1299" decoding="async"></div>
+    </div>
+    <div class="layer l-scrim"></div>
+    <div class="layer l-front">
+      <div class="hdr"><span>Sahil_.0607</span><div class="r"><span data-email-txt></span><span>05.10.2024</span></div></div>
+      <div class="frame">
+        <div class="para p-left">
+          <p data-t="I'm Sahil, and I'll be sharing with you, my ideas."></p>
+          <p data-t="I'm just a kid who once dismantled his RC car to understand how it worked. That curiosity never really went away."></p>
+        </div>
+        <div class="para p-right">
+          <p data-t="I'm an Electrical Engineering student with a focus on embedded systems, robotics, and automation. I'm drawn to problems that live at the boundary of hardware and software – where a sensor reading must become a decision, and a decision must become motion."></p>
+        </div>
+      </div>
+    </div>
+    <div class="layer l-cap">
+      <div class="frame">
+        <div class="cap">
+          <span class="mono">Fig. 01 — The engineer</span>
+          <i class="ticks"></i>
+          <span class="big">Sense · Decide · Move</span>
+          <span class="mono">Electrical · Embedded · Robotics · Automation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tcard">
+    <div class="pink"><canvas></canvas></div>
+    <div class="frame">
+      <div class="tl tl-d1"><i>The Engineering</i></div>
+      <div class="tl tl-d2"><i>Dashboard</i></div>
+      <div class="tl tl-p1"><i>The</i></div>
+      <div class="tl tl-p2"><i>Engineering</i></div>
+      <div class="tl tl-p3"><i>Dashboard</i></div>
+      <div class="tc-meta"><span class="mono">Sahil Gond</span><span class="mono">Index → 01–06</span></div>
+    </div>
+  </div>
+  <div class="cue mono"><span>Scroll</span><i></i></div>
+  <div class="curtain"></div>
+</template>
