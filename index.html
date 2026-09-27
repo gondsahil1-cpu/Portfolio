@@ -93,16 +93,35 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    ───────────────────────────────────────────── */
 .nav{
   position:fixed;z-index:8000;left:50%;top:calc(var(--safe-t) + 12px);transform:translateX(-50%);
-  display:flex;gap:2px;padding:5px;border-radius:99px;
+  display:flex;gap:2px;padding:5px;border-radius:99px;overflow:hidden;
   background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.14);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  --spotlight-x:50%;--ambience-x:50%;
 }
 .nav a{
+  position:relative;z-index:2;
   padding:6px 11px;border-radius:99px;font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .3s,background .3s;white-space:nowrap;
+  text-transform:uppercase;color:rgba(255,255,255,.7);transition:color .3s;white-space:nowrap;
 }
 .nav a:hover{color:#fff}
-.nav a.on{color:#000;background:#fff}
+.nav a.on{color:#fff}
+
+/* spotlight lighting layers (mouse-follow glow + active-item ambience) */
+.nav-spot{
+  pointer-events:none;position:absolute;inset:0;z-index:1;opacity:0;transition:opacity .3s;
+  background:radial-gradient(70px circle at var(--spotlight-x) 100%,rgba(255,255,255,.16) 0%,transparent 60%);
+}
+.nav-spot.on{opacity:1}
+.nav-amb{
+  pointer-events:none;position:absolute;left:0;bottom:-3px;width:100%;height:20px;z-index:1;
+  background:radial-gradient(52px 16px at var(--ambience-x) 100%,
+    rgba(255,255,255,.95) 0%,
+    rgba(255,255,255,.62) 16%,
+    rgba(255,255,255,.34) 34%,
+    rgba(255,255,255,.14) 56%,
+    rgba(255,255,255,.04) 78%,
+    rgba(255,255,255,0) 100%);
+}
 
 .hud{
   position:fixed;z-index:7000;left:0;right:0;bottom:0;pointer-events:none;
@@ -522,6 +541,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   <a href="#projects" data-to="projects">Projects</a>
   <a href="#engineering" data-to="engineering">Engineering</a>
   <a href="#contact" data-to="contact">Contact</a>
+  <div class="nav-spot" aria-hidden="true"></div>
+  <div class="nav-amb" aria-hidden="true"></div>
 </nav>
 
 <div class="hud mono" aria-hidden="true">
@@ -1387,6 +1408,51 @@ function buildNav() {
 }
 
 /* ════════════════════════════════════════════════════════
+   NAV SPOTLIGHT — mouse-follow glow + active-item ambience
+   ════════════════════════════════════════════════════════ */
+function initNavSpotlight() {
+  const nav = $('.nav');
+  if (!nav) return;
+  const spot = $('.nav-spot', nav), amb = $('.nav-amb', nav);
+
+  const xOf = el => {
+    const nr = nav.getBoundingClientRect(), r = el.getBoundingClientRect();
+    return r.left - nr.left + r.width / 2;
+  };
+  const activeX = () => { const a = $('.nav a.on', nav); return a ? xOf(a) : nav.clientWidth / 2; };
+
+  const spotState = { x: activeX() }, ambState = { x: spotState.x };
+  spot.style.setProperty('--spotlight-x', spotState.x + 'px');
+  amb.style.setProperty('--ambience-x', ambState.x + 'px');
+
+  const springTo = (state, prop, el, cssVar, x) =>
+    gsap.to(state, { x, duration: reduce ? 0 : .6, ease: 'elastic.out(1,.65)', overwrite: true, onUpdate: () => el.style.setProperty(cssVar, state[prop] + 'px') });
+
+  nav.addEventListener('mousemove', e => {
+    const r = nav.getBoundingClientRect(), x = e.clientX - r.left;
+    spot.classList.add('on');
+    gsap.killTweensOf(spotState);
+    spotState.x = x;
+    spot.style.setProperty('--spotlight-x', x + 'px');
+  });
+
+  nav.addEventListener('mouseleave', () => {
+    spot.classList.remove('on');
+    springTo(spotState, 'x', spot, '--spotlight-x', activeX());
+  });
+
+  const onActiveChange = () => springTo(ambState, 'x', amb, '--ambience-x', activeX());
+  const mo = new MutationObserver(onActiveChange);
+  $$('.nav a', nav).forEach(a => mo.observe(a, { attributes: true, attributeFilter: ['class'] }));
+
+  addEventListener('resize', debounce(() => {
+    const x = activeX();
+    amb.style.setProperty('--ambience-x', x + 'px');
+    if (!spot.classList.contains('on')) spot.style.setProperty('--spotlight-x', x + 'px');
+  }, 200));
+}
+
+/* ════════════════════════════════════════════════════════
    CURSOR
    ════════════════════════════════════════════════════════ */
 function initCursor() {
@@ -1497,6 +1563,7 @@ async function boot() {
   build();
   initCursor();
   initCase();
+  initNavSpotlight();
 
   document.addEventListener('click', e => {
     const a = e.target.closest('[data-to]'); if (!a) return;
