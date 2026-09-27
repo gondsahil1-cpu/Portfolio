@@ -48,7 +48,8 @@
    BASE
    ───────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{color-scheme:dark;background:#000;-webkit-text-size-adjust:100%}
+html{color-scheme:dark;background:#000;-webkit-text-size-adjust:100%;scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar{display:none}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
@@ -1576,11 +1577,11 @@ async function boot() {
   });
 
   if (window.__cine) window.__lenis = lenis;
-  let lw = innerWidth, lp = G.portrait;
+  let lw = innerWidth, lh = innerHeight, lp = G.portrait;
   addEventListener('resize', debounce(() => {
     const g = geom();
-    if (Math.abs(g.w - lw) < 8 && g.portrait === lp) return;
-    lw = g.w; lp = g.portrait;
+    if (Math.abs(g.w - lw) < 8 && Math.abs(g.h - lh) < 8 && g.portrait === lp) return;
+    lw = g.w; lh = g.h; lp = g.portrait;
     ctx.revert(); build();
   }, 300));
 }
