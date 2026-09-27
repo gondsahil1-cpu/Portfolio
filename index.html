@@ -287,6 +287,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* about */
 .about{min-height:calc(100 * var(--vh))}
+.about-in{position:relative;z-index:2}
+.shape-about{z-index:1}
 .statement{
   position:relative;z-index:2;font:300 clamp(40px,7.4vw,148px)/.98 var(--f-light);letter-spacing:-.025em;text-transform:uppercase;max-width:21ch;mix-blend-mode:difference;
 }
@@ -561,7 +563,8 @@ html.cursor-on,html.cursor-on *{cursor:none!important}
 
   <!-- ═════════ 01 ABOUT ═════════ -->
   <section class="sec about" id="about" data-section="about">
-    <div class="shape shape-about" data-shape="sun" style="right:-20vw;top:6vh;width:min(62vw,980px);aspect-ratio:1"><canvas></canvas></div>
+    <div class="shape shape-about" data-shape="pink" style="right:5vw;top:8vh;width:min(50vw,740px);aspect-ratio:1"><canvas></canvas></div>
+    <div class="about-in">
     <div class="sec-head mono"><b>[01]</b><span>About</span><i class="ruler"></i><span>Sahil Gond / EE</span></div>
     <h2 class="statement rl" data-text="Where a sensor reading must become a decision, and a decision must become motion.">Where a sensor reading must become a decision, and a decision must become motion.</h2>
 
@@ -603,6 +606,7 @@ html.cursor-on,html.cursor-on *{cursor:none!important}
         </g>
       </svg>
     </figure>
+    </div>
   </section>
 
   <!-- ═════════ 02 PROJECTS ═════════ -->
@@ -1193,9 +1197,11 @@ function buildTimeline(S) {
   });
   add(28, meta, { opacity: 0 }, { opacity: 1 }, 1.2);
 
-  /* 27 → end   the dashboard settles and drifts */
+  /* 27 → end   the dashboard settles, then the whole card sweeps off to the left
+     right before the pin releases, so it exits in sync with About sliding in from the right */
   tlD.forEach((el, i) => add(lineEnd[i], el, { x: 0 }, { x: -(.02 + .014 * i) * w }, D - lineEnd[i]));
   add(27.4, pink, { scale: 1 }, { scale: 1.07 }, D - 27.4);
+  add(D - 1.6, tcard, { x: 0 }, { x: -w * 1.15 }, 1.6, 'power3.inOut');
   tl.set({}, {}, D);
   return tl;
 }
@@ -1353,6 +1359,16 @@ function buildSections() {
   gsap.set(sdmT, { opacity: 0 });
   const sdmTl = gsap.timeline({ scrollTrigger: { trigger: '.sdm', start: 'top 80%', end: 'bottom 55%', scrub: 1 } });
   sdmTl.to(sdm, { strokeDashoffset: 0, stagger: .05, ease: 'none', duration: 1 }).to(sdmT, { opacity: 1, stagger: .06, duration: .4 }, .5);
+
+  /* about: slide-left reveal as it scrolls into view (no pin — avoids stacking on the intro's own pin) */
+  const aboutIn = $('.about-in'), aboutShape = $('.shape-about');
+  if (aboutIn && aboutShape) {
+    gsap.set(aboutShape, { xPercent: 60 });
+    gsap.set(aboutIn, { xPercent: 42, autoAlpha: 0 });
+    gsap.timeline({ scrollTrigger: { trigger: '#about', start: 'top 92%', once: true } })
+      .to(aboutShape, { xPercent: 0, duration: 1.5, ease: 'power3.out' }, 0)
+      .to(aboutIn, { xPercent: 0, autoAlpha: 1, duration: 1.2, ease: 'power3.out' }, .15);
+  }
 
   /* shapes drift */
   $$('.about .shape, .contact .shape').forEach(s => gsap.fromTo(s, { yPercent: 10, scale: .94 }, { yPercent: -14, scale: 1.06, ease: 'none', scrollTrigger: { trigger: s.closest('.sec'), start: 'top bottom', end: 'bottom top', scrub: true } }));
