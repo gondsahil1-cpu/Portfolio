@@ -378,13 +378,86 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* lab bench */
 .labbench > h2,.fieldnotes > h2{position:relative;z-index:2;font:300 clamp(40px,7vw,140px)/.98 var(--f-light);letter-spacing:-.025em;text-transform:uppercase}
 .labbench > h2 em,.fieldnotes > h2 em{font-style:normal;color:rgba(244,241,234,.3)}
-.lb-grid{margin-top:calc(9 * var(--vh));display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--faint);border-top:1px solid var(--faint);border-left:1px solid var(--faint)}
-.lb-item{position:relative;background:var(--black);padding:calc(3.6 * var(--vh)) 28px;display:flex;flex-direction:column;gap:10px;transition:background .4s}
-.lb-item:hover{background:rgba(244,241,234,.035)}
-.lb-i{position:absolute;top:calc(3.6 * var(--vh));right:28px;color:var(--faint)}
-.lb-tag{color:var(--coral)}
-.lb-name{font:400 clamp(26px,2.4vw,38px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.01em}
-.lb-desc{margin-top:2px;font:300 clamp(15px,1.15vw,17.5px)/1.35 var(--f-body);color:var(--dim);max-width:34ch}
+/* ═══ LAB BENCH · component constellation (replaces .lb-grid / .lb-item cards) ═══ */
+.labbench{overflow-x:clip}
+.lb-field{--ease:cubic-bezier(.2,.7,0,1);position:relative;height:clamp(620px,84vh,980px);isolation:isolate}
+.lb-component{position:absolute;left:var(--x);top:var(--y);width:var(--w);z-index:var(--z,2)}
+.lb-component.is-hovered,.lb-component:has(.lb-object:focus-visible){z-index:100}
+.lb-drift,.lb-float{position:relative;display:block;will-change:transform}
+.lb-object{position:relative;display:block;width:100%;opacity:var(--o,1);outline:0;-webkit-tap-highlight-color:transparent;
+  transform:rotate(var(--r)) scale(var(--s,1));transition:transform .8s var(--ease),opacity .6s var(--ease)}
+.lb-object::after{content:'';position:absolute;inset:-10px}                       /* generous touch target */
+.lb-object img{display:block;width:100%;height:auto;object-fit:contain;filter:brightness(.9);pointer-events:none;user-select:none;-webkit-user-drag:none;transition:filter .6s var(--ease)}
+.lb-component.is-hovered .lb-object{opacity:1;transform:translateY(-6px) rotate(calc(var(--r) * .5)) scale(calc(var(--s,1) * 1.11))}
+.lb-component.is-hovered img{filter:brightness(1.14) drop-shadow(0 0 24px rgba(244,241,234,.14))}
+.lb-field.has-hover .lb-component:not(.is-hovered) .lb-object{opacity:.42}
+.lb-object img.lb-img2{position:absolute;width:52%;right:-16%;bottom:-20%;transform:rotate(-9deg)}
+.lb-object:focus-visible{outline:1px dashed var(--coral);outline-offset:10px;border-radius:4px}
+.lb-object:focus-visible img{filter:brightness(1.14)}
+/* ── deskmat: blueprint grid, rulers, registration marks (decor only, sits behind the parts) ── */
+.lb-stage{position:relative;isolation:isolate;margin-top:calc(10 * var(--vh))}
+.lb-mat{--ox:34px;--oy:46px;--g1:rgba(150,180,215,.11);--g2:rgba(150,180,215,.045);--tick:rgba(244,241,234,.24);
+  position:absolute;inset:-46px -34px -34px;z-index:-1;pointer-events:none;overflow:hidden;border:1px solid rgba(244,241,234,.1);border-radius:14px;
+  background:
+    linear-gradient(var(--g1) 1px,transparent 1px) var(--ox) var(--oy)/120px 120px,
+    linear-gradient(90deg,var(--g1) 1px,transparent 1px) var(--ox) var(--oy)/120px 120px,
+    linear-gradient(var(--g2) 1px,transparent 1px) var(--ox) var(--oy)/24px 24px,
+    linear-gradient(90deg,var(--g2) 1px,transparent 1px) var(--ox) var(--oy)/24px 24px,
+    radial-gradient(70% 60% at 50% 45%,rgba(160,190,225,.06),transparent 75%),
+    rgba(7,9,12,.72);
+  -webkit-mask-image:radial-gradient(130% 120% at 50% 50%,#000 62%,rgba(0,0,0,.35) 100%);mask-image:radial-gradient(130% 120% at 50% 50%,#000 62%,rgba(0,0,0,.35) 100%)}
+.lb-mat::before{content:'';position:absolute;inset:7px;border:1px dashed rgba(244,241,234,.08);border-radius:9px}   /* stitched edge */
+.lb-cn{position:absolute;width:14px;height:14px;border:0 solid rgba(244,241,234,.38)}
+.lb-cn.tl{top:12px;left:12px;border-width:1px 0 0 1px}.lb-cn.tr{top:12px;right:12px;border-width:1px 1px 0 0}
+.lb-cn.bl{bottom:12px;left:12px;border-width:0 0 1px 1px}.lb-cn.br{bottom:12px;right:12px;border-width:0 1px 1px 0}
+.lb-cn.tl::after{content:'';position:absolute;top:-2px;left:-2px;width:3px;height:3px;border-radius:50%;background:var(--coral)}
+.lb-ruler{position:absolute;display:flex;counter-reset:r;overflow:hidden;font:9px var(--f-mono);letter-spacing:.08em;color:var(--dim)}
+.lb-ruler span{flex:0 0 120px;counter-increment:r}
+.lb-rx{top:0;left:var(--ox);right:0;height:22px;background:linear-gradient(90deg,var(--tick) 1px,transparent 1px) 0 100%/24px 6px repeat-x}
+.lb-rx span{padding:4px 0 0 6px;border-left:1px solid var(--tick)}.lb-rx span::after{content:counter(r,decimal-leading-zero)}
+.lb-ry{top:var(--oy);bottom:0;left:0;width:34px;flex-direction:column;background:linear-gradient(var(--tick) 1px,transparent 1px) 100% 0/6px 24px repeat-y}
+.lb-ry span{padding:5px 0 0 9px;border-top:1px solid var(--tick)}.lb-ry span::after{content:counter(r,upper-alpha)}
+.lb-rings{position:absolute;left:50%;top:50%;width:min(46vw,540px);aspect-ratio:1;translate:-50% -46%;fill:none;stroke:rgba(150,180,215,.13);stroke-width:1}
+.lb-rings .t{stroke-width:8;stroke-dasharray:1 11.15;stroke:rgba(244,241,234,.1)}.lb-rings .d{stroke-dasharray:3 6}
+.lb-rings .c{stroke:var(--coral);stroke-opacity:.5}
+.lb-mat-tag{position:absolute;top:6px;right:34px;font-size:9px;color:var(--faint);letter-spacing:.14em}
+/* hover / focus / tap label */
+.lb-hover-label{position:absolute;top:calc(100% + 14px);left:50%;translate:-50% 0;z-index:5;display:flex;flex-direction:column;gap:3px;width:max-content;max-width:min(280px,72vw);
+  padding:10px 14px 12px;background:rgba(0,0,0,.66);border:1px solid var(--faint);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 10px 30px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(8px);filter:blur(4px);pointer-events:none;
+  transition:opacity .38s var(--ease),transform .38s var(--ease),filter .38s var(--ease)}
+.lb-hover-label .mono{color:var(--coral);font-size:10px}
+.lb-hover-label strong{white-space:nowrap;font:400 clamp(17px,1.5vw,22px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em;color:#fff}
+.lb-info{margin:7px 0 0;padding-top:8px;border-top:1px solid rgba(244,241,234,.14);font:300 12px/1.5 var(--f-body);letter-spacing:.005em;color:rgba(244,241,234,.74);white-space:normal}
+.lb-component[data-la=start] .lb-hover-label{left:0;translate:0 0}
+.lb-component[data-la=end] .lb-hover-label{left:auto;right:0;translate:0 0}
+.lb-component[data-lp=up] .lb-hover-label{top:auto;bottom:calc(100% + 14px);transform:translateY(-8px)}
+.lb-component.is-hovered .lb-hover-label,.lb-object:focus-visible ~ .lb-hover-label{opacity:1;transform:none;filter:none}
+.lb-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* placeholder shown only while an asset is missing — drop the PNG in /assets/labbench/ and it disappears */
+.lb-slot{display:none;aspect-ratio:var(--ar);align-content:center;justify-items:center;gap:4px;text-align:center;padding:8px;border:1px dashed var(--faint);border-radius:3px;color:var(--dim);font-size:10px}
+.lb-slot i{font-style:normal;text-transform:none;letter-spacing:.03em;font-size:8.5px;color:var(--faint);word-break:break-all}
+.is-missing .lb-slot{display:grid}.is-missing .lb-object img{display:none}
+.lb-legend{margin-top:calc(4 * var(--vh));padding-top:12px;border-top:1px dashed rgba(244,241,234,.12);display:flex;justify-content:space-between;gap:16px;color:var(--dim);font-size:10.5px}
+.lb-legend span:last-child{color:var(--faint)}
+@media (max-width:1024px) and (min-width:721px){
+  .lb-field{height:clamp(560px,76vh,820px)}
+  .lb-component{width:calc(var(--w) * 1.3)}
+}
+@media (max-width:720px){                                                         /* deliberate
+  .lb-mat{--ox:0px;--oy:0px;inset:-34px -12px -26px;border-radius:10px}.lb-ruler,.lb-mat-tag,.lb-rings{display:none} 2-column asymmetric mobile composition */
+  .lb-field{height:auto;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:row dense;column-gap:6vw;row-gap:4vh;padding:2vh 0}
+  .lb-component{position:relative;left:auto;top:auto;width:var(--mw);grid-column:var(--mc);justify-self:var(--mj);margin-top:var(--mt,0)}
+  .lb-component[data-mla=start] .lb-hover-label{left:0;right:auto;translate:0 0}
+  .lb-component[data-mla=end] .lb-hover-label{left:auto;right:0;translate:0 0}
+  .lb-component[data-mla=center] .lb-hover-label{left:50%;right:auto;translate:-50% 0}
+  .lb-component[data-lp=up] .lb-hover-label{top:calc(100% + 14px);bottom:auto;transform:translateY(8px)}
+  .lb-component.is-hovered[data-lp=up] .lb-hover-label{transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .lb-object,.lb-component.is-hovered .lb-object{transform:rotate(var(--r)) scale(var(--s,1))}
+  .lb-hover-label{transform:none!important;filter:none;transition:opacity .2s}
+}
 
 /* field notes + experience: shared accordion-row pattern */
 .note,.xp-row{display:block;border-top:1px solid var(--faint)}
@@ -504,8 +577,6 @@ html.cursor-on,html.cursor-on *{cursor:none!important}
   .proj:nth-of-type(even) .meta{grid-column:1/9}
   .ew .n{display:none}
   .sk-row{grid-template-columns:1fr;gap:12px}
-  .lb-grid{grid-template-columns:1fr}
-  .lb-i{position:static;order:-1}
   .note-head,.xp-head{grid-template-columns:32px 1fr auto;row-gap:8px}
   .note-meta-tags,.xp-meta-tags{display:none}
   .note-body,.xp-body{padding-left:0}
@@ -633,7 +704,11 @@ html.cursor-on,html.cursor-on *{cursor:none!important}
     <div class="sec-head mono"><b>[05]</b><span>Lab Bench</span><i class="ruler"></i><span>Parts on the desk</span></div>
     <h2 class="rl" data-manual><em>Parts I've</em> actually put hands on</h2>
     <p class="lb-intro rl" data-text="Every module below has been wired, flashed, and debugged inside a real build — not just read about in a datasheet.">Every module below has been wired, flashed, and debugged inside a real build — not just read about in a datasheet.</p>
-    <div class="lb-grid"></div>
+    <div class="lb-stage">
+      <div class="lb-mat" aria-hidden="true"></div>
+      <div class="lb-field" role="group" aria-label="Electronics components on the lab bench"></div>
+      <p class="lb-legend mono"></p>
+    </div>
   </section>
 
   <!-- ═════════ 06 FIELD NOTES ═════════ -->
@@ -849,21 +924,21 @@ const SKILLS = [
 ];
 
 const LABBENCH = [
-  { tag:'Microcontroller', name:'ESP32', desc:"The primary brain across every build — the RFID Attendance System's auth logic and the Maze Solving Robot's real-time turn decisions both run on it." },
-  { tag:'RFID Reader', name:'RC522', desc:'Core of the RFID Attendance System — authenticates each tag against a stored ID list and hands off a timestamped, logged scan.' },
-  { tag:'Microcontroller', name:'NodeMCU', desc:"A Wi-Fi-enabled development board used for IoT applications, providing wireless connectivity for sensor monitoring, data transmission, and web-based control." },
-  { tag:'Ultrasonic Sensor', name:'HC-SR04', desc:"Three of these (front, left, right) feed the Maze Solving Robot's decision routine for real-time obstacle detection and turn selection." },
-  { tag:'Magnetic Encoder', name:'AS5600', desc:'On the bench for closed-loop position feedback ahead of the Robotic Arm build on the roadmap — contactless angle sensing for joint control.' },
-  { tag:'Display · SSD1306', name:'OLED', desc:'Gives the RFID Attendance System its on-device status feedback for every scan, and is doing the same job for the Smart Home Automation build in progress.' },
-  { tag:'Display · LCD1602 ', name:'LCD Display', desc:"A simple visual interface used to display real-time information such as sensor readings, system status, messages, and project outputs." },
-  { tag:'RTC Module', name:'DS3231', desc:'Keeps accurate time independent of network access — feeding real timestamps into attendance logging and scheduled routines.' },
-  { tag:'Motor Driver', name:'TB6612FNG', desc:'A cleaner, lower-loss dual-motor driver than a bulky H-bridge module — evaluating it for the next revision of the differential-drive platform.' },
-  { tag:'Buck Converter', name:'LM2596', desc:"Steps battery voltage down to a clean, stable logic-side rail so the MCU and sensors don't brown out when the motors draw current under load." },
-  { tag:'Micro Gearmotor', name:'N20 Motors', desc:'Compact, high-torque drive for smaller chassis builds — lined up for the Line Following Robot next on the roadmap.' },
-  { tag:'Power Source', name:'Li-ion Battery & BMS', desc:'Portable power for every wheeled build, with the BMS guarding against over-discharge and cell imbalance across repeated test runs.' },
-  { tag:'Microcontroller', name:'Arduino Uno', desc:"A reliable control board used for handling sensor inputs and actuator control in embedded projects, making it ideal for learning and rapid hardware prototyping." },
-  { tag:'Sensor', name:'IR Sensor', desc:"Used in the Bridge Saver system to detect people entering and exiting the bridge, enabling real-time crowd counting and helping prevent unsafe overcrowding." },
-  { tag:'Sensor', name:'MPU9250', desc:"Used in the Bridge Saver system to monitor bridge vibration and movement in real time, helping detect abnormal vibrations and potential structural instability." },
+  { tag:'Microcontroller', name:'ESP32', desc:"The primary brain across every build — the RFID Attendance System's auth logic and the Maze Solving Robot's real-time turn decisions both run on it.", image:'assets/images/labbench/ESP32.webp', alt:"ESP32 development board" },
+  { tag:'RFID Reader', name:'RC522', desc:'Core of the RFID Attendance System — authenticates each tag against a stored ID list and hands off a timestamped, logged scan.', image:'assets/images/labbench/RFID.webp', alt:"RC522 RFID reader module" },
+  { tag:'Microcontroller', name:'NodeMCU', desc:"A Wi-Fi-enabled development board used for IoT applications, providing wireless connectivity for sensor monitoring, data transmission, and web-based control.", image:'assets/images/labbench/NODE_MCU_8266.png', alt:"NodeMCU Wi-Fi development board" },
+  { tag:'Ultrasonic Sensor', name:'HC-SR04', desc:"Three of these (front, left, right) feed the Maze Solving Robot's decision routine for real-time obstacle detection and turn selection.", image:'assets/images/labbench/HCSR04.webp', alt:"HC-SR04 ultrasonic distance sensor" },
+  { tag:'Magnetic Encoder', name:'AS5600', desc:'On the bench for closed-loop position feedback ahead of the Robotic Arm build on the roadmap — contactless angle sensing for joint control.', image:'assets/images/labbench/AS5600.webp', alt:"AS5600 magnetic encoder board with magnet" },
+  { tag:'Display · SSD1306', name:'OLED', desc:'Gives the RFID Attendance System its on-device status feedback for every scan, and is doing the same job for the Smart Home Automation build in progress.', image:'assets/images/labbench/OLED.webp', alt:"SSD1306 OLED display module" },
+  { tag:'Display · LCD1602 ', name:'LCD Display', desc:"A simple visual interface used to display real-time information such as sensor readings, system status, messages, and project outputs.", image:'assets/images/labbench/lcd-display.png', alt:"LCD1602 character display" },
+  { tag:'RTC Module', name:'DS3231', desc:'Keeps accurate time independent of network access — feeding real timestamps into attendance logging and scheduled routines.', image:'assets/images/labbench/DS3231.webp', alt:"DS3231 real-time clock module" },
+  { tag:'Motor Driver', name:'TB6612FNG', desc:'A cleaner, lower-loss dual-motor driver than a bulky H-bridge module — evaluating it for the next revision of the differential-drive platform.', image:'assets/images/labbench/TB6612FNG.webp', alt:"TB6612FNG dual motor driver board" },
+  { tag:'Buck Converter', name:'LM2596', desc:"Steps battery voltage down to a clean, stable logic-side rail so the MCU and sensors don't brown out when the motors draw current under load.", image:'assets/images/labbench/LM2596.webp', alt:"LM2596 buck converter module" },
+  { tag:'Micro Gearmotor', name:'N20 Motors', desc:'Compact, high-torque drive for smaller chassis builds — lined up for the Line Following Robot next on the roadmap.', image:'assets/images/labbench/N20.webp', alt:"N20 micro gearmotor" },
+  { tag:'Power Source', name:'Li-ion Battery & BMS', desc:'Portable power for every wheeled build, with the BMS guarding against over-discharge and cell imbalance across repeated test runs.', image:'assets/images/labbench/Battery.webp', alt:"Li-ion battery cells with BMS board", image2:'assets/images/labbench/BMS.png', alt2:"BMS protection board" },
+  { tag:'Microcontroller', name:'Arduino Uno', desc:"A reliable control board used for handling sensor inputs and actuator control in embedded projects, making it ideal for learning and rapid hardware prototyping.", image:'assets/images/labbench/Arduino%20uno.png', alt:"Arduino Uno board" },
+  { tag:'Sensor', name:'IR Sensor', desc:"Used in the Bridge Saver system to detect people entering and exiting the bridge, enabling real-time crowd counting and helping prevent unsafe overcrowding.", image:'assets/images/labbench/IR.png', alt:"IR obstacle sensor module" },
+  { tag:'Sensor', name:'MPU9250', desc:"Used in the Bridge Saver system to monitor bridge vibration and movement in real time, helping detect abnormal vibrations and potential structural instability.", image:'assets/images/labbench/mpu60501.png', alt:"MPU9250 nine-axis motion sensor" },
  ];
 
 const NOTES = [
@@ -903,6 +978,27 @@ const NOTES = [
       ["Junctions are where it actually gets interesting",'The front sensor opening up while the side sensor still reads a wall is the signal for an intersection, and that\'s the moment the maze-solving logic (rather than pure wall-following) has to take over the decision. Getting that handoff clean was most of the actual engineering effort.']
     ] }
 ];
+
+/* LAB BENCH · composition table — x/y = % of the field, w = vw, r = deg, z = depth (1 back · 2 mid · 3 front),
+   ar = width/height (placeholder only), m = [mobile width vw, column a|b|f(ull), y-offset px], la = label alignment */
+const LB_LAYOUT = {
+  'HC-SR04':              { x:5.3, y:2.0, w:12.5, r:3, z:2, ar:1.9, la:'start', m:[46,'a',8] },
+  'RC522':                { x:38.0, y:3.4, w:14, r:6, z:3, ar:1.5, la:'center', m:[44,'a',0] },
+  'AS5600':               { x:24.1, y:5.8, w:7.5, r:9, z:2, ar:1.2, la:'center', m:[34,'b',28] },
+  'IR Sensor':            { x:91.6, y:6.7, w:8.5, r:-8, z:1, ar:1.1, la:'end', m:[30,'b',20] },
+  'Arduino Uno':          { x:66.0, y:14.6, w:17, r:-6, z:3, ar:1.35, la:'center', m:[66,'f',0] },
+  'LM2596':               { x:91.0, y:31.1, w:9, r:4, z:1, ar:1.5, la:'end', m:[32,'a',-4] },
+  'OLED':                 { x:36.0, y:34.1, w:10, r:-5, z:2, ar:1.3, la:'center', m:[36,'b',12] },
+  'DS3231':               { x:51.2, y:35.9, w:10, r:-4, z:2, ar:1.4, la:'center', m:[38,'a',10] },
+  'LCD Display':          { x:11.3, y:37.8, w:13, r:-2, z:2, ar:2, la:'center', m:[52,'b',-4] },
+  'N20 Motors':           { x:80.0, y:49.2, w:10, r:-11, z:3, ar:2.2, la:'end', m:[44,'b',-8] },
+  'ESP32':                { x:41.1, y:64.1, w:12.5, r:5, z:3, ar:1.9, la:'center', m:[46,'b',0] },
+  'Li-ion Battery & BMS': { x:73.1, y:68.0, w:12, r:4, z:3, ar:1.6, la:'center', m:[60,'f',0] },
+  'TB6612FNG':            { x:26.6, y:68.7, w:8, r:7, z:2, ar:1.3, la:'center', m:[34,'a',6] },
+  'NodeMCU':              { x:13.5, y:69.3, w:12.8, r:-3, z:2, ar:.62, la:'center', m:[36,'b',0] },
+  'MPU9250':              { x:60.1, y:76.0, w:7, r:-7, z:1, ar:1.3, la:'center', m:[30,'a',-6] }
+};
+
 
 const EDUCATION = [
   { degree:'Diploma in Electrical Engineering', school:'Government Polytechnic Daman · Daman, Dadra and Nagar Haveli and Daman and Diu', stats:[['07/2026','Graduation'],['8.05','CGPA']] },
@@ -1270,13 +1366,30 @@ function renderContent() {
   $('.sk-list').innerHTML = SKILLS.map((s, i) => `
     <div class="sk-row"><span class="i mono">0${i + 1}</span><h3 class="rl" data-text="${s.t}">${s.t}</h3><ul>${s.items.map(x => `<li>${x}</li>`).join('')}</ul></div>`).join('');
 
-  $('.lb-grid').innerHTML = LABBENCH.map((p, i) => `
-    <div class="lb-item">
-      <span class="lb-i mono">${String(i + 1).padStart(2, '0')}</span>
-      <span class="lb-tag mono">${p.tag}</span>
-      <h3 class="lb-name rl" data-text="${p.name}">${p.name}</h3>
-      <p class="lb-desc">${p.desc}</p>
-    </div>`).join('');
+  /* LAB BENCH · component markup (was text cards) */
+  const lbRank = p => { const L = LB_LAYOUT[p.name]; return Math.round(L.y / 12) * 100 + L.x; };
+  const lbZ = { s: [0, .92, 1, 1.06], o: [0, .8, .94, 1], d: [0, .5, .85, 1.25] }, lbCol = { a: 1, b: 2, f: '1 / -1' }, lbJ = { a: 'start', b: 'end', f: 'center' };
+  $('.lb-field').innerHTML = [...LABBENCH].sort((a, b) => lbRank(a) - lbRank(b)).map((p, i) => {
+    const L = LB_LAYOUT[p.name], tag = p.tag.trim(), z = L.z, mc = L.m[1];
+    return `
+    <div class="lb-component" data-name="${p.name}" data-tag="${tag}" data-depth="${lbZ.d[z]}" data-la="${L.la}" data-mla="${lbJ[mc]}" data-lp="${L.y > 70 ? 'up' : 'down'}"
+         style="--x:${L.x}%;--y:${L.y}%;--w:${L.w}vw;--r:${L.r}deg;--s:${lbZ.s[z]};--o:${lbZ.o[z]};--z:${z};--ar:${L.ar};--mw:${L.m[0]}vw;--mc:${lbCol[mc]};--mj:${lbJ[mc]};--mt:${L.m[2]}px">
+      <div class="lb-drift"><div class="lb-float">
+        <button class="lb-object" type="button" data-cursor="inspect" aria-label="${p.name} — ${tag}" aria-describedby="lbd${i}">
+          <img src="${p.image}" alt="${p.alt}" loading="lazy" decoding="async" draggable="false" onerror="this.closest('.lb-component').classList.add('is-missing')">
+          ${p.image2 ? `<img class="lb-img2" src="${p.image2}" alt="${p.alt2}" loading="lazy" decoding="async" draggable="false" onerror="this.remove()">` : ''}
+          <span class="lb-slot mono" aria-hidden="true">${p.name}<i>${decodeURI(p.image)}</i></span>
+        </button>
+        <div class="lb-hover-label" aria-hidden="true"><span class="mono">${tag}</span><strong>${p.name}</strong><p class="lb-info">${p.desc}</p></div>
+        <span class="lb-sr" id="lbd${i}">${p.desc}</span>
+      </div></div>
+    </div>`; }).join('');
+  const lbN = n => Array.from({ length: n }, () => '<span></span>').join('');
+  $('.lb-mat').innerHTML = `<i class="lb-cn tl"></i><i class="lb-cn tr"></i><i class="lb-cn bl"></i><i class="lb-cn br"></i>
+    <div class="lb-ruler lb-rx">${lbN(24)}</div><div class="lb-ruler lb-ry">${lbN(12)}</div>
+    <svg class="lb-rings" viewBox="-260 -260 520 520"><circle class="t" r="232"/><circle r="168"/><circle class="d" r="104"/><circle r="40"/><path d="M-260 0H260M0-260V260"/><path class="c" d="M-14 0H14M0-14V14"/></svg>
+    <span class="lb-mat-tag mono">Bench plate · Rev C · 1:1</span>`;
+  $('.lb-legend').innerHTML = `<span>Fig. 05 · ${LABBENCH.length} modules on the bench</span><span>${matchMedia('(hover:none)').matches ? 'Tap' : 'Hover'} a part to inspect</span>`;
 
   $('.note-list').innerHTML = NOTES.map(n => `
     <details class="note">
@@ -1398,7 +1511,7 @@ function buildSections() {
   $$('.sk-row li').forEach((li, i) => gsap.fromTo(li, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: .8, ease: 'power3.out', delay: (i % 6) * .05, scrollTrigger: { trigger: li.closest('.sk-row'), start: 'top 88%', once: true } }));
 
   /* lab bench */
-  $$('.lb-item').forEach((el, i) => gsap.fromTo(el, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', delay: (i % 5) * .05, scrollTrigger: { trigger: el, start: 'top 92%', once: true } }));
+  $$('.lb-component').length && !reduce && gsap.fromTo('.lb-component', { opacity: 0, y: 30, scale: .92 }, { opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'power3.out', stagger: .06, clearProps: 'transform', scrollTrigger: { trigger: '.lb-field', start: 'top 78%', once: true } });
 
   /* field notes */
   $$('.note').forEach(el => gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true } }));
@@ -1485,16 +1598,65 @@ function initCursor() {
   let state = 'idle';
   const set = (s) => {
     if (s === state) return; state = s;
-    cur.classList.toggle('view', s === 'view');
+    cur.classList.toggle('view', s === 'view' || s === 'inspect');
     if (s === 'view') { ring.textContent = 'View project →'; gsap.to(ring, { width: 116, height: 116, duration: .5, ease: 'power3.out' }); gsap.to(dot, { scale: 0, duration: .3 }); }
+    else if (s === 'inspect') { ring.textContent = 'Inspect'; gsap.to(ring, { width: 76, height: 76, duration: .5, ease: 'power3.out' }); gsap.to(dot, { scale: 0, duration: .3 }); }
     else if (s === 'link') { ring.textContent = ''; gsap.to(ring, { width: 46, height: 46, duration: .4, ease: 'power3.out' }); gsap.to(dot, { scale: .5, duration: .3 }); }
     else { ring.textContent = ''; gsap.to(ring, { width: 0, height: 0, duration: .35, ease: 'power3.out' }); gsap.to(dot, { scale: 1, duration: .3 }); }
   };
   document.addEventListener('mouseover', e => {
     const t = e.target.closest('[data-cursor],a,button');
-    set(!t ? 'idle' : t.dataset.cursor === 'view' ? 'view' : 'link');
+    set(!t ? 'idle' : t.dataset.cursor === 'view' ? 'view' : t.dataset.cursor === 'inspect' ? 'inspect' : 'link');
   });
   document.addEventListener('mouseleave', () => set('idle'));
+}
+
+/* ════════════════════════════════════════════════════════
+   LAB BENCH — float, parallax, hover / tap labels
+   ════════════════════════════════════════════════════════ */
+function initLabBench() {
+  const field = $('.lb-field'); if (!field) return;
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const items = $$('.lb-component', field).map((el, i) => ({ el, i, drift: $('.lb-drift', el), float: $('.lb-float', el), d: +el.dataset.depth, cx: 0, cy: 0 }));
+
+  /* hover (mouse) · tap (touch) · Esc — one delegated set of listeners */
+  let cur = null;
+  const setHover = el => { if (el === cur) return; cur && cur.classList.remove('is-hovered'); cur = el; el && el.classList.add('is-hovered'); field.classList.toggle('has-hover', !!el); };
+  if (fine) {
+    field.addEventListener('pointerover', e => setHover(e.target.closest('.lb-component')));
+    field.addEventListener('pointerleave', () => setHover(null));
+  } else {
+    field.addEventListener('click', e => { const c = e.target.closest('.lb-component'); setHover(c && c !== cur ? c : null); });
+    document.addEventListener('click', e => { if (cur && !e.target.closest('.lb-field')) setHover(null); });
+  }
+  addEventListener('keydown', e => e.key === 'Escape' && setHover(null));
+  if (reduce) return;                                                  /* reduced motion: static, hover/focus still work */
+
+  /* deterministic floating drift — transform only, paused while off-screen */
+  const R = (i, k) => { const v = Math.sin((i + 1) * 127.1 + k * 311.7) * 43758.5453; return v - Math.floor(v); };
+  const eases = ['sine.inOut', 'power1.inOut', 'sine.inOut'], tweens = [];
+  items.forEach(({ float, i }) => [['y', 2 + R(i, 1) * 4, 4.6 + R(i, 4) * 4.2], ['x', 1 + R(i, 2) * 2, 5.4 + R(i, 5) * 3.6], ['rotation', .5 + R(i, 3) * .7, 6 + R(i, 6) * 3]]
+    .forEach(([p, amp, dur], k) => tweens.push(gsap.fromTo(float, { [p]: -amp }, { [p]: amp, duration: dur, ease: eases[(i + k) % 3], yoyo: true, repeat: -1 }).progress(R(i, 7 + k)))));
+  ScrollTrigger.create({ trigger: field, start: 'top bottom', end: 'bottom top', onToggle: s => tweens.forEach(t => s.isActive ? t.resume() : t.pause()) });
+
+  /* restrained mouse parallax — one listener, one rAF, per-item depth + proximity pull */
+  if (!fine) return;
+  items.forEach(it => { it.qx = gsap.quickTo(it.drift, 'x', { duration: 1, ease: 'power3.out' }); it.qy = gsap.quickTo(it.drift, 'y', { duration: 1, ease: 'power3.out' }); });
+  const measure = () => items.forEach(it => { it.cx = it.el.offsetLeft + it.el.offsetWidth / 2; it.cy = it.el.offsetTop + it.el.offsetHeight / 2; });
+  measure(); new ResizeObserver(measure).observe(field);
+  field.addEventListener('load', measure, true); field.addEventListener('error', measure, true);
+  const clamp = gsap.utils.clamp(-18, 18);
+  let raf = 0, mx = 0, my = 0;
+  const apply = () => {
+    raf = 0;
+    const r = field.getBoundingClientRect(), fx = mx - r.left, fy = my - r.top, nx = fx / r.width * 2 - 1, ny = fy / r.height * 2 - 1;
+    items.forEach(it => {
+      const dx = fx - it.cx, dy = fy - it.cy, dist = Math.hypot(dx, dy) || 1, pull = Math.max(0, 1 - dist / 420) * (it.el === cur ? 11 : 6);
+      it.qx(clamp((nx * 9 + dx / dist * pull) * it.d)); it.qy(clamp((ny * 9 + dy / dist * pull) * it.d));
+    });
+  };
+  field.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; mx = e.clientX; my = e.clientY; raf || (raf = requestAnimationFrame(apply)); }, { passive: true });
+  field.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); raf = 0; items.forEach(it => { it.qx(0); it.qy(0); }); });
 }
 
 /* ════════════════════════════════════════════════════════
@@ -1581,6 +1743,7 @@ async function boot() {
   renderContent();
   build();
   initCursor();
+  initLabBench();
   initCase();
   initNavSpotlight();
 
