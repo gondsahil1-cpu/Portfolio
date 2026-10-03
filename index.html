@@ -446,8 +446,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 @media (max-width:720px){                                                         /* deliberate
   .lb-mat{--ox:0px;--oy:0px;inset:-34px -12px -26px;border-radius:10px}.lb-ruler,.lb-mat-tag,.lb-rings{display:none} 2-column asymmetric mobile composition */
-  .lb-field{height:auto;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:row dense;column-gap:6vw;row-gap:4vh;padding:2vh 0}
-  .lb-component{position:relative;left:auto;top:auto;width:var(--mw);grid-column:var(--mc);justify-self:var(--mj);margin-top:var(--mt,0)}
+  .lb-field{height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;column-gap:6vw;row-gap:5vh;padding:3vh 8px}
+  .lb-component{position:relative;left:auto;top:auto;width:var(--mw);max-width:100%;min-width:0;align-self:start;grid-column:var(--mc);justify-self:var(--mj);margin-top:var(--mt,0)}
   .lb-component[data-mla=start] .lb-hover-label{left:0;right:auto;translate:0 0}
   .lb-component[data-mla=end] .lb-hover-label{left:auto;right:0;translate:0 0}
   .lb-component[data-mla=center] .lb-hover-label{left:50%;right:auto;translate:-50% 0}
@@ -982,20 +982,20 @@ const NOTES = [
 /* LAB BENCH · composition table — x/y = % of the field, w = vw, r = deg, z = depth (1 back · 2 mid · 3 front),
    ar = width/height (placeholder only), m = [mobile width vw, column a|b|f(ull), y-offset px], la = label alignment */
 const LB_LAYOUT = {
-  'HC-SR04':              { x:5.3, y:2.0, w:12.5, r:3, z:2, ar:1.9, la:'start', m:[46,'a',8] },
-  'RC522':                { x:38.0, y:3.4, w:14, r:6, z:3, ar:1.5, la:'center', m:[44,'a',0] },
+  'HC-SR04':              { x:5.3, y:2.0, w:11.5, r:3, z:2, ar:1.9, la:'start', m:[46,'a',8] },
+  'RC522':                { x:38.0, y:3.4, w:11, r:6, z:3, ar:1.5, la:'center', m:[44,'a',0] },
   'AS5600':               { x:24.1, y:5.8, w:7.5, r:9, z:2, ar:1.2, la:'center', m:[34,'b',28] },
-  'IR Sensor':            { x:91.6, y:6.7, w:8.5, r:-8, z:1, ar:1.1, la:'end', m:[30,'b',20] },
-  'Arduino Uno':          { x:66.0, y:14.6, w:17, r:-6, z:3, ar:1.35, la:'center', m:[66,'f',0] },
-  'LM2596':               { x:91.0, y:31.1, w:9, r:4, z:1, ar:1.5, la:'end', m:[32,'a',-4] },
-  'OLED':                 { x:36.0, y:34.1, w:10, r:-5, z:2, ar:1.3, la:'center', m:[36,'b',12] },
-  'DS3231':               { x:51.2, y:35.9, w:10, r:-4, z:2, ar:1.4, la:'center', m:[38,'a',10] },
+  'IR Sensor':            { x:91.6, y:6.7, w:6.5, r:-8, z:1, ar:1.1, la:'end', m:[30,'b',20] },
+  'Arduino Uno':          { x:66.0, y:14.6, w:18, r:-6, z:3, ar:1.35, la:'center', m:[66,'f',0] },
+  'LM2596':               { x:91.0, y:31.1, w:7, r:4, z:1, ar:1.5, la:'end', m:[32,'a',-4] },
+  'OLED':                 { x:36.0, y:34.1, w:9, r:-5, z:2, ar:1.3, la:'center', m:[36,'b',12] },
+  'DS3231':               { x:51.2, y:35.9, w:8.5, r:-4, z:2, ar:1.4, la:'center', m:[38,'a',10] },
   'LCD Display':          { x:11.3, y:37.8, w:13, r:-2, z:2, ar:2, la:'center', m:[52,'b',-4] },
-  'N20 Motors':           { x:80.0, y:49.2, w:10, r:-11, z:3, ar:2.2, la:'end', m:[44,'b',-8] },
+  'N20 Motors':           { x:80.0, y:49.2, w:11, r:-11, z:3, ar:2.2, la:'end', m:[44,'b',-8] },
   'ESP32':                { x:41.1, y:64.1, w:12.5, r:5, z:3, ar:1.9, la:'center', m:[46,'b',0] },
   'Li-ion Battery & BMS': { x:73.1, y:68.0, w:12, r:4, z:3, ar:1.6, la:'center', m:[60,'f',0] },
   'TB6612FNG':            { x:26.6, y:68.7, w:8, r:7, z:2, ar:1.3, la:'center', m:[34,'a',6] },
-  'NodeMCU':              { x:13.5, y:69.3, w:12.8, r:-3, z:2, ar:.62, la:'center', m:[36,'b',0] },
+  'NodeMCU':              { x:13.5, y:69.3, w:8.8, r:-3, z:2, ar:.62, la:'center', m:[36,'b',0] },
   'MPU9250':              { x:60.1, y:76.0, w:7, r:-7, z:1, ar:1.3, la:'center', m:[30,'a',-6] }
 };
 
@@ -1373,7 +1373,7 @@ function renderContent() {
     const L = LB_LAYOUT[p.name], tag = p.tag.trim(), z = L.z, mc = L.m[1];
     return `
     <div class="lb-component" data-name="${p.name}" data-tag="${tag}" data-depth="${lbZ.d[z]}" data-la="${L.la}" data-mla="${lbJ[mc]}" data-lp="${L.y > 70 ? 'up' : 'down'}"
-         style="--x:${L.x}%;--y:${L.y}%;--w:${L.w}vw;--r:${L.r}deg;--s:${lbZ.s[z]};--o:${lbZ.o[z]};--z:${z};--ar:${L.ar};--mw:${L.m[0]}vw;--mc:${lbCol[mc]};--mj:${lbJ[mc]};--mt:${L.m[2]}px">
+         style="--x:${L.x}%;--y:${L.y}%;--w:${L.w}vw;--r:${L.r}deg;--s:${lbZ.s[z]};--o:${lbZ.o[z]};--z:${z};--ar:${L.ar};--mw:${mc === 'f' ? Math.min(88, L.m[0] * 1.3) : Math.min(100, Math.round(L.m[0] / 42 * 100))}%;--mc:${lbCol[mc]};--mj:${lbJ[mc]};--mt:${Math.max(0, L.m[2])}px">
       <div class="lb-drift"><div class="lb-float">
         <button class="lb-object" type="button" data-cursor="inspect" aria-label="${p.name} — ${tag}" aria-describedby="lbd${i}">
           <img src="${p.image}" alt="${p.alt}" loading="lazy" decoding="async" draggable="false" onerror="this.closest('.lb-component').classList.add('is-missing')">
