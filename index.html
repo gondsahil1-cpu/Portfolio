@@ -302,7 +302,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sdm svg{width:100%;height:auto;overflow:visible}
 .sdm .cap-l{fill:var(--dim);font:400 10px var(--f-mono);letter-spacing:.1em}
 .sdm .cap-h{fill:#fff;font:300 22px var(--f-light);letter-spacing:.08em}
-.line{fill:none;stroke:#fff;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.line{fill:none;stroke:#fff;stroke-width:1.2}
 .line.d{stroke:var(--dim)}
 
 /* projects */
@@ -444,8 +444,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .lb-field{height:clamp(560px,76vh,820px)}
   .lb-component{width:calc(var(--w) * 1.3)}
 }
-@media (max-width:720px){                                                         /* deliberate
-  .lb-mat{--ox:0px;--oy:0px;inset:-34px -12px -26px;border-radius:10px}.lb-ruler,.lb-mat-tag,.lb-rings{display:none} 2-column asymmetric mobile composition */
+@media (max-width:720px){                                                         /* deliberate 2-column asymmetric mobile composition */
+  .lb-mat{--ox:0px;--oy:0px;inset:-34px -12px -26px;border-radius:10px}.lb-ruler,.lb-mat-tag,.lb-rings{display:none}
   .lb-field{height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;column-gap:6vw;row-gap:5vh;padding:3vh 8px}
   .lb-component{position:relative;left:auto;top:auto;width:var(--mw);max-width:100%;min-width:0;align-self:start;grid-column:var(--mc);justify-self:var(--mj);margin-top:var(--mt,0)}
   .lb-component[data-mla=start] .lb-hover-label{left:0;right:auto;translate:0 0}
@@ -598,7 +598,8 @@ html.cursor-on,html.cursor-on *{cursor:none!important}
 
 .proj{overflow:hidden}
 .art .al{fill:#fff;font:400 9.5px var(--f-mono);letter-spacing:.12em}
-.art .line,.sdm .line{stroke:#fff;stroke-width:1.3;vector-effect:non-scaling-stroke;fill:none}
+.art .line,.sdm .line{stroke:#fff;stroke-width:1.3;fill:none}
+@media (max-width:820px){.sdm .line{stroke-width:2.6}.art .line{stroke-width:4}}   /* strokes now scale with the SVG; keep them visible on phones */
 .art .line.d{stroke:rgba(255,255,255,.5)}
 .proj-head{overflow:hidden;padding-bottom:.08em}
 .rm .hud,.rm .hud-line{display:none}
@@ -733,7 +734,7 @@ html.cursor-on,html.cursor-on *{cursor:none!important}
 
   <!-- ═════════ 09 CONTACT ═════════ -->
   <section class="sec contact" id="contact" data-section="contact">
-    <div class="shape shape-contact" data-shape="sun" style="left:50%;bottom:-30vw;width:min(100vw,1560px);aspect-ratio:1;margin-left:min(-50vw,-780px)"><canvas></canvas></div>
+    <div class="shape shape-contact" data-shape="sun" style="left:50%;bottom:-30vw;width:min(100vw,1560px);aspect-ratio:1;margin-left:max(-50vw,-780px)"><canvas></canvas></div>
     <div class="sec-head mono"><b>[09]</b><span>Contact</span><i class="ruler"></i><span>Open for builds</span></div>
     <h2 class="big rl" data-text="Let's build something.">Let's build something.</h2>
     <div class="c-info">
@@ -1492,6 +1493,7 @@ function buildSections() {
     spans.forEach((sp, j) => gsap.fromTo(sp, { x: (j ? 1 : -1) * dir * 16 * vw }, { x: (j ? -1 : 1) * dir * 3 * vw, ease: 'none', scrollTrigger: { trigger: p, start: 'top 92%', end: 'bottom 25%', scrub: true } }));
     gsap.fromTo($('.shape', p), { yPercent: 12, scale: .9 }, { yPercent: -12, scale: 1.06, ease: 'none', scrollTrigger: { trigger: p, start: 'top bottom', end: 'bottom top', scrub: true } });
     const lines = $$('.art .line', p);
+    lines.forEach(l => l.setAttribute('pathLength', 1));
     gsap.set(lines, { strokeDasharray: 1, strokeDashoffset: 1 });
     gsap.to(lines, { strokeDashoffset: 0, stagger: .05, ease: 'none', scrollTrigger: { trigger: p, start: 'top 78%', end: 'top 18%', scrub: 1 } });
     gsap.fromTo($$('.art text', p), { opacity: 0 }, { opacity: 1, stagger: .1, scrollTrigger: { trigger: p, start: 'top 45%', end: 'top 15%', scrub: 1 } });
